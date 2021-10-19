@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="follow">
+
+	<resultMap type="followModel" id="followModelRes">
+		<result property="follow_seq" column="follow_seq" />				
+		<result property="follow_id" column="follow_id" />
+		<result property="following_id" column="following_id" />
+	</resultMap>
+	
+	<resultMap type="followListModel" id="followListModelRes">		
+		<result property="follow_id" column="follow_id" />
+		<result property="following_id" column="following_id" />
+		<result property="nickname" column="nickname" />
+		<result property="prof_img" column="prof_img" />
+		<result property="intro" column="intro" />
+		<result property="follow_to" column="follow_to" />
+	</resultMap>
+	
+	<select id="followerViewData" parameterType="java.lang.String" resultMap="followListModelRes">
+		select follow_id
+		from follow
+		where following_id = #{following_id}
+	</select>
+	
+	<select id="followingViewData" parameterType="java.lang.String" resultMap="followListModelRes">
+		select following_id
+		from follow
+		where follow_id = #{follow_id}
+	</select>
+	
+	<select id="followExist" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(*)
+		from follow
+		where follow_id = #{follow_id}
+		and following_id = #{following_id}
+	</select>
+	
+	<select id="selectfollowQuan" parameterType="java.lang.String" resultType="java.lang.String">
+		select count(*)
+		from follow
+		where following_id = #{following_id}
+	</select>
+	
+	<select id="selectfollowingQuan" parameterType="java.lang.String" resultType="java.lang.String">
+		select count(*)
+		from follow
+		where follow_id = #{follow_id}
+	</select>
+	
+	<insert id="followReg" parameterType="followModel">
+		INSERT INTO follow
+		(follow_seq, follow_id, following_id)
+		VALUES
+		(follow_seq.nextval, #{follow_id}, #{following_id})
+	</insert>
+	
+	<delete id="followDel" parameterType="followModel">
+		delete from
+			follow
+		where
+			follow_id = #{follow_id}
+		and
+			following_id = #{following_id}
+	</delete>	
+	
+	
+</mapper>

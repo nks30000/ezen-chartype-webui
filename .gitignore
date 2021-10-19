@@ -1,0 +1,13 @@
+### Gitignore ###
+# Created by git for backups. To disable backups in Git:
+
+# Created by git when using merge tools for conflicts
+.settings/
+bin
+bin/
+.classpath
+.project
+target/
+.springBeans
+
+# End
