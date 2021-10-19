@@ -10,7 +10,7 @@
 	<link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   
-	<link rel="stylesheet" href="/ezen-chartype-webui/resources/css/main.css">
+	<link rel="stylesheet" href="/charType/resources/css/main.css">
   
 </head>
   
