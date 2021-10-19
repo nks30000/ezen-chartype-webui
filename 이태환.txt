@@ -1,3 +1,9 @@
 test 123
+<<<<<<< HEAD
 
 «œ¿Ã
+=======
+test 321
+>>>>>>> branch 'main' of https://github.com/nks30000/ezen-chartype-webui.git
+
+«ı¿Œ
