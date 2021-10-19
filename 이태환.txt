@@ -1,2 +1,17 @@
+<<<<<<< HEAD
 test 1111 
 test 321
+=======
+test 123
+
+
+하이
+
+test 321
+
+
+혁인
+이정현 왔다감.
+ㅁㄴ어로마너올
+
+>>>>>>> branch 'main' of https://github.com/nks30000/ezen-chartype-webui.git
