@@ -1,4 +1,4 @@
-package charType.commons.member.login;
+package charType.commons.member;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
