@@ -1,4 +1,4 @@
-package utils.common.service;
+package charType.utils.common.service;
 
 import java.util.Map;
 
@@ -7,7 +7,7 @@ import javax.annotation.Resource;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
-import utils.common.dao.CommonDAO;
+import charType.utils.common.dao.CommonDAO;
 
 @Service("commonService")
 public class CommonServiceImpl implements CommonService {

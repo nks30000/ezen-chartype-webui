@@ -1,4 +1,4 @@
-package utils.common.mapper;
+package charType.utils.common.mapper;
 
 import java.util.HashMap;
 import java.util.Map;

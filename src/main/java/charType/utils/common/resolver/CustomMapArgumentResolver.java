@@ -1,4 +1,4 @@
-package utils.common.resolver;
+package charType.utils.common.resolver;
 
 import java.util.Enumeration;
 
@@ -10,7 +10,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-import utils.common.mapper.CommandMap;
+import charType.utils.common.mapper.CommandMap;
 
 public class CustomMapArgumentResolver implements HandlerMethodArgumentResolver {
 
