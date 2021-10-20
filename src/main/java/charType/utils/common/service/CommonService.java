@@ -1,4 +1,4 @@
-package utils.common.service;
+package charType.utils.common.service;
 
 import java.util.Map;
 

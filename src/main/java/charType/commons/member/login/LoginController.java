@@ -1,9 +1,9 @@
-package commons.member.login;
+package charType.commons.member.login;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import utils.common.mapper.CommandMap;
+import charType.utils.common.mapper.CommandMap;
 
 @Controller
 @RequestMapping("/common/member")

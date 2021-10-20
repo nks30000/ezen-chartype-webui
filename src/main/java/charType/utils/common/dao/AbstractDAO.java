@@ -1,4 +1,4 @@
-package utils.common.dao;
+package charType.utils.common.dao;
 
 import java.util.List;
 import java.util.Map;
