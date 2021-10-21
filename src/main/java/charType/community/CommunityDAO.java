@@ -1,5 +1,5 @@
 package charType.community;
 
-public class CommunityDao {
+public class CommunityDAO {
 
 }

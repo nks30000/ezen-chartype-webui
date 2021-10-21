@@ -1,5 +1,5 @@
 package charType.account.profile.config;
 
-public class ConfigDao {
+public class ConfigDAO {
 
 }

@@ -1,5 +1,5 @@
 package charType.account.following;
 
-public class FollowDao {
+public class FollowDAO {
 
 }

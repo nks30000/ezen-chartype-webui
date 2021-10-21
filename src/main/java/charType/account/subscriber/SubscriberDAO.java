@@ -1,5 +1,5 @@
 package charType.account.subscriber;
 
-public class SubscriberDao {
+public class SubscriberDAO {
 
 }

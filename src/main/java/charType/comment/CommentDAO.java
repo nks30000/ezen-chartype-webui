@@ -1,5 +1,5 @@
 package charType.comment;
 
-public class CommentDao {
+public class CommentDAO {
 
 }

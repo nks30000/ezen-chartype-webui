@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="timeline">
+	
+	<select id="selectAccountTimeline" parameterType="hashmap" resultMap="hashmap">
+		select BOARD_NUM, 
+        TITLE, 
+        ID, 
+        NICK, 
+        CONTENT, 
+        HIT_CNT, 
+        CATEGORY, 
+        MBTI, 
+        LIKE_CNT 
+		from TB_BOARD
+		where ID = #{ID}
+		
+		ORDER BY SYSDATE;
+
+	</select>
+	
+	<insert id="writeAccontTimeline" parameterType="hashmap">
+	insert into TB_BOARD (
+        BOARD_NUM, 
+        TITLE, 
+        ID, 
+        NICK, 
+        CONTENT, 
+        HIT_CNT, 
+        CREATE_DT, 
+        CATEGORY, 
+        MBTI, 
+        LIKE_CNT)
+		VALUES (SEQ_TB_BOARD_BOARD_NUM.NEXTVAL, 
+        #{TITLE}, 
+        #{ID}, 
+        #{NICK}, 
+        #{CONTENT}, 
+        0, 
+        SYSDATE, 
+        #{CATEGORY}, 
+        #{MBTI}, 
+        0);
+	</insert>
+	
+	<update id="modifyAccountTimeline" parameterType="hashmap">
+		update TB_BOARD
+        set TITLE = #{TITLE},
+        CONTENT = #{CONTENT},
+        CATEGORY = #{CATEGORY}
+		
+		where ID = #{ID} and BOARD_NUM = #{BOARD_NUM};
+	</update>
+	
+	
+	<delete id="delAccountTimeline" parameterType="hashmap">
+	delete  from TB_BOARD 
+	where ID = #{ID} AND BOARD_NUM = #{BOARD_NUM}
+	</delete>	
+	
+	<insert id="uploadTimelineFile" parameterType="hashmap">
+		insert into TB_BOARD_IMG (IMG_NUM, 
+        BOARD_NUM, 
+        ORIGINAL_NM, 
+        FILE_SIZE, 
+        SAVED_NM)
+		values (SEQ_TB_BOARD_IMG_IMG_NUM.NEXTVAL, 
+        #{BOARD_NUM}, 
+        #{ORIGINAL_NM}, 
+        #{FILE_SIZE}, 
+        #{SAVED_NM});
+	</insert>
+	
+	<delete id="delTimelineFile" parameterType="hashmap">
+		delete  from TB_BOARD_IMG
+		where  BOARD_NUM = #{BOARD_NUM};
+	</delete>
+	
+	<select id="getTimelineFile" parameterType="hashmap" resultMap="hashmap">
+		select IMG_NUM, 
+        BOARD_NUM, 
+        ORIGINAL_NM, 
+        FILE_SIZE, 
+        SAVED_NM 
+		from TB_BOARD_IMG
+		where BOARD_NUM = #{BOARD_NUM};
+	</select>
+
+</mapper>
