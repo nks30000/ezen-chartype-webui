@@ -1,5 +1,5 @@
 package charType.commons.member;
 
-public class LoginDao {
+public class LoginDAO {
 
 }

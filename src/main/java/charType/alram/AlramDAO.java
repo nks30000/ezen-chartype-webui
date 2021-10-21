@@ -1,5 +1,5 @@
 package charType.alram;
 
-public class AlramDao {
+public class AlramDAO {
 
 }
