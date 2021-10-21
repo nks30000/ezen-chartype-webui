@@ -1,5 +1,5 @@
 package charType.admin;
 
-public class AdminDao {
+public class AdminDAO {
 
 }
