@@ -24,10 +24,16 @@ public class TimelineController {
 	public ModelAndView openSampleBoardList(Map<String,Object> commandMap) throws Exception{ 
 		
 		ModelAndView mv = new ModelAndView("/front/account/profile/timeline/account_profile_timeline_main"); 
-		
-		List<Map<String,Object>> list = timelineService.selectAccountTimeline(commandMap); 
-		
-		mv.addObject("list", list); 
+		if(commandMap.isEmpty()) {
+			//파라미터없을때 임시 코드
+			commandMap.put("ID", "EZZ01");
+			List<Map<String,Object>> list = timelineService.selectAccountTimeline(commandMap);
+			mv.addObject("list", list);
+		} else {
+			List<Map<String,Object>> list = timelineService.selectAccountTimeline(commandMap); 
+			
+			mv.addObject("list", list);
+		}
 		return mv; 
 		}
 

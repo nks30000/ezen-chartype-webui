@@ -4,8 +4,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="timeline">
-	
-	<select id="selectAccountTimeline" parameterType="hashmap" resultMap="hashmap">
+	<select id="selectAccountTimeline" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		<![CDATA[
 		select BOARD_NUM, 
         TITLE, 
         ID, 
@@ -14,15 +14,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         HIT_CNT, 
         CATEGORY, 
         MBTI, 
-        LIKE_CNT 
+        LIKE_CNT, 
+        CREATE_DT
 		from TB_BOARD
 		where ID = #{ID}
 		
-		ORDER BY SYSDATE;
-
+		ORDER BY CREATE_DT
+		]]>
 	</select>
 	
-	<insert id="writeAccontTimeline" parameterType="hashmap">
+	<insert id="writeAccontTimeline" parameterType="java.util.HashMap">
 	insert into TB_BOARD (
         BOARD_NUM, 
         TITLE, 
@@ -46,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         0);
 	</insert>
 	
-	<update id="modifyAccountTimeline" parameterType="hashmap">
+	<update id="modifyAccountTimeline" parameterType="java.util.HashMap">
 		update TB_BOARD
         set TITLE = #{TITLE},
         CONTENT = #{CONTENT},
@@ -56,12 +57,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	
-	<delete id="delAccountTimeline" parameterType="hashmap">
+	<delete id="delAccountTimeline" parameterType="java.util.HashMap">
 	delete  from TB_BOARD 
 	where ID = #{ID} AND BOARD_NUM = #{BOARD_NUM}
 	</delete>	
 	
-	<insert id="uploadTimelineFile" parameterType="hashmap">
+	<insert id="uploadTimelineFile" parameterType="java.util.HashMap">
 		insert into TB_BOARD_IMG (IMG_NUM, 
         BOARD_NUM, 
         ORIGINAL_NM, 
@@ -74,12 +75,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         #{SAVED_NM});
 	</insert>
 	
-	<delete id="delTimelineFile" parameterType="hashmap">
+	<delete id="delTimelineFile" parameterType="java.util.HashMap">
 		delete  from TB_BOARD_IMG
 		where  BOARD_NUM = #{BOARD_NUM};
 	</delete>
 	
-	<select id="getTimelineFile" parameterType="hashmap" resultMap="hashmap">
+	<select id="getTimelineFile" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select IMG_NUM, 
         BOARD_NUM, 
         ORIGINAL_NM, 
