@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Component("fileUtils")
 public class FileUtils {
-	private static final String filePath = "C:\\Users\\Tae\\Desktop\\프로젝트\\img\\saved\\";
+	private static final String filePath = "C:\\charType\\img\\";
 	
 	public List<Map<String,Object>> parseInsertFileInfo(Map<String,Object> map, HttpServletRequest request) throws Exception{
 		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
@@ -48,7 +48,7 @@ public class FileUtils {
         		
         		listMap = new HashMap<String,Object>();
         		listMap.put("BOARD_NUM", board_num);
-        		listMap.put("ORIGINAL_FILE_NAME", originalFileName);
+        		listMap.put("ORIGINAL_NM", originalFileName);
         		listMap.put("SAVED_NM", storedFileName);
         		listMap.put("FILE_SIZE", multipartFile.getSize());
         		list.add(listMap);
