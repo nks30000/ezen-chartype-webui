@@ -30,6 +30,7 @@ public class FileUtils {
         Map<String, Object> listMap = null; 
         
         String board_num = (String)map.get("BOARD_NUM");
+        String user_num = (String)map.get("USER_NUM");
         
         File file = new File(filePath);
         if(file.exists() == false){
@@ -46,19 +47,29 @@ public class FileUtils {
         		file = new File(filePath + storedFileName);
         		multipartFile.transferTo(file);
         		
+        	if(board_num != null) {
         		listMap = new HashMap<String,Object>();
         		listMap.put("BOARD_NUM", board_num);
         		listMap.put("ORIGINAL_NM", originalFileName);
         		listMap.put("SAVED_NM", storedFileName);
         		listMap.put("FILE_SIZE", multipartFile.getSize());
         		list.add(listMap);
+        	} else {
+        		listMap = new HashMap<String,Object>();
+        		listMap.put("USER_NUM", user_num);
+        		listMap.put("ORIGINAL_NM", originalFileName);
+        		listMap.put("SAVED_NM", storedFileName);
+        		listMap.put("FILE_SIZE", multipartFile.getSize());
+        		list.add(listMap);
+
+        		}
+        	
+		
         	}
         }
-		return list;
+        return list;
 	}
 }
-
-
 
 	
 	
