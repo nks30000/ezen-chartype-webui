@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+
+	<resultMap type="memberModel" id="memberRes">
+		<result property="id" column="id" />
+		<result property="password" column="password" />
+		<result property="confirmPassword" column="confirmPassword" />
+		<result property="nick" column="nick" />
+		<result property="email" column="email" />	
+		<result property="phone" column="phone" />	
+		<result property="mbti" column="mbti" />	
+		<result property="intro" column="intro" />	
+		<result property="private_yn" column="private_yn" />	
+		<result property="prof_img" column="prof_img" />
+		<result property="back_img" column="back_img" />
+	</resultMap>
+	
+	  
+
+	<!-- 회원정보 입력 쿼리문 -->
+	<insert id="insertUser" parameterType="memberModel">
+	    <![CDATA[
+	        INSERT INTO TB_USER(
+	            ID,
+	            PHONE,
+	            PASSWORD,
+	            NICK,
+	            EMAIL,
+	            REG_DT,
+	            MBTI,
+	            INTRO,
+	            PRIVATE_YN
+	        )
+	        VALUES( 
+	            #{id},
+	            #{phone},
+	            #{password},
+	            #{nick},
+	            #{email},
+	            sysdate,
+	            #{mbti},
+	            #{intro},
+	            #{private_yn}
+	        )
+	        
+	    ]]>
+	</insert>
+
+	<select id="selectIdMember" parameterType="String" resultMap="memberRes">
+		SELECT *
+		FROM TB_USER
+		WHERE ID = #{id}
+	</select>
+	
+	<select id="selectLoginMember" parameterType="memberModel" resultMap="memberRes">
+		SELECT *
+		FROM TB_USER
+		WHERE id = #{id}
+		AND password = #{password}
+	</select>
+	
+
+	<select id="selectFindId" parameterType="memberModel" resultMap="memberRes">
+		SELECT *
+		FROM TB_USER
+		WHERE EMAIL = #{email}
+		AND PHONE = #{phone}
+	</select>
+
+	<select id="selectFindPassword" parameterType="memberModel" resultMap="memberRes">
+		SELECT *
+		FROM TB_USER
+		WHERE EMAIL = #{email}
+		AND ID = #{id}
+	</select>
+
+	
+	<select id="findNickName" parameterType="java.util.Map" resultType="java.lang.String">
+		<![CDATA[
+		SELECT
+			NICK
+		FROM
+			TB_USER
+		WHERE
+			ID = #{id}
+		]]>
+	</select>	
+	
+	<select id="findProfImg" parameterType="java.util.Map" resultType="java.lang.String">
+		<![CDATA[
+		SELECT
+			PROF_IMG
+		FROM
+			TB_USER
+		WHERE
+			ID = #{id}
+		]]>
+	</select>	
+
+	
+	<select id="getMem" parameterType="java.lang.String" resultMap="memberRes">
+		SELECT *
+		FROM TB_USER
+		WHERE ID = #{id}
+	</select> 
+	
+
+	<update id="updatemodify" parameterType="memberModel" >
+		UPDATE TB_USER
+		SET
+		    PHONE = #{phone},
+		    PASSWORD =#{password},
+		    NICK = #{nick},
+		    EMAIL= #{email},
+		    MBTI = #{mbti},
+		    INTRO = #{intro},
+		    PRIVATE_YN = #{private_yn},
+		    PROF_IMG = #{prof_img},
+		    BACK_IMG = #{back_img}
+		WHERE
+    		ID = #{id}	
+	</update>
+	
+	<update id="updatepwChange" parameterType="memberModel" >
+		UPDATE TB_USER SET
+			PASSWORD = #{password}
+		WHERE ID = #{id}		
+	</update>
+	
+	<update id="memberDelete" parameterType="java.lang.String" >
+		DELETE 
+		FROM 
+    	TB_USER
+		WHERE
+    	ID = #{id}	
+	</update>
+	
+	<insert id="insertProfileImg" parameterType="java.util.HashMap">
+	    <![CDATA[
+	        INSERT INTO TB_PROFILE_IMG(
+	            IMG_NUM,
+			    USER_ID,
+			    ORIGINAL_NM,
+			    FILE_SIZE,
+			    SAVED_NM
+	        )
+	        VALUES( 
+	            SEQ_TB_PROFILE_IMG_IMG_NUM.NEXTVAL,
+	            #{USER_ID},
+	            #{ORIGINAL_NM},
+	            #{FILE_SIZE},
+	            #{SAVED_NM}
+	        )
+	    ]]>
+	</insert>
+	
+	
+	<update id="updateProfileImg" parameterType="java.util.HashMap" >
+		UPDATE TB_PROFILE_IMG 
+		SET
+		    ORIGINAL_NM = #{original_nm},
+		    FILE_SIZE = #{file_size},
+		    SAVED_NM = #{saved_nm}
+		WHERE 
+		IMG_NUM = #{img_num}		
+	</update>
+	
+	<update id="deleteProfileImg" parameterType="java.lang.String" >
+		DELETE 
+		FROM TB_PROFILE_IMG 
+		WHERE
+    	IMG_NUM = #{img_num}	
+	</update>
+	
+	<update id="updateProfileImgAtUser" parameterType="java.util.HashMap" >
+		<![CDATA[
+			UPDATE TB_USER 
+			SET
+			    PROF_IMG = #{SAVED_NM}
+			WHERE 
+			ID = #{USER_ID}
+	    ]]>		
+	</update>
+	<update id="updateBackImgAtUser" parameterType="java.util.HashMap" >
+		<![CDATA[
+			UPDATE TB_USER 
+			SET
+			    BACK_IMG = #{SAVED_NM}
+			WHERE 
+			ID = #{USER_ID}
+	    ]]>		
+	</update>
+
+</mapper>	

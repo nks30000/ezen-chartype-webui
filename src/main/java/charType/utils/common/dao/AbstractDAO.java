@@ -12,10 +12,10 @@ import org.springframework.util.StringUtils;
 public class AbstractDAO {
 	protected Log log = LogFactory.getLog(AbstractDAO.class);
 	
-//	@Autowired
+	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
-	
+		
 	protected void printQueryId(String queryId) {
 		if(log.isDebugEnabled()){
 			log.debug("\t QueryId  \t:  " + queryId);

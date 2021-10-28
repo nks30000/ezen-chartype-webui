@@ -30,8 +30,7 @@ public class FileUtils {
         Map<String, Object> listMap = null; 
         
         String board_num = (String)map.get("BOARD_NUM");
-        String user_num = (String)map.get("USER_NUM");
-        
+   
         File file = new File(filePath);
         if(file.exists() == false){
         	file.mkdirs();
@@ -47,28 +46,67 @@ public class FileUtils {
         		file = new File(filePath + storedFileName);
         		multipartFile.transferTo(file);
         		
-        	if(board_num != null) {
         		listMap = new HashMap<String,Object>();
-        		listMap.put("BOARD_NUM", board_num);
-        		listMap.put("ORIGINAL_NM", originalFileName);
-        		listMap.put("SAVED_NM", storedFileName);
-        		listMap.put("FILE_SIZE", multipartFile.getSize());
-        		list.add(listMap);
-        	} else {
-        		listMap = new HashMap<String,Object>();
-        		listMap.put("USER_NUM", user_num);
-        		listMap.put("ORIGINAL_NM", originalFileName);
-        		listMap.put("SAVED_NM", storedFileName);
-        		listMap.put("FILE_SIZE", multipartFile.getSize());
-        		list.add(listMap);
-
-        		}
-        	
+        		
+	        	if(board_num != null) {
+	        		listMap.put("BOARD_NUM", board_num);
+	        		listMap.put("ORIGINAL_NM", originalFileName);
+	        		listMap.put("SAVED_NM", storedFileName);
+	        		listMap.put("FILE_SIZE", multipartFile.getSize());
+	        	} else {
+	        		listMap.put("ORIGINAL_NM", originalFileName);
+	        		listMap.put("SAVED_NM", storedFileName);
+	        		listMap.put("FILE_SIZE", multipartFile.getSize());
+	        	}
+	        	
+	        	
+	        	list.add(listMap);
 		
         	}
         }
         return list;
 	}
+	
+	public Map<String,Object> parseSingleFileInfo (MultipartFile paramFile ) throws Exception {
+
+		Map<String, Object> listMap = null; 
+		
+		MultipartFile multipartFile = null;
+    	String originalFileName = null;
+    	String originalFileExtension = null;
+    	String storedFileName = null;
+    	
+    	
+    	System.out.println(paramFile.getOriginalFilename());
+		System.out.println(paramFile.getSize());
+    	
+    	File file = new File(filePath);
+        if(file.exists() == false){
+        	file.mkdirs();
+        }
+        
+        
+        multipartFile = paramFile;
+        System.out.println("multipartFile.isEmpty() : " + multipartFile.isEmpty());
+        if(multipartFile.isEmpty() == false){
+        	originalFileName = multipartFile.getOriginalFilename();
+        	originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+        	storedFileName = CommonUtils.getRandomString() + originalFileExtension;
+        	
+        	file = new File(filePath + storedFileName);
+    		multipartFile.transferTo(file);
+    		
+        	listMap = new HashMap<String,Object>();
+        	
+        	listMap.put("ORIGINAL_NM", originalFileName);
+        	listMap.put("SAVED_NM", storedFileName);
+        	listMap.put("FILE_SIZE", multipartFile.getSize());
+        }
+		
+		return listMap;
+	}
+	
+	
 }
 
 	

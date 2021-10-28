@@ -11,8 +11,9 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.sns.charType">
-		<level value="info" />
+	<logger name="charType" additivity="false">
+		<level value="debug" />
+		<appender-ref ref="console"/>
 	</logger>
 	
 	<!-- 3rdparty Loggers -->

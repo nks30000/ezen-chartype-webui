@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%
-	response.sendRedirect("/charType/common/member/login/form");
+	String CONTEXT_PATH = request.getContextPath();
+// 	response.sendRedirect("/charType/common/member/login/form");
+	response.sendRedirect(CONTEXT_PATH + "/member/login/form");
+
+
 %>
 

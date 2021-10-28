@@ -18,11 +18,11 @@ PUBLIC " - //mybatis.org//DTD Config 3.0//EN"
         <setting name="defaultStatementTimeout"   value="25000"/>  
 	</settings>
 
-<!-- 	<typeAliases>
+	<typeAliases>
 	
-		<typeAlias type="com.mycom.member.MemberModel" alias="memberModel" />
+		<typeAlias type="charType.member.MemberModel" alias="memberModel" />
 		
-		<typeAlias type="com.mycom.article.ArticleModel" alias="articleModel" />
+		<!-- <typeAlias type="com.mycom.article.ArticleModel" alias="articleModel" />
 		<typeAlias type="com.mycom.article.ArticleimgModel" alias="articleimgModel" />
 		<typeAlias type="com.mycom.article.ItemModel" alias="itemModel" />
 		<typeAlias type="com.mycom.article.PoliceModel" alias="policeModel" />
@@ -53,14 +53,14 @@ PUBLIC " - //mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.mycom.shop.GoodsReviewModel" alias="GoodsReviewModel" />
 		<typeAlias type="com.mycom.notice.NoticeModel" alias="noticeModel" />
 		<typeAlias type="com.mycom.notice.NoticeimgModel" alias="noticeimgModel" />
-		<typeAlias type="com.mycom.shop_qna.Shop_qnaModel" alias="qnaModel" />
+		<typeAlias type="com.mycom.shop_qna.Shop_qnaModel" alias="qnaModel" /> -->
 		
 	
-	</typeAliases> -->
+	</typeAliases>
 
 	<mappers>
-<!-- 	    <mapper resource="mybatis/config/memberSQL.xml" />
-	    <mapper resource="mybatis/config/ContentsSQL.xml" />
+ 	    <mapper resource="charType/mybatis/config/memberSQL.xml" />
+<!--	    <mapper resource="mybatis/config/ContentsSQL.xml" />
 	    <mapper resource="mybatis/config/CommentSQL.xml" />
 	    <mapper resource="mybatis/config/CollectionSQL.xml" />
 	    <mapper resource="mybatis/config/LikeSQL.xml" />
