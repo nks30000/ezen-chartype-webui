@@ -1,0 +1,6 @@
+div{
+    box-sizing: border-box;
+}
+.login-form {
+    display: block; width: 480px; margin: 0 auto; padding: 100px 0;
+}
