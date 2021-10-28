@@ -15,4 +15,31 @@ public class TimelineDAO extends AbstractDAO{
 		return (List<Map<String, Object>>)selectList("timeline.selectAccountTimeline", map);
 	}
 
+	public void writeAccountTimeline(Map<String, Object> map) {
+		insert("timeline.writeAccountTimeline", map);
+		 }
+
+/*	public void delAccountTimeline(Map<String, Object> map) {
+		delete("timeline.delAccountTimeline", map);
+		
+	}
+	*/
+	public void delAccountTimeline(int num) {
+		delete("timeline.delAccountTimeline", num);
+		
+	}
+
+	public void delTimelineFile(int num) {
+		delete("timeline.delTimelineFile", num);
+	}
+	
+	public void delComment(int num) {
+		delete("timeline.delComment", num);
+	}
+
+	public void uploadTimelineFile(Map<String, Object> map) throws Exception{
+		insert("timeline.uploadTimelineFile", map);
+	}
+	
+
 }

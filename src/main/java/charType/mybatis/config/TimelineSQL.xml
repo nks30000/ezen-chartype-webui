@@ -6,7 +6,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="timeline">
 	<select id="selectAccountTimeline" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		<![CDATA[
-		select BOARD_NUM, 
+		select
+		TB_BOARD.BOARD_NUM, 
+        TITLE, 
+        ID, 
+        NICK, 
+        CONTENT, 
+        HIT_CNT, 
+        CATEGORY, 
+        MBTI, 
+        LIKE_CNT, 
+        CREATE_DT,
+        IMG_NUM,
+        ORIGINAL_NM,
+        FILE_SIZE,
+        SAVED_NM
+		from TB_BOARD, TB_BOARD_IMG
+		where TB_BOARD.BOARD_NUM = TB_BOARD_IMG.BOARD_NUM
+		]]>
+	</select>
+	
+	<!-- select BOARD_NUM, 
         TITLE, 
         ID, 
         NICK, 
@@ -19,12 +39,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from TB_BOARD
 		where ID = #{ID}
 		
-		ORDER BY CREATE_DT
-		]]>
-	</select>
+		ORDER BY CREATE_DT -->
 	
-	<insert id="writeAccontTimeline" parameterType="java.util.HashMap">
-	insert into TB_BOARD (
+	<insert id="writeAccountTimeline" parameterType="java.util.HashMap" useGeneratedKeys="true" keyProperty="BOARD_NUM">
+		<selectKey keyProperty="BOARD_NUM" resultType="string" order="BEFORE">
+		SELECT SEQ_TB_BOARD_BOARD_NUM.NEXTVAL FROM DUAL
+	</selectKey>
+		<![CDATA[
+		insert into TB_BOARD (
         BOARD_NUM, 
         TITLE, 
         ID, 
@@ -35,7 +57,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         CATEGORY, 
         MBTI, 
         LIKE_CNT)
-		VALUES (SEQ_TB_BOARD_BOARD_NUM.NEXTVAL, 
+		VALUES (
+		#{BOARD_NUM},
         #{TITLE}, 
         #{ID}, 
         #{NICK}, 
@@ -44,8 +67,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SYSDATE, 
         #{CATEGORY}, 
         #{MBTI}, 
-        0);
+        0)
+        ]]>
 	</insert>
+	
+	
+	<!-- SEQ_TB_BOARD_BOARD_NUM.NEXTVAL, 42 줄 -->
+	
 	
 	<update id="modifyAccountTimeline" parameterType="java.util.HashMap">
 		update TB_BOARD
@@ -58,36 +86,55 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	<delete id="delAccountTimeline" parameterType="java.util.HashMap">
+	<![CDATA[
 	delete  from TB_BOARD 
-	where ID = #{ID} AND BOARD_NUM = #{BOARD_NUM}
+	where BOARD_NUM = #{BOARD_NUM}
+	]]>
 	</delete>	
 	
 	<insert id="uploadTimelineFile" parameterType="java.util.HashMap">
-		insert into TB_BOARD_IMG (IMG_NUM, 
+	<![CDATA[
+		insert into TB_BOARD_IMG (
+		IMG_NUM, 
         BOARD_NUM, 
         ORIGINAL_NM, 
         FILE_SIZE, 
-        SAVED_NM)
-		values (SEQ_TB_BOARD_IMG_IMG_NUM.NEXTVAL, 
+        SAVED_NM) 
+		values (
+		SEQ_TB_BOARD_IMG_IMG_NUM.NEXTVAL, 
         #{BOARD_NUM}, 
         #{ORIGINAL_NM}, 
         #{FILE_SIZE}, 
-        #{SAVED_NM});
+        #{SAVED_NM}
+        )
+          ]]>
 	</insert>
 	
 	<delete id="delTimelineFile" parameterType="java.util.HashMap">
+	<![CDATA[
 		delete  from TB_BOARD_IMG
-		where  BOARD_NUM = #{BOARD_NUM};
+		where  BOARD_NUM = #{BOARD_NUM}
+		]]>
 	</delete>
 	
-	<select id="getTimelineFile" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		select IMG_NUM, 
-        BOARD_NUM, 
+	<delete id="delComment" parameterType="java.util.HashMap">
+	<![CDATA[
+		delete  from TB_COMMENTS
+		where  BOARD_NUM = #{BOARD_NUM}
+		]]>
+	</delete>
+	
+	<select id="getTimelineFile" parameterType="java.util.HashMap">
+	<![CDATA[
+		select 
+		IMG_NUM, 
         ORIGINAL_NM, 
-        FILE_SIZE, 
-        SAVED_NM 
+        ROUND(FILE_SIZE/1024,1) as FILE_SIZE 
 		from TB_BOARD_IMG
-		where BOARD_NUM = #{BOARD_NUM};
+		where BOARD_NUM = #{BOARD_NUM}
+		]]>
 	</select>
+	
+	
 
 </mapper>
