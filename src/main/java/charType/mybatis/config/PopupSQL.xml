@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="popup">
+
+<select id="selectOneCommunityTimeline" parameterType="java.util.HashMap"
+	resultType="java.util.HashMap">
+	<![CDATA[
+	SELECT 
+    	BOARD_NUM,
+		TITLE,
+  		ID,
+	   	NICK,
+ 	   	CONTENT,
+   		HIT_CNT,
+    	CREATE_DT,
+    	CATEGORY,
+    	MBTI,
+    	LIKE_CNT
+	FROM
+    	TB_BOARD
+	WHERE
+    	BOARD_NUM = #{BOARD_NUM}	
+	]]>
+</select>
+
+<select id="selectOneCommunityTimelineImage" parameterType="java.util.HashMap"
+	resultType="java.util.HashMap">
+	<![CDATA[
+	SELECT 
+  	 	BOARD_NUM,
+	    ORIGINAL_NM,
+   		SAVED_NM,
+    	FILE_SIZE
+	FROM
+    	TB_BOARD_IMG
+	WHERE
+    	BOARD_NUM = #{BOARD_NUM}
+	]]>
+</select>
+
+<select id="selectOneCommunityTimelineProfImg" parameterType="java.util.HashMap"
+	resultType="java.util.HashMap">
+	<![CDATA[
+	SELECT 
+    	PROF_IMG
+	FROM
+    	TB_USER U, TB_BOARD B
+	WHERE
+    	U.ID = B.ID AND B.ID= #{ID}
+	]]>
+</select>
+
+<update id="modifyAccountTimeLine" parameterType="java.util.HashMap">
+	<![CDATA[
+	UPDATE TB_BOARD
+	SET 
+		TITLE = #{TITLE},
+		CONTENT = #{CONTENT},
+		CATEGORY = #{CATEGORY}
+	where 
+		BOARD_NUM = #{BOARD_NUM};
+	]]>
+</update>
+
+
+<insert id="writeComment" parameterType="java.util.HashMap">
+	<![CDATA[
+	insert into TB_COMMENTS (
+		COMMENT_NUM, 
+		BOARD_NUM, 
+		ID,
+		NICK,
+		CONTENTS,
+		REGDATE, 
+		MBTI, 
+		PROF_IMG
+		)
+	values (
+		SEQ_TB_COMMENTS_COMMENT_NUM.NEXTVAL, 
+		#{BOARD_NUM}, 
+		#{ID}, 
+		#{NICK},
+		#{CONTENTS}, 
+		SYSDATE, 
+		#{MBTI}, 
+		#{PROF_IMG}
+	)
+	]]>
+</insert>
+
+<select id="selectComment" parameterType="java.util.HashMap" 
+	resultType="java.util.HashMap">
+	<![CDATA[
+	select 
+		COMMENT_NUM, 
+		BOARD_NUM, 
+		CONTENTS, 
+		REGDATE, 
+		ID, 
+		NICK,
+		MBTI, 
+		PROF_IMG 
+	from 
+		TB_COMMENTS
+	where 
+		BOARD_NUM = #{BOARD_NUM}
+	order by 
+		COMMENT_NUM desc
+	]]>
+</select>
+
+<select id="selectCntComment" parameterType="java.util.HashMap" 
+	resultType="java.util.HashMap">
+	<![CDATA[
+	select 
+		count(ID)
+	from 
+		TB_COMMENTS
+	where 
+		BOARD_NUM = #{BOARD_NUM}	
+	]]>
+</select>
+
+<delete id="deleteComment" parameterType="java.util.HashMap">
+	<![CDATA[
+	delete  from 
+		TB_COMMENTS
+	where 
+		COMMENT_NUM = #{COMMENT_NUM}
+	]]>
+</delete>
+
+<update id="modifyComment" parameterType="java.util.HashMap">
+	<![CDATA[
+	UPDATE TB_COMMENTS
+	SET
+    	CONTENTS = #{CONTENTS}
+	WHERE
+    	COMMENT_NUM = #{COMMENT_NUM}
+	]]>
+</update>
+
+
+
+
+</mapper>
