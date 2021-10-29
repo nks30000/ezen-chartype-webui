@@ -138,7 +138,7 @@ public class MemberController {
 		}
 
 		session.invalidate();
-		return new ModelAndView("/member/logout");
+		return new ModelAndView("/common/member/logout/common_member_logout");
 	}
 	
 	

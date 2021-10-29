@@ -39,6 +39,7 @@
             <div class="card-body">
               <%-- <spring:hasBindErrors name="mem"/> --%>
 				<form method="post" name="userinput" onSubmit="return checkIt()" enctype="multipart/form-data">
+					<input type="hidden" name="id" value="${mem.id}"/>
                 <h6 class="heading-small text-muted mb-4">User information</h6>
                 <div class="pl-lg-4">
                   <div class="row">
@@ -106,7 +107,7 @@
 			                    <label class="form-control-label">Profile Image</label>
 			                    <br/>
 			                    <div class="text-center my-4">
-				                	<img width="400" src="/charType/resources/images/main/noimage_mem.png" alt="mem_img" class="img-circle"  style="width:100px; height: 100px; vertical-align: left" />
+				                	<img width="400" src="/img/${mem.prof_img}" alt="mem_img" class="img-circle"  style="width:100px; height: 100px; vertical-align: left" />
 			                    </div>
 			  					<div class="text-right">
 			  						<input type="file" name="prof_img" class="form-control form-control-alternative">
@@ -172,18 +173,18 @@
 	                       	Background Image 
 	                        </label>
 	                        <div class="input-group">
+	                        	<img alt="back_img" src="/img/${mem.back_img}">
 		                        <input type="file" name="back_img" class="form-control form-control-alternative" placeholder="">
 	                        </div>
 	                      </div>
 	                    </div>
-	                    
                     </div>
                 </div>
                 <div class="">
                 	<input type="submit" class="btn btn-block btn-primary" value="Submit"/>
                 </div>
                 
-                  <div class="">
+                <div class="">
                 	<input type="submit" OnClick="window.location='memberDelete.do'" class="btn btn-block btn-primary" value="Withdrawal"/>
                 </div>
                 
