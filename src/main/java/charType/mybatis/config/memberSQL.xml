@@ -118,9 +118,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		    EMAIL= #{email},
 		    MBTI = #{mbti},
 		    INTRO = #{intro},
-		    PRIVATE_YN = #{private_yn},
-		    PROF_IMG = #{prof_img},
-		    BACK_IMG = #{back_img}
+		    PRIVATE_YN = #{private_yn}
 		WHERE
     		ID = #{id}	
 	</update>
@@ -194,5 +192,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			ID = #{USER_ID}
 	    ]]>		
 	</update>
-
+	<select id="selectProfileImg" parameterType="String" resultType="hashmap">
+		SELECT *
+		FROM TB_PROFILE_IMG
+		WHERE SAVED_NM = #{saved_nm}
+	</select>
 </mapper>	
