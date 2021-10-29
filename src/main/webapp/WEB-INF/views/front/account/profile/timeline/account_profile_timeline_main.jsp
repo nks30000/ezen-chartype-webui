@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +12,7 @@
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
   <link rel="stylesgeet" href="https://rawgit.com/creativetimofficial/material-kit/master/assets/css/material-kit.css">
   <link rel="stylesheet" href="/charType/resources/css/profile.css">
+  <link rel="stylesheet" href="/charType/resources/css/timeline.css">
 </head>
 
 <body class="profile-page">
@@ -25,47 +27,33 @@
         </button>
       </div>
 
-      <div class="collapse navbar-collapse">
+<div class="collapse navbar-collapse">
         <ul class="navbar-nav ml-auto">
-          <li class="dropdown nav-item">
-            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
-              <i class="material-icons">apps</i> Components
-            </a>
-            <div class="dropdown-menu dropdown-with-icons">
-              <a href="../index.html" class="dropdown-item">
-                <i class="material-icons">layers</i> All Components
-              </a>
-
-              <a href="https://demos.creative-tim.com/material-kit/docs/2.0/getting-started/introduction.html" class="dropdown-item">
-                <i class="material-icons">content_paste</i> Documentation
-              </a>
-            </div>
-          </li>
           <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0)">
-              <i class="material-icons">cloud_download</i> Download
+            <a href="/charType/myPageInfoMod" class="nav-link">
+              <i class="material-icons">apps</i> Edit Profile
             </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://twitter.com/CreativeTim" target="_blank">
-              <i class="fa fa-twitter"></i>
+    		</li>
+           <li class="nav-item">
+            <a href="/charType/logout" class="nav-link">
+              <i class="material-icons">apps</i> Logout
             </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://www.facebook.com/CreativeTim" target="_blank">
-              <i class="fa fa-facebook-square"></i>
+    		</li>
+          
+            <li class="nav-item">
+            <a href="#-----------------" class="nav-link">
+              <i class="material-icons">apps</i> Main
             </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://www.instagram.com/CreativeTimOfficial" target="_blank">
-              <i class="fa fa-instagram"></i>
-            </a>
-          </li>
+    		</li>
+        
         </ul>
       </div>
     </div>
   </nav>
-
+            
+            
+            
+            
   <div class="page-header header-filter" data-parallax="true" style="background-image:url('http://wallpapere.org/wp-content/uploads/2012/02/black-and-white-city-night.png');"></div>
   <div class="main main-raised">
     <div class="profile-content">
@@ -77,8 +65,8 @@
                 <img src="https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTU0NjQzOTk4OTQ4OTkyMzQy/ansel-elgort-poses-for-a-portrait-during-the-baby-driver-premiere-2017-sxsw-conference-and-festivals-on-march-11-2017-in-austin-texas-photo-by-matt-winkelmeyer_getty-imagesfor-sxsw-square.jpg" alt="Circle Image" class="img-raised rounded-circle img-fluid">
               </div>
               <div class="name">
-                <h3 class="title">Christian Louboutin</h3>
-                <h6>Designer</h6>
+                <h3 class="title"> ${list[0].ID}  </h3>
+                <h6>${list[0].MBTI}</h6>
                 <a href="#pablo" class="btn btn-just-icon btn-link btn-dribbble"><i class="fa fa-dribbble"></i></a>
                 <a href="#pablo" class="btn btn-just-icon btn-link btn-twitter"><i class="fa fa-twitter"></i></a>
                 <a href="#pablo" class="btn btn-just-icon btn-link btn-pinterest"><i class="fa fa-pinterest"></i></a>
@@ -87,43 +75,212 @@
           </div>
         </div>
         <div class="description text-center">
-          <p>An artist of considerable range, Chet Faker — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a solid groove structure. </p>
+          <p>${list[0].INTRO}</p>
         </div>
         <div class="row">
           <div class="col-md-6 ml-auto mr-auto">
             <div class="profile-tabs">
               <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
                 <li class="nav-item">
-                  <a class="nav-link active" href="#studio" role="tab" data-toggle="tab">
+                  <a class="nav-link active" href="#life" role="tab" data-toggle="tab">
                     <i class="material-icons">camera</i>
-                    Studio
+                    Life
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#works" role="tab" data-toggle="tab">
+                  <a class="nav-link" href="#fav" role="tab" data-toggle="tab">
                     <i class="material-icons">palette</i>
-                    Work
+                    Favorite
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#favorite" role="tab" data-toggle="tab">
+                  <a class="nav-link" href="#shop" role="tab" data-toggle="tab">
                     <i class="material-icons">favorite</i>
-                    Favorite
+                    Shop List
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#style" role="tab" data-toggle="tab">
+                    <i class="material-icons">favorite</i>
+                    Style
                   </a>
                 </li>
               </ul>
             </div>
           </div>
         </div>
-        
+ <!-- ============================================================================================== -->
+ <form id="frm" name="frm" enctype="multipart/form-data">
+                     <div class="card gedf-card">
+                        <div class="card-header">
+                            <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="true">Make
+                                        a publication</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="images-tab" data-toggle="tab" role="tab" aria-controls="images" aria-selected="false" href="#images">Images</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content" id="myTabContent">
+                            
+                          	  <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+                                   <div class="form-group">
+                                   <label class="sr-only" for="message">post</label>
+                                   <textarea class="form-control" id="TITLE" name="TITLE" rows="1" placeholder="Write your title"></textarea>
+                             </div>
+                             </div>
+                            
+                              <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+                                    <div class="form-group">
+                                        <label class="sr-only" for="message">post</label>
+                                        <textarea class="form-control" id="CONTENT" name="CONTENT" rows="3" placeholder="What are you thinking?"></textarea>
+                              </div>
+                              </div>
+        			   <input type="hidden" id="ID" name="ID" value="${sessionScope.ID}">
+    				   <input type="hidden" id="NICK" name="NICK" value="${sessionScope.NICK}">
+    				   <input type="hidden" id="MBTI" name="MBTI" value="${sessionScope.MBTI}">
+
+                                
+                                <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
+                                    <div class="form-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" name="file">
+                                            <label class="custom-file-label" for="customFile">Upload image</label>
+                                        </div>
+                                    </div>
+                                    <div class="py-4"></div>
+                                </div>
+                                  <label for="CATEGORY">Choose a category:</label>
+								<select name="CATEGORY" id="CATEGORY">
+  									<option value="LIFE">LIFE</option>
+  									<option value="FAVORITE">FAVORITE</option>
+  									<option value="SHOP">SHOP LIST</option>
+  									<option value="STYLE">STYLE</option>
+								</select>
+                            </div>
+                            <div class="btn-toolbar justify-content-between">
+                                <div class="btn-group">
+                                    <a href=#this class="btn btn-primary" id="write">share</a>
+                                </div>   
+                            </div>
+                        </div>
+                    </div>
+			 </form>
+   
+
+<!-- ============================================================================================== -->
 
         <div class="tab-content tab-space">
-          <div class="tab-pane active text-center gallery" id="studio">
+          <div class="tab-pane active text-center gallery" id="life">
             <div class="row">
               <div class="col-md-3 ml-auto">
               	<c:choose>
-					<c:when test="${fn:length(list) > 0}">
-					<c:forEach items="${list }" var="timelineList" begin="0" step="2">
+					<c:when test="${fn:length(life) > 0}">
+					<c:forEach items="${life }" var="timelineLife" begin="0" step="2">
+              			<img src ="/img/${timelineLife.SAVED_NM}">
+              			<button id="delete" onclick="location.href='delete?num=${timelineLife.BOARD_NUM}'">delete</button>
+       				  </c:forEach>
+					</c:when>
+						<c:otherwise>
+							조회된 결과가 없습니다.
+           				</c:otherwise>
+           	 </c:choose>
+              </div>
+              <div class="col-md-3 mr-auto">
+                <c:choose>
+					<c:when test="${fn:length(life) > 0}">
+					<c:forEach items="${life}" var="timelineLife" begin="1" step="2">
+              			<img src ="/img/${timelineLife.SAVED_NM}">
+              			<button id="delete" onclick="location.href='delete?num=${timelineLife.BOARD_NUM}'">delete</button>
+       				  </c:forEach>
+					</c:when>
+						<c:otherwise>
+							조회된 결과가 없습니다.
+           				</c:otherwise>
+           		 </c:choose>
+              </div> 
+            </div>
+          </div>
+          
+<!-- ============================================================================================== -->
+          
+          <div class="tab-pane text-center gallery" id="fav">
+          	<div class="row">
+          		<div class="col-md-3 ml-auto">
+
+           <c:choose>
+					<c:when test="${fn:length(fav) > 0}">
+					<c:forEach items="${fav }" var="timelineFav" begin="0" step="2">
+              			<img src ="/img/${timelineFav.SAVED_NM}">
+              			<button id="delete" onclick="location.href='delete?num=${timelineFav.BOARD_NUM}'">delete</button>
+       				  </c:forEach>
+					</c:when>
+						<c:otherwise>
+							조회된 결과가 없습니다.
+           				</c:otherwise>
+           	 </c:choose>
+              </div>
+              <div class="col-md-3 mr-auto">
+				<c:choose>
+					<c:when test="${fn:length(fav) > 0}">
+					<c:forEach items="${fav}" var="timelineFav" begin="1" step="2">
+              			<img src ="/img/${timelineFav.SAVED_NM}">
+              			<button id="delete" onclick="location.href='delete?num=${timelineFav.BOARD_NUM}'">delete</button>
+       				  </c:forEach>
+					</c:when>
+						<c:otherwise>
+							조회된 결과가 없습니다.
+           				</c:otherwise>
+           		 </c:choose>
+              </div>
+          </div>
+          </div>
+ <!-- ============================================================================================== -->
+          
+          
+        <div class="tab-pane text-center gallery" id="shop">
+          	<div class="row">
+          		<div class="col-md-3 ml-auto">
+
+           <c:choose>
+					<c:when test="${fn:length(shop) > 0}">
+					<c:forEach items="${shop}" var="timelineShop" begin="0" step="2">
+              			<img src ="/img/${timelineShop.SAVED_NM}">
+              			<button id="delete" onclick="location.href='delete?num=${timelineShop.BOARD_NUM}'">delete</button>
+       				  </c:forEach>
+					</c:when>
+						<c:otherwise>
+							조회된 결과가 없습니다.
+           				</c:otherwise>
+           	 </c:choose>
+              </div>
+              <div class="col-md-3 mr-auto">
+                <c:choose>
+					<c:when test="${fn:length(shop) > 0}">
+					<c:forEach items="${shop}" var="timelineList" begin="1" step="2">
+              			<img src ="/img/${timelineList.SAVED_NM}">
+              			<button id="delete" onclick="location.href='delete?num=${timelineList.BOARD_NUM}'">delete</button>
+       				  </c:forEach>
+					</c:when>
+						<c:otherwise>
+							조회된 결과가 없습니다.
+           				</c:otherwise>
+           		 </c:choose>
+              </div>
+          </div>
+          </div>
+           <!-- ============================================================================================== -->
+          
+          <div class="tab-pane text-center gallery" id="style">
+          	<div class="row">
+          		<div class="col-md-3 ml-auto">
+
+           <c:choose>
+					<c:when test="${fn:length(style) > 0}">
+					<c:forEach items="${style }" var="timelineList" begin="0" step="2">
               			<img src ="/img/${timelineList.SAVED_NM}">
               			<button id="delete" onclick="location.href='delete?num=${timelineList.BOARD_NUM}'">delete</button>
        				  </c:forEach>
@@ -134,10 +291,9 @@
            	 </c:choose>
               </div>
               <div class="col-md-3 mr-auto">
-					<button id="write" onclick="location.href='form'">글쓰기</button>
                 <c:choose>
-					<c:when test="${fn:length(list) > 0}">
-					<c:forEach items="${list}" var="timelineList" begin="1" step="2">
+					<c:when test="${fn:length(style) > 0}">
+					<c:forEach items="${style}" var="timelineList" begin="1" step="2">
               			<img src ="/img/${timelineList.SAVED_NM}">
               			<button id="delete" onclick="location.href='delete?num=${timelineList.BOARD_NUM}'">delete</button>
        				  </c:forEach>
@@ -147,41 +303,13 @@
            				</c:otherwise>
            		 </c:choose>
               </div>
-              
-              
-            </div>
           </div>
-          <div class="tab-pane text-center gallery" id="works">
-            <div class="row">
-              <div class="col-md-3 ml-auto">
-                <img src="https://images.unsplash.com/photo-1524498250077-390f9e378fc0?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=83079913579babb9d2c94a5941b2e69d&auto=format&fit=crop&w=751&q=80" class="rounded">
-                <img src="https://images.unsplash.com/photo-1506667527953-22eca67dd919?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6326214b7ce18d74dde5e88db4a12dd5&auto=format&fit=crop&w=750&q=80" class="rounded">
-                <img src="https://images.unsplash.com/photo-1505784045224-1247b2b29cf3?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ec2bdc92a9687b6af5089b335691830e&auto=format&fit=crop&w=750&q=80" class="rounded">
-              </div>
-              <div class="col-md-3 mr-auto">
-                <img src="https://images.unsplash.com/photo-1504346466600-714572c4b726?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6754ded479383b7e3144de310fa88277&auto=format&fit=crop&w=750&q=80" class="rounded">
-                <img src="https://images.unsplash.com/photo-1494028698538-2cd52a400b17?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=83bf0e71786922a80c420c17b664a1f5&auto=format&fit=crop&w=334&q=80" class="rounded">
-              </div>
-            </div>
           </div>
-          <div class="tab-pane text-center gallery" id="favorite">
-            <div class="row">
-              <div class="col-md-3 ml-auto">
-                <img src="https://images.unsplash.com/photo-1504346466600-714572c4b726?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6754ded479383b7e3144de310fa88277&auto=format&fit=crop&w=750&q=80" class="rounded">
-                <img src="https://images.unsplash.com/photo-1494028698538-2cd52a400b17?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=83bf0e71786922a80c420c17b664a1f5&auto=format&fit=crop&w=334&q=80" class="rounded">
-              </div>
-              <div class="col-md-3 mr-auto">
-                <img src="https://images.unsplash.com/photo-1505784045224-1247b2b29cf3?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ec2bdc92a9687b6af5089b335691830e&auto=format&fit=crop&w=750&q=80" class="rounded">
-                <img src="https://images.unsplash.com/photo-1524498250077-390f9e378fc0?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=83079913579babb9d2c94a5941b2e69d&auto=format&fit=crop&w=751&q=80" class="rounded">
-                <img src="https://images.unsplash.com/photo-1506667527953-22eca67dd919?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6326214b7ce18d74dde5e88db4a12dd5&auto=format&fit=crop&w=750&q=80" class="rounded">
-              </div>
-            </div>
+          
           </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
+          </div>
+          </div>
+          </div>
 
   <footer class="footer text-center ">
     <p>Made with <a href="https://demos.creative-tim.com/material-kit/index.html" target="_blank">Material Kit</a> by Creative Tim</p>
@@ -197,4 +325,40 @@
 
 
 </body>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="<c:url value='/js/common.js'/>" charset="utf-8"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#list").on("click", function(e){ //목록으로 버튼
+				e.preventDefault();
+				fn_openBoardList();
+			});
+			
+			$("#write").on("click", function(e){ //작성하기 버튼
+				e.preventDefault();
+				fn_insertBoard();
+			});
+		});
+		
+		function fn_openBoardList(){
+			var comSubmit = new ComSubmit();
+			comSubmit.submit();
+		}
+		
+		function fn_insertBoard(){
+			var comSubmit = new ComSubmit("frm");
+			comSubmit.setUrl("<c:url value='/front/account/profile/write' />");
+			comSubmit.submit();
+		}
+
+
+
+	</script>
+
+
+
+
 </html>
