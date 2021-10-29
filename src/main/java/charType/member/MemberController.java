@@ -168,19 +168,21 @@ public class MemberController {
 		
 		if( mem.getPrivate_yn() ==  null) {
 			mem.setPrivate_yn("N");
+		} else {
+			mem.setPrivate_yn("Y");
 		}
 		
 		
 		MemberModel m = memberService.insertUser(mem);
 		
-		log.debug("유저 입력 성공");
+//		log.debug("유저 입력 성공");
 		
 		if (m != null) {
 			session.setAttribute("session_mem_id", m.getId());
 			session.setAttribute("session_mem_nick", m.getNick());
 			session.setAttribute("session_mem_mbti", m.getMbti());
 		}
-		log.debug("세션 생성 완료");
+//		log.debug("세션 생성 완료");
 //		Iterator<String> keys = commandMap.getMap().keySet().iterator();
 //		while( keys.hasNext()) {
 //			log.debug("key:" + keys.next());
@@ -281,7 +283,7 @@ public class MemberController {
 	 
 	
 	@RequestMapping(value="/account/profile/config/modify", method = RequestMethod.POST)
-	public ModelAndView memberModifyEnd(@ModelAttribute("mem") MemberModel mem, BindingResult bindingResult,
+	public ModelAndView memberModifyEnd(CommandMap commandMap, @ModelAttribute("mem") MemberModel mem, BindingResult bindingResult,
 			HttpSession session, MultipartHttpServletRequest request ) throws Exception { 
 
 		ModelAndView mv = new ModelAndView();
@@ -290,17 +292,19 @@ public class MemberController {
 		mem.setId(id);	
 		
 		//공개여부설정 처리
-		String privateYn = mem.getPrivate_yn();
-		System.out.println(privateYn);
-		
-		//배경이미지는 기본 이미지로 지정			
-		mem.setBack_img("mem_no_back_img.png");
+		if( mem.getPrivate_yn() ==  null) {
+			mem.setPrivate_yn("N");
+		} else {
+			mem.setPrivate_yn("Y");
+		}
 		
 		memberService.updatemodify(mem);
 		mem = memberService.selectIdMember(mem.getId());
 		if (mem != null) {
 			session.setAttribute("session_mem_nick", mem.getNick());
 		}
+		
+		memberService.updateProfileImg(commandMap.getMap(), request);
 		
 		mv.setViewName("redirect:/account/profile/config/modify");
 		return mv;

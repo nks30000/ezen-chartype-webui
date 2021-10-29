@@ -29,10 +29,12 @@ public interface MemberService{
 	
 	void memberDelete(String id) throws Exception;
 	
+	
 	void insertProfileImg(Map<String, Object> map, HttpServletRequest request) throws Exception;
 	
 	void updateProfileImg(Map<String, Object> map, HttpServletRequest request) throws Exception;
 	
 	void deleteProfileImg(String id) throws Exception;
 	
+	Map<String, Object> selectProfileImg(String saved_nm) throws Exception;
 }
