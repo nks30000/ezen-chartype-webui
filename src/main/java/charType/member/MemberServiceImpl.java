@@ -104,7 +104,7 @@ public class MemberServiceImpl implements MemberService{
 			memberDao.insertProfileImg(fileInfo);
 		}
 		
-		if(multipartRequest.getFile("back_img") != null && multipartRequest.getFile("prof_img").getSize() > 0) {
+		if(multipartRequest.getFile("back_img") != null && multipartRequest.getFile("back_img").getSize() > 0) {
 			MultipartFile file = multipartRequest.getFile("back_img");
 			//query
 			fileInfo = fileUtils.parseSingleFileInfo(file);
