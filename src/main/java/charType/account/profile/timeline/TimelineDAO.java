@@ -40,6 +40,26 @@ public class TimelineDAO extends AbstractDAO{
 	public void uploadTimelineFile(Map<String, Object> map) throws Exception{
 		insert("timeline.uploadTimelineFile", map);
 	}
+
+	public List<Map<String, Object>> selectAccountTimelineLike(Map<String, Object> map) {
+		return (List<Map<String, Object>>)selectList("timeline.selectAccountTimelineLife", map);
+
+	}
+
+	public List<Map<String, Object>> selectAccountTimelineFav(Map<String, Object> map) {
+		return (List<Map<String, Object>>)selectList("timeline.selectAccountTimelineFav", map);
+
+	}
+
+	public List<Map<String, Object>> selectAccountTimelineShop(Map<String, Object> map) {
+		return (List<Map<String, Object>>)selectList("timeline.selectAccountTimelineShop", map);
+
+	}
+
+	public List<Map<String, Object>> selectAccountTimelineStyle(Map<String, Object> map) {
+		return (List<Map<String, Object>>)selectList("timeline.selectAccountTimelineStyle", map);
+
+	}
 	
 
 }

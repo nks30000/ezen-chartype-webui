@@ -42,6 +42,18 @@ public class TimelineController {
 			List<Map<String,Object>> list = timelineService.selectAccountTimeline(commandMap);
 			mv.addObject("list", list);
 			
+			List<Map<String,Object>> life = timelineService.selectAccountTimelineLife(commandMap);
+			mv.addObject("life", life);
+			
+			List<Map<String,Object>> fav = timelineService.selectAccountTimelineFav(commandMap);
+			mv.addObject("fav", fav);
+			
+			List<Map<String,Object>> shop = timelineService.selectAccountTimelineShop(commandMap);
+			mv.addObject("shop", shop);
+			
+			List<Map<String,Object>> style = timelineService.selectAccountTimelineStyle(commandMap);
+			mv.addObject("style", style);
+			
 
 			
 		} else {

@@ -85,6 +85,26 @@ public class TimelineServiceImpl implements TimelineService {
 
 	}
 
+	@Override
+	public List<Map<String, Object>> selectAccountTimelineLife(Map<String, Object> map) throws Exception {
+		return timelineDAO.selectAccountTimelineLike(map); 
+	}
+
+	@Override
+	public List<Map<String, Object>> selectAccountTimelineFav(Map<String, Object> map) throws Exception {
+		return timelineDAO.selectAccountTimelineFav(map); 
+	}
+
+	@Override
+	public List<Map<String, Object>> selectAccountTimelineShop(Map<String, Object> map) throws Exception {
+		return timelineDAO.selectAccountTimelineShop(map); 
+	}
+
+	@Override
+	public List<Map<String, Object>> selectAccountTimelineStyle(Map<String, Object> map) throws Exception {
+		return timelineDAO.selectAccountTimelineStyle(map); 
+	}
+
 
 
 }

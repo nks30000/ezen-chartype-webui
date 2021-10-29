@@ -19,6 +19,11 @@ public interface TimelineService {
 	
 	void delComment(int num) throws Exception;
 	
+	List<Map<String, Object>> selectAccountTimelineLife(Map<String, Object> map) throws Exception;
+	List<Map<String, Object>> selectAccountTimelineFav(Map<String, Object> map) throws Exception;
+	List<Map<String, Object>> selectAccountTimelineShop(Map<String, Object> map) throws Exception;
+	List<Map<String, Object>> selectAccountTimelineStyle(Map<String, Object> map) throws Exception;
+	
 
 
 }

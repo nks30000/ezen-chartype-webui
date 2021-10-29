@@ -7,6 +7,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectAccountTimeline" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		<![CDATA[
 		select
+        TB_USER.ID,
+        PHONE,
+        USER_PW,
+        TB_USER.NICK,
+        EMAIL,
+        REG_DT,
+        TB_USER.MBTI,
+        ADMIN_YN,
+        INTRO,
+        PRIVATE_YN,
+        PROF_IMG,
+        BACK_IMG,
+        BOARD_NUM,
+        TITLE,
+        CONTENT,
+        HIT_CNT,
+        CATEGORY,
+        LIKE_CNT,
+        CREATE_DT,
+        IMG_NUM,
+        ORIGINAL_NM,
+        FILE_SIZE,
+        SAVED_NM
+        from TB_USER,
+        (select
 		TB_BOARD.BOARD_NUM, 
         TITLE, 
         ID, 
@@ -22,8 +47,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FILE_SIZE,
         SAVED_NM
 		from TB_BOARD, TB_BOARD_IMG
-		where TB_BOARD.BOARD_NUM = TB_BOARD_IMG.BOARD_NUM
-		]]>
+		where TB_BOARD.BOARD_NUM = TB_BOARD_IMG.BOARD_NUM)
+        where TB_USER.ID = #{ID}
+				]]>
 	</select>
 	
 	<!-- select BOARD_NUM, 
@@ -40,6 +66,101 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ID = #{ID}
 		
 		ORDER BY CREATE_DT -->
+		
+		<select id="selectAccountTimelineLife" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		<![CDATA[
+			select
+		TB_BOARD.BOARD_NUM, 
+        TITLE, 
+        ID, 
+        NICK, 
+        CONTENT, 
+        HIT_CNT, 
+        TB_BOARD.CATEGORY,
+        MBTI, 
+        LIKE_CNT, 
+        CREATE_DT,
+        IMG_NUM,
+        ORIGINAL_NM,
+        FILE_SIZE,
+        SAVED_NM
+		from TB_BOARD, TB_BOARD_IMG
+		where TB_BOARD.BOARD_NUM = TB_BOARD_IMG.BOARD_NUM
+        and TB_BOARD.CATEGORY = 'LIFE'
+		order by CREATE_DT DESC		
+				]]>
+		</select>
+	
+		<select id="selectAccountTimelineFav" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		<![CDATA[
+			select
+		TB_BOARD.BOARD_NUM, 
+        TITLE, 
+        ID, 
+        NICK, 
+        CONTENT, 
+        HIT_CNT, 
+        TB_BOARD.CATEGORY,
+        MBTI, 
+        LIKE_CNT, 
+        CREATE_DT,
+        IMG_NUM,
+        ORIGINAL_NM,
+        FILE_SIZE,
+        SAVED_NM
+		from TB_BOARD, TB_BOARD_IMG
+		where TB_BOARD.BOARD_NUM = TB_BOARD_IMG.BOARD_NUM
+        and TB_BOARD.CATEGORY = 'FAVORITE'
+		order by CREATE_DT DESC				]]>
+		</select>
+	
+		<select id="selectAccountTimelineShop" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		<![CDATA[
+			select
+		TB_BOARD.BOARD_NUM, 
+        TITLE, 
+        ID, 
+        NICK, 
+        CONTENT, 
+        HIT_CNT, 
+        TB_BOARD.CATEGORY,
+        MBTI, 
+        LIKE_CNT, 
+        CREATE_DT,
+        IMG_NUM,
+        ORIGINAL_NM,
+        FILE_SIZE,
+        SAVED_NM
+		from TB_BOARD, TB_BOARD_IMG
+		where TB_BOARD.BOARD_NUM = TB_BOARD_IMG.BOARD_NUM
+        and TB_BOARD.CATEGORY = 'SHOP'
+		order by CREATE_DT DESC
+				]]>
+		</select>
+	
+		<select id="selectAccountTimelineStyle" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		<![CDATA[
+			select
+		TB_BOARD.BOARD_NUM, 
+        TITLE, 
+        ID, 
+        NICK, 
+        CONTENT, 
+        HIT_CNT, 
+        TB_BOARD.CATEGORY,
+        MBTI, 
+        LIKE_CNT, 
+        CREATE_DT,
+        IMG_NUM,
+        ORIGINAL_NM,
+        FILE_SIZE,
+        SAVED_NM
+		from TB_BOARD, TB_BOARD_IMG
+		where TB_BOARD.BOARD_NUM = TB_BOARD_IMG.BOARD_NUM
+        and TB_BOARD.CATEGORY = 'STYLE'
+		order by CREATE_DT DESC
+				]]>
+		</select>
 	
 	<insert id="writeAccountTimeline" parameterType="java.util.HashMap" useGeneratedKeys="true" keyProperty="BOARD_NUM">
 		<selectKey keyProperty="BOARD_NUM" resultType="string" order="BEFORE">
