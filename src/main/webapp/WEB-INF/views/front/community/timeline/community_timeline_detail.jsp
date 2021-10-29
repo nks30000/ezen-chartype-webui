@@ -27,7 +27,7 @@
               <div class="col-md-8 modal-image">
               	<!-- 게시글 이미지 가져오기 -->
               	<c:forEach var="timelineImg" items="${imgList}">
-                <img class="img-responsive " src="/charType/html/resource/img/${timelineImg.SAVED_NM}.jpg">
+                <img class="img-responsive " src="/img/${timelineImg.SAVED_NM}">
                 <img class="img-responsive hidden" src="http://upload.wikimedia.org/wikipedia/commons/1/1a/Bachalpseeflowers.jpg" />
                 <img class="img-responsive hidden" src="http://www.netflights.com/media/216535/hong%20kong_03_681x298.jpg" />                    
                 <a href="" class="img-modal-btn left"><i class="glyphicon glyphicon-chevron-left"></i></a>
@@ -40,7 +40,7 @@
                   <button type="button" class="close"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
                   <div class="img-poster clearfix">
                   	<p>${timelineMap.PROP_IMG}</p>
-                    <a href=""><img class="img-circle" src="/charType/html/resource/img/${timelineMap.PROF_IMG}.jpg"/></a>                    
+                    <a href=""><img class="img-circle" src="/img/${timelineMap.PROF_IMG}"/></a>                    
                     <strong><a href="">${timelineMap.NICK}</a></strong><span>${timelineMap.MBTI}</span>
                     <span>${timelineMap.CREATE_DT }</span> 
                     <p>${timelineMap.CONTENT }</p>
@@ -51,7 +51,7 @@
                   	<c:forEach var="comment" items="${commentList}" varStatus="var">
                     <li>
                       <div class="comment-img">
-                        <img src="/charType/html/resource/img/${comment.PROF_IMG}.jpg">
+                        <img src="/img/${comment.PROF_IMG}">
                       </div>
                       <div class="comment-text">                      
                         <strong><a href="">${comment.NICK }</a></strong>

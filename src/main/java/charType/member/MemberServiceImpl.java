@@ -89,14 +89,14 @@ public class MemberServiceImpl implements MemberService{
 		
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		
-		if(multipartRequest.getFile("prof_img") != null) {
+		if(multipartRequest.getFile("prof_img") != null && multipartRequest.getFile("prof_img").getSize() > 0) {
 			MultipartFile file = multipartRequest.getFile("prof_img");
 			
 			//query
 			fileInfo = fileUtils.parseSingleFileInfo(file);
 			System.out.println("프로파일 이미지 파싱 실행");
 			System.out.println(map.get("id"));
-			System.out.println("SAVED_NM" + fileInfo.get("SAVED_NM"));
+			System.out.println("SAVED_N" + fileInfo.get("SAVED_NM"));
 			
 			fileInfo.put("USER_ID", map.get("id"));
 			
@@ -104,7 +104,7 @@ public class MemberServiceImpl implements MemberService{
 			memberDao.insertProfileImg(fileInfo);
 		}
 		
-		if(multipartRequest.getFile("back_img") != null) {
+		if(multipartRequest.getFile("back_img") != null && multipartRequest.getFile("back_img").getSize() > 0) {
 			MultipartFile file = multipartRequest.getFile("back_img");
 			//query
 			fileInfo = fileUtils.parseSingleFileInfo(file);
@@ -118,11 +118,42 @@ public class MemberServiceImpl implements MemberService{
 	}
 	@Override
 	public void updateProfileImg(Map<String, Object> map, HttpServletRequest request) throws Exception{
+		Map<String, Object> fileInfo = null;
 		
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+		
+		if(multipartRequest.getFile("prof_img") != null && multipartRequest.getFile("prof_img").getSize() > 0) {
+			MultipartFile file = multipartRequest.getFile("prof_img");
+			fileInfo = fileUtils.parseSingleFileInfo(file);
+			System.out.println("프로파일 이미지 파싱 실행");
+			System.out.println(map.get("id"));
+			System.out.println("SAVED_N" + fileInfo.get("SAVED_NM"));
+			
+			fileInfo.put("USER_ID", map.get("id"));
+			
+			memberDao.updateProfileImgAtUser(fileInfo);
+			memberDao.insertProfileImg(fileInfo);
+		}
+		
+		if(multipartRequest.getFile("back_img") != null && multipartRequest.getFile("back_img").getSize() > 0 ) {
+			MultipartFile file = multipartRequest.getFile("back_img");
+			fileInfo = fileUtils.parseSingleFileInfo(file);
+			System.out.println("배경 이미지 파싱");
+			
+			fileInfo.put("USER_ID", map.get("id"));
+			
+			memberDao.updateBackImgAtUser(fileInfo);
+			memberDao.insertProfileImg(fileInfo);
+		}
 	}
 	@Override
 	public void deleteProfileImg(String id) throws Exception{
 		memberDao.deleteProfileImg(id);
 	}
 	
+	@Override
+	public Map<String, Object> selectProfileImg(String saved_nm) throws Exception{
+		
+		return memberDao.selectProfileImg(saved_nm);
+	}
 }

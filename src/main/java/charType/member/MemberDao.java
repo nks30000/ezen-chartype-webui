@@ -93,4 +93,8 @@ public class MemberDao extends AbstractDAO{
 		update(NAMESPACE+"updateBackImgAtUser", map);
 	}
 	
+	public Map<String, Object> selectProfileImg(String saved_nm) {
+		return (Map<String, Object>) selectOne(NAMESPACE+"selectProfileImg", saved_nm);
+	}
+	
 }
