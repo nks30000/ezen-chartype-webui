@@ -62,10 +62,18 @@
           <div class="col-md-6 ml-auto mr-auto">
             <div class="profile">
               <div class="avatar">
+              <c:choose>
+              	<c:when test="${list[0].PROF_IMG == null}">
                 <img src="https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTU0NjQzOTk4OTQ4OTkyMzQy/ansel-elgort-poses-for-a-portrait-during-the-baby-driver-premiere-2017-sxsw-conference-and-festivals-on-march-11-2017-in-austin-texas-photo-by-matt-winkelmeyer_getty-imagesfor-sxsw-square.jpg" alt="Circle Image" class="img-raised rounded-circle img-fluid">
+              	</c:when>
+              <c:otherwise>
+              	 <img src="/img/${list[0].PROF_IMG}" alt="Circle Image" class="img-raised rounded-circle img-fluid">
+              </c:otherwise>
+              </c:choose>
+              
               </div>
               <div class="name">
-                <h3 class="title"> ${list[0].ID}  </h3>
+                <h3 class="title"> ${list[0].NICK}  </h3>
                 <h6>${list[0].MBTI}</h6>
                 <a href="#pablo" class="btn btn-just-icon btn-link btn-dribbble"><i class="fa fa-dribbble"></i></a>
                 <a href="#pablo" class="btn btn-just-icon btn-link btn-twitter"><i class="fa fa-twitter"></i></a>
@@ -101,7 +109,7 @@
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="#style" role="tab" data-toggle="tab">
-                    <i class="material-icons">favorite</i>
+                    <i class="material-icons">style</i>
                     Style
                   </a>
                 </li>
@@ -110,6 +118,12 @@
           </div>
         </div>
  <!-- ============================================================================================== -->
+
+
+  <c:choose>
+              	<c:when test="${list[0].ID == sessionScope.ID}">
+                
+ 
  <form id="frm" name="frm" enctype="multipart/form-data">
                      <div class="card gedf-card">
                         <div class="card-header">
@@ -169,7 +183,8 @@
                         </div>
                     </div>
 			 </form>
-   
+</c:when>
+</c:choose>   
 
 <!-- ============================================================================================== -->
 
