@@ -121,7 +121,7 @@
 
 
   <c:choose>
-              	<c:when test="${list[0].ID == sessionScope.ID}">
+              	<c:when test="${list[0].ID == sessionScope.session_mem_id}">
                 
  
  <form id="frm" name="frm" enctype="multipart/form-data">
@@ -153,9 +153,9 @@
                                         <textarea class="form-control" id="CONTENT" name="CONTENT" rows="3" placeholder="What are you thinking?"></textarea>
                               </div>
                               </div>
-        			   <input type="hidden" id="ID" name="ID" value="${sessionScope.ID}">
-    				   <input type="hidden" id="NICK" name="NICK" value="${sessionScope.NICK}">
-    				   <input type="hidden" id="MBTI" name="MBTI" value="${sessionScope.MBTI}">
+        			   <input type="hidden" id="ID" name="ID" value="${sessionScope.session_mem_id}">
+    				   <input type="hidden" id="NICK" name="NICK" value="${sessionScope.session_mem_nick}">
+    				   <input type="hidden" id="MBTI" name="MBTI" value="${sessionScope.session_mem_mbti}">
 
                                 
                                 <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
