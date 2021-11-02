@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select
         TB_USER.ID,
         PHONE,
-        USER_PW,
+        PASSWORD,
         TB_USER.NICK,
         EMAIL,
         REG_DT,
