@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface TimelineService {
 
-	List<Map<String, Object>> selectAccountTimeline(Map<String, Object> map) throws Exception;
+	List<Map<String, Object>> selectAccountTimeline(Map<String, Object> map, HttpServletRequest request) throws Exception;
 	
 	void writeAccountTimeline(Map<String, Object> map, HttpServletRequest request) throws Exception;
 

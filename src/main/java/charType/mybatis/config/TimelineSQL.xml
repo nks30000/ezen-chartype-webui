@@ -87,7 +87,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from TB_BOARD, TB_BOARD_IMG
 		where TB_BOARD.BOARD_NUM = TB_BOARD_IMG.BOARD_NUM
         and TB_BOARD.CATEGORY = 'LIFE'
+        and TB_BOARD.ID = #{ID}
 		order by CREATE_DT DESC		
+		
 				]]>
 		</select>
 	
@@ -111,6 +113,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from TB_BOARD, TB_BOARD_IMG
 		where TB_BOARD.BOARD_NUM = TB_BOARD_IMG.BOARD_NUM
         and TB_BOARD.CATEGORY = 'FAVORITE'
+        and TB_BOARD.ID = #{ID}
 		order by CREATE_DT DESC				]]>
 		</select>
 	
@@ -134,6 +137,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from TB_BOARD, TB_BOARD_IMG
 		where TB_BOARD.BOARD_NUM = TB_BOARD_IMG.BOARD_NUM
         and TB_BOARD.CATEGORY = 'SHOP'
+        and TB_BOARD.ID = #{ID}
 		order by CREATE_DT DESC
 				]]>
 		</select>
@@ -158,6 +162,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from TB_BOARD, TB_BOARD_IMG
 		where TB_BOARD.BOARD_NUM = TB_BOARD_IMG.BOARD_NUM
         and TB_BOARD.CATEGORY = 'STYLE'
+        and TB_BOARD.ID = #{ID}
 		order by CREATE_DT DESC
 				]]>
 		</select>

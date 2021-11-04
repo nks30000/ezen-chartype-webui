@@ -27,11 +27,11 @@ public class TimelineServiceImpl implements TimelineService {
 	private TimelineDAO timelineDAO;
 
 	@Override
-	public List<Map<String, Object>> selectAccountTimeline(Map<String, Object> map) throws Exception {
+	public List<Map<String, Object>> selectAccountTimeline(Map<String, Object> map, HttpServletRequest request) throws Exception {
 
 		
 		
-		 return timelineDAO.selectAccountTimeline(map); 
+		 return timelineDAO.selectAccountTimeline(map, request); 
 	}
 
 	@Override

@@ -29,49 +29,37 @@ public class TimelineController {
 	public ModelAndView accountTimelineMain(CommandMap commandMap, HttpServletRequest request) throws Exception{ 
 		
 		ModelAndView mv = new ModelAndView("/front/account/profile/timeline/account_profile_timeline_main"); 
-		if(commandMap.isEmpty()) {
-			
-			/*
-			 * HttpSession session = request.getSession();
-			 * 
-			 * session.setAttribute("session_mem_id", "EZZ02");
-			 * session.setAttribute("session_mem_nick", "EZZ02");
-			 * session.setAttribute("session_mem_mbti", "INFP");
-			 */
-			
+		if(commandMap.getMap().get("ID") == null) {
 			//파라미터없을때 임시 코드
-			commandMap.put("ID", "EZZ02");
-			mv.addObject("ID", "EZZ02");
+			 HttpSession session = request.getSession();
+				/*
+				 * session.setAttribute("ID", "EZZ02"); 
+				 * session.setAttribute("NICK", "EZZ02");
+				 * session.setAttribute("MBTI", "INFP");
+				 */
+		
 			
-			List<Map<String,Object>> list = timelineService.selectAccountTimeline(commandMap.getMap());
-			mv.addObject("list", list);
-			
-			List<Map<String,Object>> life = timelineService.selectAccountTimelineLife(commandMap.getMap());
-			mv.addObject("life", life);
-			
-			List<Map<String,Object>> fav = timelineService.selectAccountTimelineFav(commandMap.getMap());
-			mv.addObject("fav", fav);
-			
-			List<Map<String,Object>> shop = timelineService.selectAccountTimelineShop(commandMap.getMap());
-			mv.addObject("shop", shop);
-			
-			List<Map<String,Object>> style = timelineService.selectAccountTimelineStyle(commandMap.getMap());
-			mv.addObject("style", style);
-			
-
-			
+			commandMap.put("ID", (String)session.getAttribute("session_mem_id")); 
+			String sessionId = (String)session.getAttribute("session_mem_id"); 
+			mv.addObject("ID", sessionId);
 		} else {
-			  HttpSession session = request.getSession();
-		      
-		      session.setAttribute("ID", "EZZ01");
-		      session.setAttribute("NICK", "EZZ02");
-		      session.setAttribute("MBTI", "INFP");
-			
-			List<Map<String,Object>> list = timelineService.selectAccountTimeline(commandMap.getMap()); 
-			mv.addObject("list", list);
-
-
+			String id= (String)commandMap.get("ID");
+            mv.addObject("ID", id);
 		}
+		List<Map<String,Object>> list = timelineService.selectAccountTimeline(commandMap.getMap(), request);
+		mv.addObject("list", list);
+		
+		List<Map<String,Object>> life = timelineService.selectAccountTimelineLife(commandMap.getMap());
+		mv.addObject("life", life);
+		
+		List<Map<String,Object>> fav = timelineService.selectAccountTimelineFav(commandMap.getMap());
+		mv.addObject("fav", fav);
+		
+		List<Map<String,Object>> shop = timelineService.selectAccountTimelineShop(commandMap.getMap());
+		mv.addObject("shop", shop);
+		
+		List<Map<String,Object>> style = timelineService.selectAccountTimelineStyle(commandMap.getMap());
+		mv.addObject("style", style);
 		
 		
 		return mv; 

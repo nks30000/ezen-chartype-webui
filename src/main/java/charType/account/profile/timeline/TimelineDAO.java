@@ -3,6 +3,8 @@ package charType.account.profile.timeline;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Repository;
 
 import charType.utils.common.dao.AbstractDAO;
@@ -11,7 +13,7 @@ import charType.utils.common.dao.AbstractDAO;
 public class TimelineDAO extends AbstractDAO{
 
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> selectAccountTimeline(Map<String, Object> map) throws Exception {
+	public List<Map<String, Object>> selectAccountTimeline(Map<String, Object> map, HttpServletRequest request) throws Exception {
 		return (List<Map<String, Object>>)selectList("timeline.selectAccountTimeline", map);
 	}
 
