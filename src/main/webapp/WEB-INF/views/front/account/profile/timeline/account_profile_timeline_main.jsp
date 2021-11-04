@@ -129,8 +129,8 @@
  <!-- ============================================================================================== -->
 
 
-  <c:choose>
-              	<c:when test="${list[0].ID == sessionScope.session_mem_id}">
+ <c:choose>
+              	<c:when test="${ID == sessionScope.session_mem_id}">
                 
  
  <form id="frm" name="frm" enctype="multipart/form-data">
