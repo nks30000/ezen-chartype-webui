@@ -7,6 +7,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.codec.binary.Base64;
@@ -18,16 +19,25 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import charType.member.validator.RegValidator;
+import charType.utils.common.email.EmailConfig;
+import charType.utils.common.email.EmailModel;
+import charType.utils.common.email.EmailService;
 import charType.utils.common.mapper.CommandMap;
 import charType.member.validator.LoginValidator;
 import charType.member.validator.FindIdValidator;
@@ -48,11 +58,17 @@ public class MemberController {
 	@Resource(name = "memberService")
 	private MemberService memberService;
 	
-
-	@RequestMapping(value = "/pleaseLogin")
+	@Resource(name = "emailService")
+	private EmailService emailService;
+	
+	@Autowired
+    MessageSource messageSource;
+	
+	
+	@RequestMapping(value = "/member/login/pleaselogin")
 	public String pleaseLogin() {
 		
-		return "member/pleaseLogin";
+		return "front/member/login/member_login_pleaselogin";
 	}
 
 	
@@ -97,7 +113,7 @@ public class MemberController {
 				session.setAttribute("session_mem_prof_img", m.getProf_img());
 				session.setAttribute("session_mem_back_img", m.getBack_img());
 				
-				mv.setViewName("redirect:/account/profile/config/modify");//임시로 회원정보수정으로 리다이렉트
+				mv.setViewName("redirect:/front/account/profile/timeline");//mypage
 			}
 			else {
 				//비밀번호 틀림
@@ -211,27 +227,44 @@ public class MemberController {
 		
 	}
 		
-		
-
-
-	@RequestMapping(value = "/memberFind/id", method = RequestMethod.POST)
-	public ModelAndView findId(@ModelAttribute("mem") MemberModel mem, BindingResult bindingResult) throws Exception {
-		ModelAndView mv = new ModelAndView("memberFindForm");
-		mv.addObject("state", "id");
-		new FindIdValidator().validate(mem, bindingResult);
-		if(bindingResult.hasErrors()){
-			return mv;
-		} else {
-			MemberModel m = memberService.selectFindId(mem);
-			if (m == null || StringUtils.isBlank(m.getId())) {
-				mv.addObject("message", "입력하신 정보와 일치하는 ID가 없습니다.");
-				return mv;
-			} else {
-				mv.addObject("message", "찾은 ID : <strong>"+m.getId()+"</strong>");
-				return mv;
-			}
-		}
+	@RequestMapping(value = "/member/password/form", method = RequestMethod.GET)
+	public ModelAndView findId(CommandMap commandMap) throws Exception {
+		ModelAndView mv = new ModelAndView("front/member/password/member_password_form");
+//		mv.addObject("state", "id");
+//		new FindIdValidator().validate(mem, bindingResult);
+//		if(bindingResult.hasErrors()){
+//		} else {
+//			MemberModel m = memberService.selectFindId(mem);
+//			if (m == null || StringUtils.isBlank(m.getId())) {
+//				mv.addObject("message", "입력하신 정보와 일치하는 ID가 없습니다.");
+//				return mv;
+//			} else {
+//				mv.addObject("message", "찾은 ID : <strong>"+m.getId()+"</strong>");
+//				return mv;
+//			}
+//		}
+		return mv;
 	}
+
+
+//	@RequestMapping(value = "/memberFind/id", method = RequestMethod.POST)
+//	public ModelAndView findId(@ModelAttribute("mem") MemberModel mem, BindingResult bindingResult) throws Exception {
+//		ModelAndView mv = new ModelAndView("memberFindForm");
+//		mv.addObject("state", "id");
+//		new FindIdValidator().validate(mem, bindingResult);
+//		if(bindingResult.hasErrors()){
+//			return mv;
+//		} else {
+//			MemberModel m = memberService.selectFindId(mem);
+//			if (m == null || StringUtils.isBlank(m.getId())) {
+//				mv.addObject("message", "입력하신 정보와 일치하는 ID가 없습니다.");
+//				return mv;
+//			} else {
+//				mv.addObject("message", "찾은 ID : <strong>"+m.getId()+"</strong>");
+//				return mv;
+//			}
+//		}
+//	}
 	
 
 	@RequestMapping(value = "/memberFind/pw", method = RequestMethod.POST)
@@ -371,6 +404,39 @@ public class MemberController {
 
 		return mv;
 	}
-
+	@RequestMapping(value = "/member/sign/popup/checkNick")
+	@ResponseBody
+	public int checkNick(@RequestParam("nick") String str) throws Exception {
+		return memberService.nickCheck(str);
+	}
+	@RequestMapping(value = "/member/sign/popup/checkId")
+	@ResponseBody
+	public int checkId(@RequestParam("id") String str) throws Exception {
+		return memberService.idCheck(str);
+	}
 	
+	
+	@RequestMapping(value = "/member/sign/sendNewPassword")
+	public ModelAndView sendNewPassword(CommandMap commandMap, HttpServletRequest request,  HttpSession session) throws Exception {
+		ModelAndView mv = new ModelAndView("/front/member/sign/popup/member_sign_popup_nickcheck");
+		
+		EmailModel mail = new EmailModel(); 
+        mail.setMailFrom("nks30000@gmail.com");
+        mail.setMailTo("nks30000@naver.com");
+        mail.setMailSubject("회원님의 비밀번호를 초기화했습니다");
+        
+        String html = "<div>";
+        html += "당신의 비밀번호는 알수없네요 미안합니다";
+        html += "</div>";
+        mail.setMailContent(html);
+ 
+//        AbstractApplicationContext context = new AnnotationConfigApplicationContext(EmailConfig.class);
+//        EmailService mailService = (EmailService) context.getBean("emailService");
+        
+        emailService.sendEmail(mail);
+//        context.close();
+        
+		return mv;
+		
+	}
 }

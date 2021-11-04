@@ -12,7 +12,16 @@
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
   <link rel="stylesgeet" href="https://rawgit.com/creativetimofficial/material-kit/master/assets/css/material-kit.css">
   <link rel="stylesheet" href="/charType/resources/css/profile.css">
-  <link rel="stylesheet" href="/charType/resources/css/timeline.css">
+  <!-- 
+  
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+
+
+<link rel="stylesheet" href="/charType/resources/css/timeline.css">
+  
+  
 </head>
 
 <body class="profile-page">
@@ -41,7 +50,7 @@
     		</li>
           
             <li class="nav-item">
-            <a href="#-----------------" class="nav-link">
+            <a href="/charType/front/community/timeline/list" class="nav-link">
               <i class="material-icons">apps</i> Main
             </a>
     		</li>
@@ -96,14 +105,14 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#fav" role="tab" data-toggle="tab">
-                    <i class="material-icons">palette</i>
+                  <a class="nav-link " href="#fav" role="tab" data-toggle="tab">
+                    <i class="material-icons">favorite</i>
                     Favorite
                   </a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="#shop" role="tab" data-toggle="tab">
-                    <i class="material-icons">favorite</i>
+                    <i class="material-icons">palette</i>
                     Shop List
                   </a>
                 </li>
@@ -187,9 +196,39 @@
 </c:choose>   
 
 <!-- ============================================================================================== -->
-
         <div class="tab-content tab-space">
-          <div class="tab-pane active text-center gallery" id="life">
+        
+    
+		<div class="tab-pane active text-center gallery" id="life">
+		    <section class="pinBoot2">
+
+           <c:choose>
+					<c:when test="${fn:length(life) > 0}">
+					<c:forEach items="${life}" var="timelineLife">
+             			<article class="white-panel"><img src="/img/${timelineLife.SAVED_NM}" alt="" />
+        				<h4><a href="#">${timelineLife.TITLE}</a></h4>
+       					 <p>${timelineLife.CONTENT}</p>
+      					</article>
+<%--               			<button id="delete" onclick="location.href='delete?num=${timelineFav.BOARD_NUM}'">delete</button>
+ --%>       				
+ 					</c:forEach>
+					</c:when>
+						<c:otherwise>
+							조회된 결과가 없습니다.
+           				</c:otherwise>
+           	 </c:choose>
+  		 </section>
+		</div>
+
+
+
+        
+        
+        
+        
+        
+        
+          <%-- <div class="tab-pane active text-center gallery" id="life">
             <div class="row">
               <div class="col-md-3 ml-auto">
               	<c:choose>
@@ -218,107 +257,87 @@
            		 </c:choose>
               </div> 
             </div>
-          </div>
+          </div> --%>
           
 <!-- ============================================================================================== -->
           
           <div class="tab-pane text-center gallery" id="fav">
-          	<div class="row">
-          		<div class="col-md-3 ml-auto">
+	  	   <section class="pinBoot2">
 
-           <c:choose>
+			     <c:choose>
+			    
 					<c:when test="${fn:length(fav) > 0}">
-					<c:forEach items="${fav }" var="timelineFav" begin="0" step="2">
-              			<img src ="/img/${timelineFav.SAVED_NM}">
-              			<button id="delete" onclick="location.href='delete?num=${timelineFav.BOARD_NUM}'">delete</button>
-       				  </c:forEach>
+					<c:forEach items="${fav}" var="timelineFav">
+             			<article class="white-panel"><img src="/img/${timelineFav.SAVED_NM}" alt=""/>
+        				<h4><a href="#">${timelineFav.TITLE}</a></h4>
+       					 <p>${timelineFav.CONTENT}</p>
+      					</article>
+<%--               			<button id="delete" onclick="location.href='delete?num=${timelineFav.BOARD_NUM}'">delete</button>
+ --%>       				
+ 					</c:forEach>
 					</c:when>
 						<c:otherwise>
 							조회된 결과가 없습니다.
            				</c:otherwise>
+           				
            	 </c:choose>
-              </div>
-              <div class="col-md-3 mr-auto">
-				<c:choose>
-					<c:when test="${fn:length(fav) > 0}">
-					<c:forEach items="${fav}" var="timelineFav" begin="1" step="2">
-              			<img src ="/img/${timelineFav.SAVED_NM}">
-              			<button id="delete" onclick="location.href='delete?num=${timelineFav.BOARD_NUM}'">delete</button>
-       				  </c:forEach>
-					</c:when>
-						<c:otherwise>
-							조회된 결과가 없습니다.
-           				</c:otherwise>
-           		 </c:choose>
-              </div>
+		
+          </section>
           </div>
-          </div>
+          
  <!-- ============================================================================================== -->
           
           
         <div class="tab-pane text-center gallery" id="shop">
-          	<div class="row">
-          		<div class="col-md-3 ml-auto">
+          <section class="pinBoot2">
 
            <c:choose>
 					<c:when test="${fn:length(shop) > 0}">
-					<c:forEach items="${shop}" var="timelineShop" begin="0" step="2">
-              			<img src ="/img/${timelineShop.SAVED_NM}">
-              			<button id="delete" onclick="location.href='delete?num=${timelineShop.BOARD_NUM}'">delete</button>
-       				  </c:forEach>
+					<c:forEach items="${shop}" var="timelineShop">
+             			<article class="white-panel"><img src="/img/${timelineShop.SAVED_NM}" alt="">
+        				<h4><a href="#">${timelineShop.TITLE}</a></h4>
+       					 <p>${timelineShop.CONTENT}</p>
+      					</article>
+<%--               			<button id="delete" onclick="location.href='delete?num=${timelineFav.BOARD_NUM}'">delete</button>
+ --%>       				
+ 					</c:forEach>
 					</c:when>
 						<c:otherwise>
 							조회된 결과가 없습니다.
            				</c:otherwise>
            	 </c:choose>
-              </div>
-              <div class="col-md-3 mr-auto">
-                <c:choose>
-					<c:when test="${fn:length(shop) > 0}">
-					<c:forEach items="${shop}" var="timelineList" begin="1" step="2">
-              			<img src ="/img/${timelineList.SAVED_NM}">
-              			<button id="delete" onclick="location.href='delete?num=${timelineList.BOARD_NUM}'">delete</button>
-       				  </c:forEach>
-					</c:when>
-						<c:otherwise>
-							조회된 결과가 없습니다.
-           				</c:otherwise>
-           		 </c:choose>
-              </div>
-          </div>
-          </div>
+    </section>
+	</div>
+          
+       
            <!-- ============================================================================================== -->
           
           <div class="tab-pane text-center gallery" id="style">
-          	<div class="row">
-          		<div class="col-md-3 ml-auto">
+          	          <section class="pinBoot2">
 
            <c:choose>
 					<c:when test="${fn:length(style) > 0}">
-					<c:forEach items="${style }" var="timelineList" begin="0" step="2">
-              			<img src ="/img/${timelineList.SAVED_NM}">
-              			<button id="delete" onclick="location.href='delete?num=${timelineList.BOARD_NUM}'">delete</button>
-       				  </c:forEach>
+					<c:forEach items="${style}" var="timelineStyle">
+             			<article class="white-panel"><img src="/img/${timelineStyle.SAVED_NM}" alt="">
+        				<h4><a href="#">${timelineStyle.TITLE}</a></h4>
+       					 <p>${timelineStyle.CONTENT}</p>
+      					</article>
+<%--               			<button id="delete" onclick="location.href='delete?num=${timelineFav.BOARD_NUM}'">delete</button>
+ --%>       				
+ 					</c:forEach>
 					</c:when>
 						<c:otherwise>
 							조회된 결과가 없습니다.
            				</c:otherwise>
            	 </c:choose>
-              </div>
-              <div class="col-md-3 mr-auto">
-                <c:choose>
-					<c:when test="${fn:length(style) > 0}">
-					<c:forEach items="${style}" var="timelineList" begin="1" step="2">
-              			<img src ="/img/${timelineList.SAVED_NM}">
-              			<button id="delete" onclick="location.href='delete?num=${timelineList.BOARD_NUM}'">delete</button>
-       				  </c:forEach>
-					</c:when>
-						<c:otherwise>
-							조회된 결과가 없습니다.
-           				</c:otherwise>
-           		 </c:choose>
-              </div>
-          </div>
+    </section>
+          	
+          	
+          	
+          	
+          	
+          	
+          	
           </div>
           
           </div>
@@ -335,14 +354,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="<c:url value='/js/common.js'/>" charset="utf-8"></script>
+<script src="/charType/resources/script/communityTimeline.js"></script>
 
 
 </body>
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="<c:url value='/js/common.js'/>" charset="utf-8"></script>
 
 	<script type="text/javascript">

@@ -97,4 +97,20 @@ public class MemberDao extends AbstractDAO{
 		return (Map<String, Object>) selectOne(NAMESPACE+"selectProfileImg", saved_nm);
 	}
 	
+	public Integer nickCheck(String str) {
+		return (Integer) selectOne(NAMESPACE+"nickCheck", str);
+	}
+	public Integer idCheck(String str) {
+		return (Integer) selectOne(NAMESPACE+"idCheck", str);
+	}
+	
+	public Map<String, Object> selectUserByEmail (String str) {
+		return null;
+	}
+	public Map<String, Object> selectUserByPhone (String str) {
+		return null;
+	}
+	public Map<String, Object> selectUserByNick (String str) {
+		return null;
+	}
 }
