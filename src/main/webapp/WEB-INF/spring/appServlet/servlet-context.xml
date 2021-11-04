@@ -22,6 +22,16 @@
 	
 	<mvc:default-servlet-handler/>
 	
+	<mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/member/login/**"/>
+            <mvc:exclude-mapping path="/member/sign/**"/>
+            <mvc:exclude-mapping path="/logout"/>
+            <bean class="charType.utils.common.session.SessionCheckInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>
+    
 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
 	
 	
@@ -58,10 +68,28 @@
 	
 	
 	<!-- 파일 업로드용 resolver -->
-	<!-- <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="defaultEncoding" value="UTF-8" />
 		<property name="maxUploadSize" value="10485760" />
-	</bean> -->
+	</bean>
 	
+	
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	    <!-- SMTP settings -->
+	    <property name="host" value="smtp.gmail.com" />
+	    <property name="port" value="587" />
+	    <property name="username" value="nks30000@gmail.com" />
+	    <property name="password" value="xbeqsfwljjkqfprf" />
+	    <property name="javaMailProperties">
+	        <!-- additional properties specific to JavaMail -->
+	        <props>
+	            <prop key="mail.transport.protocol">smtp</prop>
+	            <prop key="mail.smtp.auth">true</prop>
+	            <prop key="mail.smtp.starttls.enable">true</prop>
+	            <prop key="mail.smtp.ssl.trust">smtp.gmail.com</prop>
+				<prop key="mail.smtp.ssl.protocols">TLSv1.2</prop>
+	        </props>
+	    </property>
+	</bean>
     
 </beans>

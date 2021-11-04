@@ -197,4 +197,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM TB_PROFILE_IMG
 		WHERE SAVED_NM = #{saved_nm}
 	</select>
+	<select id="nickCheck" parameterType="String" resultType="int">
+		SELECT count(*)
+		FROM tb_user WHERE nick=#{nick}
+	</select>
+	<select id="idCheck" parameterType="String" resultType="int">
+		SELECT count(*)
+		FROM tb_user WHERE id=#{id}
+	</select>
+	
+	
 </mapper>	

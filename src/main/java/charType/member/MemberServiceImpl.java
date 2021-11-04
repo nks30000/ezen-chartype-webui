@@ -156,4 +156,38 @@ public class MemberServiceImpl implements MemberService{
 		
 		return memberDao.selectProfileImg(saved_nm);
 	}
+	
+	@Override 
+	public int nickCheck(String str) throws Exception {
+		int resultCnt = memberDao.nickCheck(str);
+		int result = 0;
+		
+		if(resultCnt == 0){
+			System.out.println("중복되는 닉네임 없음");	
+			result = 1;
+		}
+		
+		return result; 
+	}
+	@Override 
+	public int idCheck(String str) throws Exception {
+		int resultCnt = memberDao.idCheck(str);
+		int result = 0;
+		
+		if(resultCnt == 0){
+			System.out.println("중복되는 아이디 없음");	
+			result = 1;
+		}
+		
+		return result; 
+	}
+
+	@Override
+	public Map<String, Object> seletUserByEmail(String email) throws Exception {
+		// TODO Auto-generated method stub
+		
+		return null;
+	}
+	
+	
 }

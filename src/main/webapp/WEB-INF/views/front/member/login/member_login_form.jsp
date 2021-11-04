@@ -8,7 +8,7 @@
 <c:set var="CONTEXT_PATH" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
-<html lang="en" class=""><head>
+<html lang="ko" class=""><head>
 
     <meta charset="UTF-8">
     <title>CodePen Demo</title>
@@ -85,7 +85,7 @@
                 <div class="footer text-center">
                   <button type="submit" class="btn btn-primary btn-link btn-wd btn-lg">Login</button> 
                   <a href="${CONTEXT_PATH}/member/sign/form" class="btn btn-primary btn-link btn-wd btn-lg">Sign up</a>
-                  <a href="memberFind.do" class="btn btn-primary btn-link btn-wd btn-lg">Forget your ID or Password?</a>
+                  <a href="${CONTEXT_PATH}/member/password/form" class="btn btn-primary btn-link btn-wd btn-lg">Forget your ID or Password?</a>
                 </div>
               </form>
             </div>

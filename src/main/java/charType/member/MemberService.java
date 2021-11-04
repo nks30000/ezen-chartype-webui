@@ -37,4 +37,10 @@ public interface MemberService{
 	void deleteProfileImg(String id) throws Exception;
 	
 	Map<String, Object> selectProfileImg(String saved_nm) throws Exception;
+	
+	int nickCheck(String str) throws Exception;
+	int idCheck(String str) throws Exception;
+	
+	Map<String, Object> seletUserByEmail(String email) throws Exception;
+	
 }
