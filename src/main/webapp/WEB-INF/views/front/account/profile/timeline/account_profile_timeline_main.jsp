@@ -94,6 +94,27 @@
         <div class="description text-center">
           <p>${list[0].INTRO}</p>
         </div>
+        
+          		<c:if test="${pageId != sessionScope.session_mem_id }">
+			       			   
+			        	<c:if test="${followCnt == 0 }">			        
+			        		<button class="btn btn-outline-primary btn-sm" type="button" id="btnRequestFollow">follow</button>			        		
+			        	</c:if>			 													
+			        	<c:if test="${followCnt != 0 }">
+			           		<button class="btn btn-primary btn-sm" type="button" id="btnRequestUnfollow" >following</button>
+			        	</c:if>			        		       
+				</c:if>
+				
+				<div class="name" >
+ 					<a href="javascript:void(0);" onclick="followModal('follow')" >
+ 					<h3 class="title"> ${followCnt }</h3></a>      
+                	<h6>Followers</h6> 
+                  
+            		<a href="javascript:void(0);" onclick="followModal('following')" >
+            		<h3 class="title"> ${followingCnt }</h3></a>              
+                	<h6>Following</h6>                                       
+               </div>
+				
         <div class="row">
           <div class="col-md-6 ml-auto mr-auto">
             <div class="profile-tabs">
@@ -129,8 +150,8 @@
  <!-- ============================================================================================== -->
 
 
-  <c:choose>
-              	<c:when test="${list[0].ID == sessionScope.session_mem_id}">
+ <c:choose>
+              	<c:when test="${ID == sessionScope.session_mem_id}">
                 
  
  <form id="frm" name="frm" enctype="multipart/form-data">
@@ -358,6 +379,27 @@
 <script src="/charType/resources/script/communityTimeline.js"></script>
 
 
+<!-- Modal -->
+	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	      <!-- <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        ...
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary">Save changes</button>
+	      </div> -->
+<!-- 	      <iframe src="/charType/follow/follow_list" height="500px"></iframe> -->
+	    </div>
+	  </div>
+	</div>
 </body>
 
 
@@ -374,7 +416,16 @@
 				e.preventDefault();
 				fn_insertBoard();
 			});
-		});
+
+		$('#btnRequestFollow').click(function(){
+			window.location = "/charType/follow/requestFollow?user_id=${pageId}";
+		})
+		
+		$('#btnRequestUnfollow').click(function(){
+			window.location = "/charType/follow/deleteFollow?user_id=${pageId}";
+		})
+		
+	});
 		
 		function fn_openBoardList(){
 			var comSubmit = new ComSubmit();
@@ -386,8 +437,30 @@
 			comSubmit.setUrl("<c:url value='/front/account/profile/write' />");
 			comSubmit.submit();
 		}
+		
+		function followModal(param) {
+			
+			var uri = "";
+			var html = "";
+			
+			if(param== "follow"){
+				uri="/charType/follow/follow_list/${pageId}";
+			}else if(param== "following") {
+				uri="/charType/follow/following_list/${pageId}";
+			}
+			
+			html = "<iframe src='"+ uri +"' style='height: 500px;'></iframe>";
+			
+			$("#exampleModalCenter").find(".modal-content").html(html);
+			
+			$("#exampleModalCenter").modal('show');
+		}
+		
 
-
+		function openWin(param){  
+			window.location.href = "/charType/front/account/profile/timeline/"+param;
+//	 	    window.open("/charType/front/account/profile/timeline?user_id="+param, "userId", "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );  
+		}  
 
 	</script>
 
