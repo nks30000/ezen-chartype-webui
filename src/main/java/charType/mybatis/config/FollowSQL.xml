@@ -5,67 +5,107 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="follow">
 
-	<resultMap type="followModel" id="followModelRes">
-		<result property="follow_seq" column="follow_seq" />				
-		<result property="follow_id" column="follow_id" />
-		<result property="following_id" column="following_id" />
-	</resultMap>
-	
-	<resultMap type="followListModel" id="followListModelRes">		
-		<result property="follow_id" column="follow_id" />
-		<result property="following_id" column="following_id" />
-		<result property="nickname" column="nickname" />
-		<result property="prof_img" column="prof_img" />
-		<result property="intro" column="intro" />
-		<result property="follow_to" column="follow_to" />
-	</resultMap>
-	
-	<select id="followerViewData" parameterType="java.lang.String" resultMap="followListModelRes">
-		select follow_id
-		from follow
-		where following_id = #{following_id}
+<!-- 	<select id="followerViewData" parameterType="hashmap" resultType="hashmap"> -->
+<!-- 		<![CDATA[ -->
+		
+<!-- 		select  -->
+<!-- 		TB_USER.ID, -->
+<!-- 		PROF_IMG, -->
+<!-- 		TB_USER.NICK -->
+<!-- 		from TB_USER, FOLLOW -->
+<!-- 		where TB_USER.ID = FOLLOW.FOLLOW_ID -->
+<!-- 		and FOLLOWING_ID = #{following_id} -->
+<!-- 	]]> -->
+<!-- 	</select> -->
+	<select id="followerViewData" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		
+		select pr.id,pr.nick, pr.prof_img, (select count(*) from follow where following_id=pr.following_id) following_Cnt
+		from (
+		    select 
+		    tb_user.id id,
+		    tb_user.nick nick,
+		    following_id, 
+		    tb_user.prof_img prof_img, 
+		    follow_id
+		    from tb_user, follow where tb_user.id = follow.following_id and follow.follow_id = #{pageId}
+		    ) pr
+	]]>
 	</select>
 	
-	<select id="followingViewData" parameterType="java.lang.String" resultMap="followListModelRes">
-		select following_id
-		from follow
-		where follow_id = #{follow_id}
+<!-- 	<select id="followingViewData" parameterType="hashmap" resultType="hashmap"> -->
+<!-- 		<![CDATA[ -->
+<!-- 		select -->
+<!-- 		TB_USER.ID, -->
+<!-- 		PROF_IMG, -->
+<!-- 		TB_USER.NICK -->
+<!-- 		from TB_USER,FOLLOW -->
+<!-- 		where TB_USER.ID = FOLLOW.FOLLOWING_ID -->
+<!-- 		and FOLLOW_ID = #{follow_id} -->
+		
+<!-- 	]]> -->
+<!-- 	</select> -->
+	<select id="followingViewData" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		
+		select pr.id,pr.nick, pr.prof_img, (select count(*) from follow where following_id=pr.follow_id) following_Cnt
+		from (
+		    select 
+		    tb_user.id id,
+		    tb_user.nick nick,
+		    following_id, 
+		    tb_user.prof_img prof_img, 
+		    follow_id
+		    from tb_user, follow where tb_user.id = follow.follow_id and follow.following_id = #{pageId}
+		    ) pr
+        
+	]]>
 	</select>
 	
-	<select id="followExist" parameterType="java.util.Map" resultType="java.lang.Integer">
+	<select id="followExist" parameterType="hashmap" resultType="java.lang.Integer">
+		<![CDATA[
 		select count(*)
 		from follow
 		where follow_id = #{follow_id}
 		and following_id = #{following_id}
+	]]>
 	</select>
 	
-	<select id="selectfollowQuan" parameterType="java.lang.String" resultType="java.lang.String">
-		select count(*)
+	<select id="selectfollowQuan" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		select count(follow_ID)
 		from follow
 		where following_id = #{following_id}
+	]]>
 	</select>
 	
-	<select id="selectfollowingQuan" parameterType="java.lang.String" resultType="java.lang.String">
-		select count(*)
+	<select id="selectfollowingQuan" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		select count(following_ID)
 		from follow
 		where follow_id = #{follow_id}
+	]]>
 	</select>
 	
-	<insert id="followReg" parameterType="followModel">
+	<insert id="followReg" parameterType="hashmap">
+		<![CDATA[
 		INSERT INTO follow
 		(follow_seq, follow_id, following_id)
 		VALUES
-		(follow_seq.nextval, #{follow_id}, #{following_id})
+	(follow_seq.nextval, #{follow_id}, #{following_id})
+	]]>
 	</insert>
 	
-	<delete id="followDel" parameterType="followModel">
+	<delete id="followDel" parameterType="hashmap">
+		<![CDATA[
 		delete from
 			follow
 		where
 			follow_id = #{follow_id}
 		and
 			following_id = #{following_id}
+	]]>
 	</delete>	
 	
-	
+
 </mapper>

@@ -17,6 +17,9 @@
 
 <meta charset="UTF-8">
 <title>Main</title>
+
+
+
 </head>
 <body>
 
@@ -26,13 +29,13 @@
     <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="https://pbs.twimg.com/media/EGHYvttU4AAYKb7?format=jpg&name=large" class="d-block w-100" alt="...">
+                <img src="https://cdn.pixabay.com/photo/2016/02/18/22/18/picnic-1208229_960_720.jpg" class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
-                <img src="https://pbs.twimg.com/media/EGHYvtkUcAAuc8T?format=jpg&name=large" class="d-block w-100" alt="...">
+                <img src="https://cdn.pixabay.com/photo/2018/08/18/08/05/friends-3614311_960_720.jpg" class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
-                <img src="https://pbs.twimg.com/media/EGHYvtjU0AAO8w1?format=jpg&name=large" class="d-block w-100" alt="...">
+                <img src="https://cdn.pixabay.com/photo/2014/12/04/15/53/photomontage-556806_960_720.jpg" class="d-block w-100" alt="...">
             </div>
             <!--https://upload.wikimedia.org/wikipedia/commons/8/8d/Yarra_Night_Panorama%2C_Melbourne_-_Feb_2005.jpg-->
         </div>
@@ -45,6 +48,7 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
+ 
 </section>
 <section class="search-sec">
     <div class="container">

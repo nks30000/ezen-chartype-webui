@@ -114,7 +114,7 @@ public class TimelineController {
 		mv.addObject("state", state);	
 		
 		
-		List<Map<String,Object>> list = timelineService.selectAccountTimeline(param);
+		List<Map<String,Object>> list = timelineService.selectAccountTimeline(param, request);
 		mv.addObject("list", list);
 		
 		List<Map<String,Object>> life = timelineService.selectAccountTimelineLife(param);
