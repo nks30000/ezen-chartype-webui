@@ -66,9 +66,10 @@ public class MemberController {
 	
 	
 	@RequestMapping(value = "/member/login/pleaselogin")
-	public String pleaseLogin() {
-		
-		return "front/member/login/member_login_pleaselogin";
+	public ModelAndView pleaseLogin() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("front/member/login/member_login_pleaselogin");
+		return mv;
 	}
 
 	
@@ -76,15 +77,13 @@ public class MemberController {
 	public ModelAndView loginForm(HttpSession session) {
 		
 		ModelAndView mv = new ModelAndView();
-		
+		String sessionId = (String) session.getAttribute("session_mem_id");
 		//Session Check
-		if(session.getAttribute("id") == null || session.getAttribute("id") =="" ) { //session검증 추가 처리 필요
+		if(sessionId == null || sessionId =="" ) { //session검증 추가 처리 필요
 			mv.setViewName("front/member/login/member_login_form");
 		} else {
-			mv.setViewName("redirect:/charType/acccount/profile/modify");
+			mv.setViewName("redirect:/front/community/timeline/list");
 		}
-		
-		
 		return mv;
 	}
 	
@@ -288,60 +287,7 @@ public class MemberController {
 		}
 	}
 	
-	//정보 수정
-	@RequestMapping(value="/account/profile/config/modify", method = RequestMethod.GET)
-	public ModelAndView memeberModify(@ModelAttribute("mem") MemberModel mem,
-			HttpSession session ) throws Exception {
-		ModelAndView mv = new ModelAndView(); 
-		
-		String[] mbtiList = listMbti.MBTI;
-		mv.addObject("mbtiList", mbtiList);
-		
-		session.getAttribute("session_mem_id");
-		
-		if(session.getAttribute("session_mem_id") !=null) {
-			String id=(String) session.getAttribute("session_mem_id");
-			mem=memberService.getMem(id);
-			
-			mv.setViewName("front/account/profile/config/account_profile_config_modify");
-			mv.addObject("mem", mem); 
-			return mv;
-		
-		} else {
-			mv.setViewName("front/member/login/member_login_form");
-			return mv;
-		}
-	}
 	
-	 
-	
-	@RequestMapping(value="/account/profile/config/modify", method = RequestMethod.POST)
-	public ModelAndView memberModifyEnd(CommandMap commandMap, @ModelAttribute("mem") MemberModel mem, BindingResult bindingResult,
-			HttpSession session, MultipartHttpServletRequest request ) throws Exception { 
-
-		ModelAndView mv = new ModelAndView();
-		
-		String id=(String) session.getAttribute("session_mem_id");
-		mem.setId(id);	
-		
-		//공개여부설정 처리
-		if( mem.getPrivate_yn() ==  null) {
-			mem.setPrivate_yn("N");
-		} else {
-			mem.setPrivate_yn("Y");
-		}
-		
-		memberService.updatemodify(mem);
-		mem = memberService.selectIdMember(mem.getId());
-		if (mem != null) {
-			session.setAttribute("session_mem_nick", mem.getNick());
-		}
-		
-		memberService.updateProfileImg(commandMap.getMap(), request);
-		
-		mv.setViewName("redirect:/account/profile/config/modify");
-		return mv;
-	}
 	
 	@RequestMapping(value = "/passwordChange.do", method = RequestMethod.GET)
 	public String passwordChange() {

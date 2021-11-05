@@ -19,7 +19,7 @@ public class LoginValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "required");
 		
 		MemberModel mem = (MemberModel) target;
-		String id_regex = "^[_a-z]+[0-9a-z]*";
+		String id_regex = "^[_a-zA-Z]+[0-9a-zA-Z]*";
 		if(StringUtils.isBlank(mem.getId())){
 			errors.rejectValue("id", "required");
 		} else if(!mem.getId().matches(id_regex)){
