@@ -30,6 +30,7 @@
             <mvc:exclude-mapping path="/member/login/**"/>
             <mvc:exclude-mapping path="/member/sign/**"/>
             <mvc:exclude-mapping path="/member/password/**"/>
+            <mvc:exclude-mapping path="/resources/**"/>
             <bean class="charType.utils.common.session.SessionCheckInterceptor" />
         </mvc:interceptor>
     </mvc:interceptors>
