@@ -20,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="followerViewData" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
 		
-		select pr.id,pr.nick, pr.prof_img, (select count(*) from follow where following_id=pr.following_id) following_Cnt
+		select pr.id,pr.nick, pr.prof_img, (select count(*) from TB_FOLLOW where following_id=pr.following_id) following_Cnt
 		from (
 		    select 
 		    tb_user.id id,
@@ -28,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		    following_id, 
 		    tb_user.prof_img prof_img, 
 		    follow_id
-		    from tb_user, follow where tb_user.id = follow.following_id and follow.follow_id = #{pageId}
+		    from tb_user, TB_FOLLOW where tb_user.id = TB_FOLLOW.following_id and TB_FOLLOW.follow_id = #{pageId}
 		    ) pr
 	]]>
 	</select>
@@ -48,7 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="followingViewData" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
 		
-		select pr.id,pr.nick, pr.prof_img, (select count(*) from follow where following_id=pr.follow_id) following_Cnt
+		select pr.id,pr.nick, pr.prof_img, (select count(*) from TB_FOLLOW where following_id=pr.follow_id) following_Cnt
 		from (
 		    select 
 		    tb_user.id id,
@@ -56,7 +56,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		    following_id, 
 		    tb_user.prof_img prof_img, 
 		    follow_id
-		    from tb_user, follow where tb_user.id = follow.follow_id and follow.following_id = #{pageId}
+		    from tb_user, TB_FOLLOW where tb_user.id = TB_FOLLOW.follow_id and TB_FOLLOW.following_id = #{pageId}
 		    ) pr
         
 	]]>
@@ -65,7 +65,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="followExist" parameterType="hashmap" resultType="java.lang.Integer">
 		<![CDATA[
 		select count(*)
-		from follow
+		from TB_FOLLOW
 		where follow_id = #{follow_id}
 		and following_id = #{following_id}
 	]]>
@@ -74,7 +74,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectfollowQuan" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
 		select count(follow_ID)
-		from follow
+		from TB_FOLLOW
 		where following_id = #{following_id}
 	]]>
 	</select>
@@ -82,24 +82,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectfollowingQuan" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
 		select count(following_ID)
-		from follow
+		from TB_FOLLOW
 		where follow_id = #{follow_id}
 	]]>
 	</select>
 	
 	<insert id="followReg" parameterType="hashmap">
 		<![CDATA[
-		INSERT INTO follow
-		(follow_seq, follow_id, following_id)
+		INSERT INTO TB_FOLLOW
+		(SEQ_TB_FOLLOW_FOLLOW_SEQ, follow_id, following_id)
 		VALUES
-	(follow_seq.nextval, #{follow_id}, #{following_id})
+	(SEQ_TB_FOLLOW_FOLLOW_SEQ.nextval, #{follow_id}, #{following_id})
 	]]>
 	</insert>
 	
 	<delete id="followDel" parameterType="hashmap">
 		<![CDATA[
 		delete from
-			follow
+			TB_FOLLOW
 		where
 			follow_id = #{follow_id}
 		and
