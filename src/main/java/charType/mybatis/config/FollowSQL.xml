@@ -90,7 +90,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="followReg" parameterType="hashmap">
 		<![CDATA[
 		INSERT INTO TB_FOLLOW
-		(SEQ_TB_FOLLOW_FOLLOW_SEQ, follow_id, following_id)
+		(FOLLOW_SEQ, follow_id, following_id)
 		VALUES
 	(SEQ_TB_FOLLOW_FOLLOW_SEQ.nextval, #{follow_id}, #{following_id})
 	]]>

@@ -91,26 +91,45 @@ public class TimelineController {
 		commandMap.put("following_id", userId);
 		commandMap.put("follow_id", pageId);
 		
-		if(pageId.equals(userId)) { 
-		 //자신의 타임라인 페이지일때
-			return mv;
-		} else {
+		if(!pageId.equals(userId)) { 
 			//다른사람의 타임라인 페이지일때
 			//팔로우 상태인지를 검사 
 			int followYN = followService.followExist(commandMap.getMap());
-			
 			commandMap.put("followYN", followYN);
-			
-			//pagdId의 팔로워 수 	
-			List<Map<String, Object>> followList = followService.followerViewData(commandMap.getMap());
-//			mv.addObject("followCnt",followList.size());	
-			commandMap.put("followCnt", followList.size());
-			
-			//pagdId의 팔로잉 수 
-			List<Map<String, Object>> followingList = followService.followingViewData(commandMap.getMap());
-//			mv.addObject("followingCnt",followingList.size());
-			commandMap.put("followingCnt", followingList.size());
 		}
+		
+		
+		//pagdId의 팔로워 수 	
+		List<Map<String, Object>> followList = followService.followerViewData(commandMap.getMap());
+//			mv.addObject("followCnt",followList.size());	
+		commandMap.put("followCnt", followList.size());
+		
+		//pagdId의 팔로잉 수 
+		List<Map<String, Object>> followingList = followService.followingViewData(commandMap.getMap());
+//			mv.addObject("followingCnt",followingList.size());
+		commandMap.put("followingCnt", followingList.size());
+		
+		commandMap.put("ID", pageId);
+		mv.addObject("ID", pageId);
+		
+		List<Map<String,Object>> list = timelineService.selectAccountTimeline(commandMap.getMap(), request);
+		mv.addObject("list", list);
+		System.out.println("list.size() :" + list.size());
+		List<Map<String,Object>> life = timelineService.selectAccountTimelineLife(commandMap.getMap());
+		mv.addObject("life", life);
+		System.out.println("life.size() :" + life.size());
+		
+		List<Map<String,Object>> fav = timelineService.selectAccountTimelineFav(commandMap.getMap());
+		mv.addObject("fav", life);
+		System.out.println("life.size() :" + life.size());
+		
+		List<Map<String,Object>> shop = timelineService.selectAccountTimelineShop(commandMap.getMap());
+		mv.addObject("shop", shop);
+		System.out.println("shop.size() :" + shop.size());
+		
+		List<Map<String,Object>> style = timelineService.selectAccountTimelineStyle(commandMap.getMap());
+		mv.addObject("style", style);
+		System.out.println("style.size() :" + style.size());
 		
 		mv.addObject("map", commandMap.getMap());
 		return mv; 
