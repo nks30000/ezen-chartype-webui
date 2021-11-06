@@ -40,7 +40,6 @@ public class FollowController {
 		
 		commandMap.put("pageId", fId);
 		commandMap.put("fId", fId);
-		System.out.println(fId);
 		commandMap.put("follow_Id", fId);
 		commandMap.put("following_Id", fId);
 		commandMap.put("pageId", fId);
@@ -83,47 +82,42 @@ public class FollowController {
 
 	// 팔로우 삭제
 	@RequestMapping(value = "/deleteFollow")
-	public ModelAndView deleteFollow(HttpServletRequest request) throws Exception {
+	public ModelAndView deleteFollow(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView();
-
-		String userId = request.getParameter("user_id");
 		HttpSession session = request.getSession();
-		String following_id = (String) session.getAttribute("session_mem_id");
+		String userId = (String) session.getAttribute("session_mem_id");
+		String fId  = (String) commandMap.get("fId");//파라미터로 넘어온 fId값
+		//following_id: 팔로우 하는 사람, 
+		//follow_id: 팔로우 당하는사람
+		commandMap.put("following_id", userId);
+		commandMap.put("follow_id", fId);
 
-		CommandMap commandMap = new CommandMap();
-		commandMap.put("following_id", following_id);
-		commandMap.put("follow_id", userId);
-		int followCnt = followService.followExist(commandMap.getMap());
+		followService.followDel(commandMap.getMap());
 		
-		if (followCnt != 0) {
-			followService.followDel(commandMap.getMap());
-		}
-		mv.setViewName("redirect:/front/account/profile/timeline/" + userId);
+		mv.setViewName("redirect:/front/account/profile/timeline/" + fId);
 		return mv;
 
 	}
 
 	// 팔로우
 	@RequestMapping(value = "/requestFollow")
-	public ModelAndView requestFollow(HttpServletRequest request) throws Exception {
+	public ModelAndView requestFollow(CommandMap commandMap, HttpServletRequest request) throws Exception {
 
 		ModelAndView mv = new ModelAndView();
-
-		String userId = request.getParameter("user_id");
 		HttpSession session = request.getSession();
-		String follow_id = (String) session.getAttribute("session_mem_id");
-
-		CommandMap commandMap = new CommandMap();
-		commandMap.put("follow_id", follow_id);
+		String userId = (String) session.getAttribute("session_mem_id");
+		String fId  = (String) commandMap.get("fId");//파라미터로 넘어온 fId값
+		//following_id: 팔로우 하는 사람, 
+		//follow_id: 팔로우 당하는사람
 		commandMap.put("following_id", userId);
+		commandMap.put("follow_id", fId);
 
-		int followCnt = followService.followExist(commandMap.getMap());
-
-		if (followCnt == 0) {
-			followService.followReg(commandMap.getMap());
-		}
-		mv.setViewName("redirect:/front/account/profile/timeline/" + userId);
+		followService.followReg(commandMap.getMap());
+		
+		mv.setViewName("redirect:/front/account/profile/timeline/" + fId);
 		return mv;
 
 	}
 }
+
+
