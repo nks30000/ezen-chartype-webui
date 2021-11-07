@@ -44,6 +44,11 @@ public class MemberDao extends AbstractDAO{
 		return (MemberModel) selectOne(NAMESPACE+"selectFindPassword", mem);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> selectUserById(Map<String, Object> map){
+		return (Map<String, Object>) selectOne(NAMESPACE+"selectUserById", map);
+	}
+	
 
 	public String findNickName(String id){
 
@@ -93,6 +98,7 @@ public class MemberDao extends AbstractDAO{
 		update(NAMESPACE+"updateBackImgAtUser", map);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public Map<String, Object> selectProfileImg(String saved_nm) {
 		return (Map<String, Object>) selectOne(NAMESPACE+"selectProfileImg", saved_nm);
 	}

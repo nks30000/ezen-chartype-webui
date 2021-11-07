@@ -50,6 +50,10 @@ public class MemberServiceImpl implements MemberService{
 	public MemberModel selectFindPassword(MemberModel mem) throws Exception{
 		return memberDao.selectFindPassword(mem);
 	}
+	@Override
+	public Map<String, Object> selectUserById(Map<String, Object> map) throws Exception{
+		return memberDao.selectUserById(map);
+	}
 	
 	@Override
 	public String findNickName(String id) throws Exception{

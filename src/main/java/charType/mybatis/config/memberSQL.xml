@@ -56,6 +56,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE ID = #{id}
 	</select>
 	
+	<select id="selectUserById" parameterType="hashmap" resultType="hashmap">
+		SELECT *
+		FROM TB_USER
+		WHERE ID = #{id}
+	</select>
+	
 	<select id="selectLoginMember" parameterType="memberModel" resultMap="memberRes">
 		SELECT *
 		FROM TB_USER
@@ -129,12 +135,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE ID = #{id}		
 	</update>
 	
+<!-- 	<update id="memberDelete" parameterType="java.lang.String" > -->
+<!-- 		DELETE  -->
+<!-- 		FROM  -->
+<!--     	TB_USER -->
+<!-- 		WHERE -->
+<!--     	ID = #{id}	 -->
+<!-- 	</update> -->
 	<update id="memberDelete" parameterType="java.lang.String" >
-		DELETE 
-		FROM 
-    	TB_USER
-		WHERE
-    	ID = #{id}	
+		UPDATE TB_USER SET
+			DEL_YN = 'Y'
+			WHERE ID = #{id}
 	</update>
 	
 	<insert id="insertProfileImg" parameterType="java.util.HashMap">

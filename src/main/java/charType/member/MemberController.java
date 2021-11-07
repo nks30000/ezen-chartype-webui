@@ -17,6 +17,7 @@ import org.codehaus.plexus.util.StringUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -226,22 +227,33 @@ public class MemberController {
 		
 	}
 		
-	@RequestMapping(value = "/member/password/form", method = RequestMethod.GET)
+	@RequestMapping(value = "/member/password/form")
 	public ModelAndView findId(CommandMap commandMap) throws Exception {
 		ModelAndView mv = new ModelAndView("front/member/password/member_password_form");
-//		mv.addObject("state", "id");
-//		new FindIdValidator().validate(mem, bindingResult);
-//		if(bindingResult.hasErrors()){
-//		} else {
-//			MemberModel m = memberService.selectFindId(mem);
-//			if (m == null || StringUtils.isBlank(m.getId())) {
-//				mv.addObject("message", "입력하신 정보와 일치하는 ID가 없습니다.");
-//				return mv;
-//			} else {
-//				mv.addObject("message", "찾은 ID : <strong>"+m.getId()+"</strong>");
-//				return mv;
-//			}
-//		}
+		
+		String phone_regex = "^010+[0-9]{7,8}$";
+		String id_regex = "^[A-Za-z]{1}[A-Za-z0-9]{3,19}$";
+		String email_regex = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$";
+		System.out.println("user_input : " + commandMap.get("user_input"));
+		if(commandMap.get("user_input") != null) {
+			String userInput = commandMap.get("user_input").toString();
+			
+			if(userInput.matches(phone_regex)) {
+				//phone 처리
+				System.out.println("휴대폰번호");
+			}
+			if(userInput.matches(id_regex)) {
+				//id 처리
+				System.out.println("아이디");
+				
+			}
+			if(userInput.matches(email_regex)) {
+				//mail 처리
+				System.out.println("이메일");
+			}
+		}
+		
+		
 		return mv;
 	}
 
@@ -348,6 +360,34 @@ public class MemberController {
 		
 		mv.setViewName("/mypage_set/memDelSuc");
 
+		return mv;
+	}
+	@RequestMapping(value = "/member/deleteMember")
+	public ModelAndView deleteMember(CommandMap commandMap, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		
+		String id=(String) session.getAttribute("session_mem_id");
+		
+		Map<String, Object> resMap = memberService.selectUserById(commandMap.getMap());
+		
+		String inputPw = (String) commandMap.get("password");
+		
+		if(!inputPw.equals((String)resMap.get("PASSWORD"))) {
+			mv.setViewName("redirect:/error/500?code=0");
+			return mv;
+		}
+		memberService.memberDelete(id);
+		
+		Enumeration<?> valueNames = session.getAttributeNames();
+		while (valueNames.hasMoreElements()) {
+			String sessionKey = (String) valueNames.nextElement();
+			session.removeAttribute(sessionKey);
+		}
+		
+		session.invalidate();
+		
+		mv.setViewName("redirect:/member/login/form");
+		
 		return mv;
 	}
 	@RequestMapping(value = "/member/sign/popup/checkNick")
