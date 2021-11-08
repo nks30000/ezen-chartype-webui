@@ -174,15 +174,14 @@
                                    <div class="form-group">
                                    <label class="sr-only" for="message">post</label>
                                    <textarea class="form-control" id="TITLE" name="TITLE" rows="1" placeholder="Write your title"></textarea>
+                                   <textarea class="form-control" id="CONTENT" name="CONTENT" rows="3" placeholder="What are you thinking?"></textarea>
+                                 			
                              </div>
                              </div>
                             
-                              <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
-                                    <div class="form-group">
-                                        <label class="sr-only" for="message">post</label>
-                                        <textarea class="form-control" id="CONTENT" name="CONTENT" rows="3" placeholder="What are you thinking?"></textarea>
-                              </div>
-                              </div>
+                         
+                                        
+                             
         			   <input type="hidden" id="ID" name="ID" value="${sessionScope.session_mem_id}">
     				   <input type="hidden" id="NICK" name="NICK" value="${sessionScope.session_mem_nick}">
     				   <input type="hidden" id="MBTI" name="MBTI" value="${sessionScope.session_mem_mbti}">
@@ -191,8 +190,12 @@
                                 <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
                                     <div class="form-group">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="file">
-                                            <label class="custom-file-label" for="customFile">Upload image</label>
+                                        	<div id="fileDiv">
+                                            	<p>
+                                            	<input type="file" name="file_0">
+                                 				<a href="#this" class="btn" id="deleteFile">delete</a>
+                                            	</p>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="py-4"></div>
@@ -207,6 +210,7 @@
                             </div>
                             <div class="btn-toolbar justify-content-between">
                                 <div class="btn-group">
+                                <a href=#this class="btn btn-primary" id="addFile">add file</a>
                                     <a href=#this class="btn btn-primary" id="write">share</a>
                                 </div>   
                             </div>
@@ -215,6 +219,9 @@
 			 </form>
 </c:when>
 </c:choose>   
+
+
+
 
 <!-- ============================================================================================== -->
         <div class="tab-content tab-space">
@@ -244,8 +251,7 @@
 
 
         
-        
-        
+
         
         
         
@@ -364,6 +370,8 @@
           </div>
           </div>
           </div>
+          
+          
           </div>
 
   <footer class="footer text-center ">
@@ -406,6 +414,8 @@
 <script src="<c:url value='/js/common.js'/>" charset="utf-8"></script>
 
 	<script type="text/javascript">
+		var gfv_count = 1;
+	
 		$(document).ready(function(){
 			$("#list").on("click", function(e){ //목록으로 버튼
 				e.preventDefault();
@@ -416,6 +426,11 @@
 				e.preventDefault();
 				fn_insertBoard();
 			});
+			
+			$("#addFile").on("click", function(e){ //파일 추가 버튼 
+				e.preventDefault(); 
+				fn_addFile(); });
+
 
 		$('#btnRequestFollow').click(function(){
 			window.location = "/charType/follow/requestFollow?fId=${map.pageId}";
@@ -438,6 +453,23 @@
 			comSubmit.setUrl("<c:url value='/front/account/profile/write' />");
 			comSubmit.submit();
 		}
+		
+		
+		function fn_addFile(){
+			
+			var str = "<p><input type='file' name='file_"+(gfv_count++)+"'><a href=''#this' class='btn' id='deleteFile' name='deleteFile'>delete</a></p>";
+			$("#fileDiv").append(str);
+			$("a[name='deleteFile']").on("click", function(e){ //삭제 버튼
+				e.preventDefault();
+				fn_deleteFile($(this));
+			});
+		}
+
+		function fn_deleteFile(obj){ 
+			obj.parent().remove(); 
+		}
+
+
 		
 		function followModal(param) {
 			
