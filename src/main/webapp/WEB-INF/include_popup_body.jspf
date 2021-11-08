@@ -170,6 +170,12 @@
 			fn_modifyTimeline($(this));
 		});
 		
+		/* 게시글 삭제 */
+		$(document).on("click","#deleteTimeline", function(e){	
+			e.preventDefault();
+			fn_deleteTimeline($(this));
+		});
+		
 		/* 유저 마이페이지 가기 */
 		$(document).on("click","a[name='myPage']", function(e){ 
 			e.preventDefault();
@@ -178,6 +184,23 @@
 		
 	});
 
+	//등록날짜 포멧터
+	function dateFormat(date) {
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        var hour = date.getHours();
+        var minute = date.getMinutes();
+        var second = date.getSeconds();
+
+        month = month >= 10 ? month : '0' + month;
+        day = day >= 10 ? day : '0' + day;
+        hour = hour >= 10 ? hour : '0' + hour;
+        minute = minute >= 10 ? minute : '0' + minute;
+        second = second >= 10 ? second : '0' + second;
+
+        return date.getFullYear() + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+}
+	
 	//요청시 팝업 화면 데이터 설정
 	function fn_openPopup(BOARD_NUM, ID){
 		
@@ -202,7 +225,10 @@
 				var timelineMap = data.timelineMap;
 				var commentList = data.commentList;
 				var i = 0;
-				var html = "";				
+				var html = "";
+				var date = new Date(timelineMap.CREATE_DT);					
+	            var create_dt = dateFormat(date);
+	            
 				//게시글 이미지 출력
 				 for (i = 0; i < imgList.length ; i++){	
 					if( i == 0){
@@ -219,18 +245,24 @@
 	            html += '<a href=""><img class="img-circle" src="/img/'+timelineMap.PROF_IMG+'"/></a>'
 	            html += '<strong><a href="#this" name="myPage">'+timelineMap.NICK+'</a>'
 	            html += '<input type="hidden" id="ID" value="'+timelineMap.ID+'"></strong><span>'+timelineMap.MBTI+'</span>'
-	            html += '<span>'+ timelineMap.CREATE_DT +'</span>'
+	            html += '<span>'+ create_dt +'</span>'
 	            html += '<br>'
 	           	html += '<p id="timelineContent">'+timelineMap.CONTENT+'</p>'
 	           	html += '<span>댓글 수 : '+timelineMap.commentCnt +'</span>'
 	           	//게시글 ID = 로그인 ID 가 같을 경우 글 수정 가능
 	           	if(sessionId == timelineMap.ID){
 	           	html += '<a href="#this" class="btn" id="modifyTimeline" >글수정</a>'
+	           	html += '<a href="#this" class="btn" id="deleteTimeline" >글삭제</a>'
 	           	}
-	            $("#timeline").html(html);
+	            $("#timeline").html(html); //게시글 입력
+	            //댓글 입력
 	            html = "";
 	            html += '<ul class="img-comment-list">'
 	            for (i = 0; i < commentList.length ; i++) {
+	            	
+	            	/* var regDate = new Date(commentList[i].REGDATE);
+	            	var commentRegDate = dateFormat(regDate); */
+	            	
 	            	html += '<li>'
 	            	html += '<div class="comment-img">'
 	            	html += '<img src="/img/'+commentList[i].PROF_IMG+'">'
@@ -353,8 +385,20 @@
 			success : function(data) {
 				fn_openPopup(BOARD_NUM, ID);
 			}
+		});		
+ 	}
+ 	
+ 	function fn_deleteTimeline(){
+ 		var BOARD_NUM = $("#commentBoardNum").val();
+ 		alert(BOARD_NUM);
+ 		$.ajax({
+			url : "/charType/community/timeline/popup/delete",
+			type : "post",
+			data : { "BOARD_NUM" : BOARD_NUM },
+			success : function(data) {
+				location.reload();
+			}
 		});
-		
  	}
  	
  	function fn_openAccountTimeline(obj){

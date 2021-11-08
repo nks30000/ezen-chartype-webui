@@ -47,9 +47,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	SELECT 
     	PROF_IMG
 	FROM
-    	TB_USER U, TB_BOARD B
+    	TB_USER
 	WHERE
-    	U.ID = B.ID AND B.ID= #{ID}
+    	ID= #{ID}
 	]]>
 </select>
 
