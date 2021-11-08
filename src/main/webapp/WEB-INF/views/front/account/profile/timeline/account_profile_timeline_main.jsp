@@ -94,26 +94,33 @@
         <div class="description text-center">
           <p>${list[0].INTRO}</p>
         </div>
-        
-          		<c:if test="${map.following_id != map.follow_id }">
-          			<!-- follow하지 않은상태-->	
-		        	<c:if test="${map.followYN == 0 }">			        
-		        		<button class="btn btn-outline-primary btn-sm" type="button" id="btnRequestFollow">follow</button>			        		
-		        	</c:if>
-		        	<!-- follow한 상태일때-->	
-		        	<c:if test="${map.followYN == 1 }">
-		           		<button class="btn btn-primary btn-sm active" type="button" id="btnRequestUnfollow" >following</button>
-		        	</c:if>			        		       
-				</c:if>
+        		<div class="text-center">
+	        		<%-- <c:when test="${map.following_id == sessionScope.session_mem_id}"> --%>
+	          		<c:if test="${map.following_id != map.follow_id}">
+	          			<!-- follow하지 않은상태-->	
+			        	<c:if test="${map.followYN == 0 }">			        
+			        		<button class="btn btn-outline-primary btn-sm" type="button" id="btnRequestFollow">follow</button>			        		
+			        	</c:if>
+			        	<!-- follow한 상태일때-->	
+			        	<c:if test="${map.followYN == 1 }">
+			           		<button class="btn btn-primary btn-sm active" type="button" id="btnRequestUnfollow" >following</button>
+			        	</c:if>			        		       
+					</c:if>
+					<%-- </c:when> --%>
+        		</div>
 				
-				<div class="name" >
- 					<a href="javascript:void(0);" onclick="followModal('follow')" >
- 					<h3 class="title"> ${map.followCnt }</h3></a>      
-                	<h6>Followers</h6> 
+				<div class="name d-flex justify-content-center" >
+					<div class="text-center m-3">
+	 					<a href="javascript:void(0);" onclick="followModal('follow')" >
+	 					<h3 class="title"> ${map.followCnt }</h3></a>      
+	                	<h6>Followers</h6> 
+					</div>
                   
-            		<a href="javascript:void(0);" onclick="followModal('following')" >
-            		<h3 class="title"> ${map.followingCnt }</h3></a>              
-                	<h6>Following</h6>                                       
+					<div class="text-center m-3">
+						<a href="javascript:void(0);" onclick="followModal('following')" >
+	            		<h3 class="title"> ${map.followingCnt }</h3></a>              
+	                	<h6>Following</h6>
+					</div>            		                                       
                </div>
 				
         <div class="row">

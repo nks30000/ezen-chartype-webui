@@ -50,13 +50,14 @@
 				                        </div>
 				                    </div>	         
 				                    <div class="d-flex flex-row align-items-center mt-2">
-				                    
-					                    <c:if test="${row.rowFollowCnt == 0 }">
-			        						<button class="btn btn-outline-primary btn-sm" type="button" id="btnRequestFollow" data-target="${row.ID}">follow</button>			        		
-			        					</c:if>
-			        					<c:if test="${row.rowFollowCnt > 0 }">
-			           						<button class="btn btn-primary btn-sm active" type="button" id="btnRequestUnfollow" data-target="${row.ID}" >following</button>
-			        					</c:if>
+				                    	<c:if test="${row.ID != sessionScope.session_mem_id }">
+						                    <c:if test="${row.rowFollowCnt == 0 }">
+				        						<button class="btn btn-outline-primary btn-sm" type="button" id="btnRequestFollow" data-target="${row.ID}">follow</button>			        		
+				        					</c:if>
+				        					<c:if test="${row.rowFollowCnt > 0 }">
+				           						<button class="btn btn-primary btn-sm active" type="button" id="btnRequestUnfollow" data-target="${row.ID}" >following</button>
+				        					</c:if>
+				                    	</c:if>
 				                    </div>  
 			                    </div>     
                  			</c:forEach>

@@ -14,8 +14,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <style>
         body {
             background: #eee
@@ -45,7 +45,7 @@
 		                        	<img class="rounded-circle" src="/img/${row.PROF_IMG}" width="55" height="55">
 		                            <div class="d-flex flex-column align-items-start ml-2">
 		                            <span class="font-weight-bold"><a href="#openWin" onclick="openWin(this.innerHTML)">${row.ID }</a></span>
-		                            <span class="followers">${row.FOLLOWCNT} followers</span></div>
+		                            <span class="followers">${row.FOLLOWING_CNT} followers</span></div>
 		                        </div>
 		                        <div class="d-flex flex-row align-items-center mt-2">
 		                        	<button class="btn btn-primary btn-sm active" type="button" id="btnRequestUnfollow" data-target="${row.ID}" >unfollowing</button>
