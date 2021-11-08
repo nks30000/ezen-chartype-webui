@@ -12,6 +12,6 @@
 <!-- jsp파일에 include file로 입력할 데이터 -->
 
 <!-- Jquery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
 <script src="<c:url value='/js/common.js'/>" charset="utf-8"></script>
 

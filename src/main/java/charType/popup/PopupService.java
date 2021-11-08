@@ -10,6 +10,8 @@ public interface PopupService {
 	 
 	 List<Map<String, Object>> selectOneCommunityTimelineImage(Map<String, Object> map)
 				throws Exception;
+	 
+	 void modifyAccountTimeLine(Map<String, Object> map) throws Exception;
 	
 	void writeComment(Map<String, Object> map) throws Exception;
 	

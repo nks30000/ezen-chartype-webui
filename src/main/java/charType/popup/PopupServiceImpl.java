@@ -36,6 +36,11 @@ public class PopupServiceImpl implements PopupService{
 		return popupDAO.selectOneCommunityTimelineImage(map);
 	}
 	
+	@Override
+	public void modifyAccountTimeLine(Map<String, Object> map) throws Exception{
+		popupDAO.modifyAccountTimeLine(map);
+	}
+	
 	//댓글 입력하기
 	@Override
 	public void writeComment(Map<String, Object> map) throws Exception{

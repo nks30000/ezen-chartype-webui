@@ -1,51 +1,40 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>    
     
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<%@ include file="/WEB-INF/include-header.jspf" %>
 
+<%@ include file="/WEB-INF/include-header.jspf" %>
+<%@ include file="/WEB-INF/include_popup_header.jspf" %>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<!-- <script src="//code.jquery.com/jquery-1.11.1.min.js"></script> -->
 <script src="/charType/resources/script/communityTimeline.js"></script>
 <link rel="stylesheet" href="/charType/resources/css/communityTimeline.css">
 
-
-
-<meta charset="UTF-8">
 <title>Main</title>
-
-
 
 </head>
 <body>
-
-
-<ul >
-        
-        
-             <li class="nav-item">
+	<ul > 
+            <li class="nav-item">
           		<a href="/charType/front/account/profile/timeline" class="nav-link">
          	    My page
             	</a>
-    		 </li>
-        
+    		 </li>        
     		
             <li class="nav-item">
            		 <a href="/charType/logout" class="nav-link">
             	Logout
         	     </a>
-    		</li>
-          
+    		</li>          
        
         </ul>
-
 
 <section>
     <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
@@ -107,28 +96,25 @@
 			<c:when test="${fn:length(list) > 0}">
 				<c:forEach items="${list}" var="communityList">
 					<article class="white-panel"><img src="/img/${communityList.SAVED_NM}" alt="" />
-        				<h4><a href="#">${communityList.TITLE}</a></h4>
+        				<h4><a href="#this" name="openPopup">${communityList.TITLE}</a>
+        				<input type="hidden" name="BOARD_NUM" id="subBoardNum" value="${communityList.BOARD_NUM }">
+        				<input type="hidden" name="ID" id="subId" value="${communityList.ID }" >      					
+        				</h4>
+        				<!-- 게시판 팝업을 위한 전송 데이터 -->
        						 <p>${communityList.CONTENT}</p>
       				</article>
 <%--               			<button id="delete" onclick="location.href='delete?num=${timelineFav.BOARD_NUM}'">delete</button>
  --%>       				
  				</c:forEach>
 			</c:when>
-				<c:otherwise>
+			<c:otherwise>
 							조회된 결과가 없습니다.
-           		</c:otherwise>
-           	 </c:choose>
+           	</c:otherwise>
+           	</c:choose>
     	</section>
-
-
-  
-
-
   </div>
-  
-
 </div>
-
+<%@ include file="/WEB-INF/include_popup_body.jspf" %>
 
 </body>
 
@@ -140,8 +126,6 @@ $(document).ready(function(){
 		fn_searchNick();
 	});
 });
-
-
 
 function fn_searchNick(){
 	var comSubmit = new ComSubmit("searchfrm");

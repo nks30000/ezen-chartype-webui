@@ -56,12 +56,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <update id="modifyAccountTimeLine" parameterType="java.util.HashMap">
 	<![CDATA[
 	UPDATE TB_BOARD
-	SET 
-		TITLE = #{TITLE},
-		CONTENT = #{CONTENT},
-		CATEGORY = #{CATEGORY}
+	SET
+		CONTENT = #{CONTENT}
 	where 
-		BOARD_NUM = #{BOARD_NUM};
+		BOARD_NUM = #{BOARD_NUM}
 	]]>
 </update>
 

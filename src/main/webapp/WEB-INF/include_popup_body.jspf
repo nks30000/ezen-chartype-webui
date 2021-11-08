@@ -1,0 +1,368 @@
+<%@ page pageEncoding="utf-8"%>
+
+  
+    <!------ Include the above in your HEAD tag ---------->
+    
+<!--     <button type="button" id="openPopup"  data-toggle="modal" data-target="#modalBoard">게시글 팝업 띄우기</button> -->
+
+    <div class="modal img-modal" id="modalBoard">
+      <div class="modal-dialog modal-lg" >     
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-8 modal-image" id="image">              	
+              	<!-- 게시글 이미지 가져오기 -->
+              	
+              	
+              	<c:forEach var="timelineImg" items="" varStatus="var">              	
+              		<c:choose>
+              		<c:when test="${var.first}">
+                	<img class="img-responsive " src="/img/${timelineImg.SAVED_NM}">
+                	</c:when>
+                	<c:otherwise>
+                	<img class="img-responsive hidden" src="/img/${timelineImg.SAVED_NM}" />
+                	</c:otherwise>
+                	</c:choose>                
+                </c:forEach>
+                <a href="" class="img-modal-btn left"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                <a href="" class="img-modal-btn right"><i class="glyphicon glyphicon-chevron-right"></i></a>
+              </div> 
+              <!-- 게시글 정보 가져오기 -->
+              <div class="col-md-4 modal-meta">
+                <div class="modal-meta-top">
+                  <button type="button" class="close"  data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                  <div class="img-poster clearfix" id="timeline">
+                  	<p>${timelineMap.PROP_IMG}</p>
+                    <a href=""><img class="img-circle" src="/img/${timelineMap.PROF_IMG}"/></a>                    
+                    <strong><a href="#this" name="myPage">${timelineMap.NICK}</a>
+                    <input type="hidden" id="ID" value="${timelineMap.ID}"></strong><span>${timelineMap.MBTI}</span>
+                    <span>${timelineMap.CREATE_DT }</span>
+                    <br>
+                    <p id="timelineContent">${timelineMap.CONTENT }</p>
+                    <span>댓글 수 : ${timelineMap.commentCnt }</span> <!-- 총 댓글 수 -->
+                    <!-- 자신의 게시글 수정가능 -->
+                   <c:if test="${sessionScope.session_mem_id == timelineMap.ID }">
+                    <a href="#this" class="btn" id="modifyTimeline" >글수정</a>
+                     </c:if>               
+                  </div>
+    				<!-- 댓글 리스트 가져오기 -->
+    			<div id="commentList">
+                  <ul class="img-comment-list">
+                  	<c:forEach var="comment" items="${commentList}" varStatus="var">
+                    <li>
+                      <div class="comment-img">                      	
+                        <img src="/img/${comment.PROF_IMG}">
+                      </div>
+                      <div class="comment-text">                      
+                        <strong><a href="#this" name="myPage">${comment.NICK }</a>
+                        <input type="hidden" id="ID" value="${comment.ID}"></strong>
+                        <span>${comment.MBTI }</span>
+                        <p id="comment_contents">${comment.CONTENTS }</p>                        
+                        <span class="date sub-text">${comment.REGDATE }</span>                        
+                        <div id="hidden">
+                        	<!-- 자신의 댓글 수정 삭제 기능 -->
+                        	<c:choose>
+                        	<c:when test="${sessionScope.session_mem_id == comment.ID }">
+                        		<a href="#this" class="btn" id="deleteComment"
+                        			name="deleteComment">삭제</a>
+                        		<a href="#this" class="btn" id="modifyComment"
+                        			name="modifyComment">수정</a>
+                        		<input type="hidden" id="COMMENT_NUM" 
+                        			value="${comment.COMMENT_NUM }">
+                        	</c:when>
+                        	<c:otherwise>
+                        		<input type="hidden" id="COMMENT_NUM" 
+                        			value="${comment.COMMENT_NUM }">
+                        	</c:otherwise>
+                        	</c:choose>                                       		
+                        </div>               
+                      </div>
+                    </li>
+                    </c:forEach>
+                  </ul>
+                  </div>
+                </div>
+                <!-- 댓글 입력 -->
+                <form id="comment" name="comment">
+                <div class="modal-meta-bottom">
+                  <input type="text" class="form-control" name="CONTENTS" placeholder="Leave a commment.."/>
+                  <a href="#this" class="btn" id="writeComment">작성</a>                  
+                  <input type="hidden" name="BOARD_NUM" id="commentBoardNum" value="${timelineMap.BOARD_NUM }" >
+                  <input type="hidden" name="BOARD_ID" id="commentBoardId" value="${timelineMap.ID }" >
+                  <input type="hidden" name="ID" id="commentId" value="${sessionScope.session_mem_id }" >                  
+                  <input type="hidden" name="NICK" id="commentNick" value="${sessionScope.session_mem_nick }" >
+                  <input type="hidden" name="MBTI" id="commentMBTI" value="${sessionScope.session_mem_mbti }" >
+                  <input type="hidden" name="PROF_IMG" id="commentProfImg" value="${sessionScope.session_mem_prof_img }" >
+                </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+    
+    <form id="commonForm" name="commonForm"></form>
+    
+    <p class="text-center text-muted">Updated Dec. 5th 2016 with basic responsive styles</p>
+	<script type="text/javascript">
+	
+	/* 이미지 슬라이드 */
+	$(function(){
+	    // This code is not even almost production ready. It's 2am here, and it's a cheap proof-of-concept if anything.
+	    
+	    $(document).on('click',".img-modal-btn.right", function(e){
+	        e.preventDefault();
+	        cur = $(this).parent().find('img:visible()');
+	        next = cur.next('img');
+	        par = cur.parent();
+	        if (!next.length) { next = $(cur.parent().find("img").get(0)) }
+	        cur.addClass('hidden');
+	        next.removeClass('hidden');
+	        
+	        return false;
+	    })
+	    
+	    $(document).on('click',".img-modal-btn.left", function(e){
+	        e.preventDefault();
+	        cur = $(this).parent().find('img:visible()');
+	        next = cur.prev('img');
+	        par = cur.parent();
+	        children = cur.parent().find("img");
+	        if (!next.length) { next = $(children.get(children.length-1)) }
+	        cur.addClass('hidden');
+	        next.removeClass('hidden');
+	        
+	        return false;
+	    })
+	});
+	
+	$(document).ready(function(){
+		
+		$("a[name='openPopup']").on("click", function(e){			 
+			 var BOARD_NUM = $(this).parent().find("#subBoardNum").val();
+			 var ID = $(this).parent().find("#subId").val();			 
+			 console.log(ID + BOARD_NUM);			
+			e.preventDefault();
+			fn_openPopup(BOARD_NUM,ID);
+		});
+		/* 댓글 작성 */
+		$("#writeComment").on("click", function(e){ 
+			e.preventDefault();
+			fn_openWriteComment($(this));
+		});
+		
+		/* 댓글 삭제 */
+		$(document).on("click","a[name='deleteComment']", function(e){ 
+			e.preventDefault();
+			fn_deleteComment($(this));
+		});
+		
+		/* 댓글 수정 */
+		$(document).on("click","a[name='modifyComment']", function(e){ 
+			e.preventDefault();
+			fn_modifyComment($(this));
+		});
+		
+		/* 게시글 수정 */
+		$(document).on("click","#modifyTimeline", function(e){	
+			e.preventDefault();
+			fn_modifyTimeline($(this));
+		});
+		
+		/* 유저 마이페이지 가기 */
+		$(document).on("click","a[name='myPage']", function(e){ 
+			e.preventDefault();
+			fn_openAccountTimeline($(this));
+		});
+		
+	});
+
+	//요청시 팝업 화면 데이터 설정
+	function fn_openPopup(BOARD_NUM, ID){
+		
+		var sessionId = $("#commentId").val();
+		var sessionNick = $("#commentNick").val();
+		var sessionMBTI = $("#commentMBTI").val();
+		var sessionProfImg = $("#commentProfImg").val();
+		/* var str = obj.parent().parent().find("form[name='subData']").serialize(); */
+		var str = { "BOARD_NUM" : BOARD_NUM, "ID" : ID };
+		console.log(str);
+		
+ 		/* var BOARD_NUM = obj.parent().find("#BOARD_NUM").val();
+		var ID = obj.parent().find("#ID").val();
+		alert(BOARD_NUM); */
+		alert(sessionId + sessionNick + sessionMBTI + sessionProfImg);		
+		$.ajax({
+			url : "/charType/community/timeline/popup",
+			type : "post",
+			data : str,
+			success : function(data){
+				var imgList = data.imgList;
+				var timelineMap = data.timelineMap;
+				var commentList = data.commentList;
+				var i = 0;
+				var html = "";				
+				//게시글 이미지 출력
+				 for (i = 0; i < imgList.length ; i++){	
+					if( i == 0){
+						console.log(imgList[i].SAVED_NM);
+						html += '<img class="img-responsive " src="/img/'+imgList[i].SAVED_NM+'">'
+					} 
+						html += '<img class="img-responsive hidden" src="/img/'+imgList[i].SAVED_NM+'" />'				
+				} 
+				html += '<a href="" class="img-modal-btn left"><i class="glyphicon glyphicon-chevron-left"></i></a>'
+	            html += '<a href="" class="img-modal-btn right"><i class="glyphicon glyphicon-chevron-right"></i></a>'
+	            $("#image").html(html);				
+	            html = "";
+	            //게시글	            
+	            html += '<a href=""><img class="img-circle" src="/img/'+timelineMap.PROF_IMG+'"/></a>'
+	            html += '<strong><a href="#this" name="myPage">'+timelineMap.NICK+'</a>'
+	            html += '<input type="hidden" id="ID" value="'+timelineMap.ID+'"></strong><span>'+timelineMap.MBTI+'</span>'
+	            html += '<span>'+ timelineMap.CREATE_DT +'</span>'
+	            html += '<br>'
+	           	html += '<p id="timelineContent">'+timelineMap.CONTENT+'</p>'
+	           	html += '<span>댓글 수 : '+timelineMap.commentCnt +'</span>'
+	           	//게시글 ID = 로그인 ID 가 같을 경우 글 수정 가능
+	           	if(sessionId == timelineMap.ID){
+	           	html += '<a href="#this" class="btn" id="modifyTimeline" >글수정</a>'
+	           	}
+	            $("#timeline").html(html);
+	            html = "";
+	            html += '<ul class="img-comment-list">'
+	            for (i = 0; i < commentList.length ; i++) {
+	            	html += '<li>'
+	            	html += '<div class="comment-img">'
+	            	html += '<img src="/img/'+commentList[i].PROF_IMG+'">'
+	            	html += '</div>'
+	            	html += '<div class="comment-text">'
+	            	html += '<strong><a href="#this" name="myPage">'+commentList[i].NICK +'</a>'
+	            	html += '<input type="hidden" id="ID" value="'+commentList[i].ID+'"></strong>'
+	            	html += '<span>'+commentList[i].MBTI +'</span>'
+	            	html += '<p id="comment_contents">'+commentList[i].CONTENTS+'</p>'
+	            	html += '<span class="date sub-text">'+commentList[i].REGDATE+'</span>'
+	            	html += '<div id="hidden">'
+	            	if(sessionId == commentList[i].ID){
+	            		html += '<a href="#this" class="btn" id="deleteComment" name="deleteComment">삭제</a>'
+	            		html += '<a href="#this" class="btn" id="modifyComment" name="modifyComment">수정</a>'
+	            		html += '<input type="hidden" id="COMMENT_NUM" value="'+commentList[i].COMMENT_NUM+'">'
+	            	}
+	            	html += '</div>'
+	            	html += '</div>'
+	            	html += '</li>'
+	            }
+	            html += '</ul>'
+	           	$("#commentList").html(html);
+	            //댓글 입력시 전송될 게시글 데이터
+	            $("#commentBoardNum").val(timelineMap.BOARD_NUM);
+	            $("#commentBoardId").val(timelineMap.ID);
+	            $("input[name='CONTENTS']").val("");
+	            
+				 $("#modalBoard").modal('show');				 
+				 
+			}			
+		});	
+	}
+	
+	//댓글 달기
+	function fn_openWriteComment(obj){
+		var BOARD_NUM = $("#commentBoardNum").val();
+		var ID = $("#commentBoardId").val();
+		var str = $("form[name='comment']").serialize();
+		console.log(BOARD_NUM + " , " + ID );
+		$.ajax({
+			url : "/charType/community/timeline/popup/commentWrite",
+			type : "post",
+			data : str,
+			success : function(data) {
+				fn_openPopup(BOARD_NUM, ID);
+			}
+		});
+		
+		
+	}
+	
+	//댓글 삭제
+	function fn_deleteComment(obj){	
+		var BOARD_NUM = $("#commentBoardNum").val();
+		var ID = $("#commentBoardId").val();
+		var COMMENT_NUM = obj.parent().find("#COMMENT_NUM").val();
+		alert(COMMENT_NUM);
+		$.ajax({
+			url : "/charType/community/timeline/popup/commentDelete",
+			type : "post",
+			data : {"COMMENT_NUM" : COMMENT_NUM },
+			success : function(data){
+				fn_openPopup(BOARD_NUM, ID);
+			}
+		});
+	}
+	
+	//댓글 수정 폼 
+  	function fn_modifyComment(obj){
+		var comment = obj.parent().parent().find("#comment_contents").text();
+		var html = "<input type='text' name='CONTENTS' id='CONTENTS' value='"+comment+"'>"
+		html += "<a href='#this' class='btn' name='updateComment'>작성</a>";
+		obj.parent().parent().find("#comment_contents").html(html);
+		$(document).on("click","a[name='updateComment']", function(e){ /* 수정 완료하기 */
+		 	e.preventDefault();
+			fn_updateComment($(this));		
+		});  
+	} 
+	
+	function fn_updateComment(obj){	
+		var BOARD_NUM = $("#commentBoardNum").val();
+		var ID = $("#commentBoardId").val();
+		var CONTENTS = obj.parent().find("#CONTENTS").val();
+		var COMMENT_NUM = obj.parent().parent().find("#hidden").find("#COMMENT_NUM").val();		
+		$.ajax({
+			url : "/charType/community/timeline/popup/commentModify",
+			type : "post",
+			data : {"CONTENTS" : CONTENTS, "COMMENT_NUM" : COMMENT_NUM},
+			success : function(data) {
+				fn_openPopup(BOARD_NUM, ID);
+			}
+		});
+		
+	}	
+ 	
+ 	/* 팝업 글수정 하기 */
+ 	function fn_modifyTimeline(obj){
+ 		var str = $("#timelineContent").text();
+ 		var html = "";
+ 		html += "<textarea id='modifyContents' >"+str+"</textarea>"
+ 		html += "<a href='#this' class='btn' name='updateContents'>수정</a>"
+ 		$("#timelineContent").html(html);
+ 		$(document).on("click","a[name='updateContents']", function(e){ 
+		 	e.preventDefault();
+			fn_updateContents($(this));		
+		}); 
+ 	} 	
+
+ 	
+ 	/* 팝업 글 수정 완료하기 */
+ 	function fn_updateContents(obj){ 		
+ 		var BOARD_NUM = $("#commentBoardNum").val();
+		var ID = $("#commentBoardId").val();
+		var CONTENT = $("#modifyContents").val();
+		alert(CONTENT);
+		$.ajax({
+			url : "/charType/community/timeline/popup/modify",
+			type : "post",
+			data : {"CONTENT" : CONTENT , "BOARD_NUM" : BOARD_NUM},
+			success : function(data) {
+				fn_openPopup(BOARD_NUM, ID);
+			}
+		});
+		
+ 	}
+ 	
+ 	function fn_openAccountTimeline(obj){
+ 		var aaa = obj.parent().find("#ID").val();
+ 		alert(aaa);
+ 		var comSubmit = new ComSubmit();
+ 		comSubmit.setUrl("<c:url value='/front/account/profile/timeline	' />");		
+		comSubmit.addParam("ID", obj.parent().find("#ID").val());		
+		comSubmit.submit();	
+ 	}
+	</script>

@@ -14,6 +14,7 @@ public class PopupDAO extends AbstractDAO{
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> selectOneCommunutyTimeline(Map<String, Object> map)
 		throws Exception {
+		System.out.println(map.keySet());
 		return (Map<String, Object>) selectOne("popup.selectOneCommunityTimeline", map);
 	}
 	
@@ -28,6 +29,10 @@ public class PopupDAO extends AbstractDAO{
 	public Map<String, Object> selectOneCommunityTimelineProfImg(Map<String, Object> map)
 		throws Exception {
 		return (Map<String, Object>) selectOne("popup.selectOneCommunityTimelineProfImg", map);
+	}
+	
+	public void modifyAccountTimeLine(Map<String, Object> map) throws Exception{
+		update("popup.modifyAccountTimeLine", map);
 	}
 	
 	//댓글 입력하기
