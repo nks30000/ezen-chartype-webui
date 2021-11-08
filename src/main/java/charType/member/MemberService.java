@@ -15,6 +15,8 @@ public interface MemberService{
 	
 	MemberModel selectFindId(MemberModel mem) throws Exception;
 	
+	Map<String, Object> selectUserById(Map<String, Object> map) throws Exception;
+
 	MemberModel selectFindPassword(MemberModel mem) throws Exception;
 	
 	String findNickName(String id) throws Exception;

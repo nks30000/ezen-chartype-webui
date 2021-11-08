@@ -1,5 +1,6 @@
 package charType.account.profile.timeline;
 
+import java.util.HashMap;
 import java.util.List; 
 import java.util.Map; 
 
@@ -8,11 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger; 
-import org.springframework.stereotype.Controller; 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import charType.account.follow.FollowService;
+import charType.member.MemberModel;
+import charType.member.MemberService;
 import charType.utils.common.mapper.CommandMap;
 
 
@@ -24,6 +29,12 @@ public class TimelineController {
 	
 	@Resource(name="timelineService") 
 	private TimelineService timelineService; 
+	
+	@Resource(name="followService") 
+	private FollowService followService; 
+	
+	@Resource(name="memberService") 
+	private MemberService memberService; 
 	
 	@RequestMapping(value="/timeline") 
 	public ModelAndView accountTimelineMain(CommandMap commandMap, HttpServletRequest request) throws Exception{ 
@@ -64,7 +75,65 @@ public class TimelineController {
 		
 		return mv; 
 		}
-
+	
+	
+	@RequestMapping(value="/timeline/{pageId}") 
+	public ModelAndView accountTimeline(CommandMap commandMap, HttpServletRequest request, @PathVariable String pageId) throws Exception{ 
+		
+		ModelAndView mv = new ModelAndView("/front/account/profile/timeline/account_profile_timeline_main"); 
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("session_mem_id");
+		
+		commandMap.put("pageId", pageId);		
+				
+		//following_id: 팔로우 하는 사람, 
+		//follow_id: 팔로우 당하는사람
+		commandMap.put("following_id", userId);
+		commandMap.put("follow_id", pageId);
+		
+		if(!pageId.equals(userId)) { 
+			//다른사람의 타임라인 페이지일때
+			//팔로우 상태인지를 검사 
+			int followYN = followService.followExist(commandMap.getMap());
+			commandMap.put("followYN", followYN);
+		}
+		
+		
+		//pagdId의 팔로워 수 	
+		List<Map<String, Object>> followList = followService.followerViewData(commandMap.getMap());
+//			mv.addObject("followCnt",followList.size());	
+		commandMap.put("followCnt", followList.size());
+		
+		//pagdId의 팔로잉 수 
+		List<Map<String, Object>> followingList = followService.followingViewData(commandMap.getMap());
+//			mv.addObject("followingCnt",followingList.size());
+		commandMap.put("followingCnt", followingList.size());
+		
+		commandMap.put("ID", pageId);
+		mv.addObject("ID", pageId);
+		
+		List<Map<String,Object>> list = timelineService.selectAccountTimeline(commandMap.getMap(), request);
+		mv.addObject("list", list);
+		System.out.println("list.size() :" + list.size());
+		List<Map<String,Object>> life = timelineService.selectAccountTimelineLife(commandMap.getMap());
+		mv.addObject("life", life);
+		System.out.println("life.size() :" + life.size());
+		
+		List<Map<String,Object>> fav = timelineService.selectAccountTimelineFav(commandMap.getMap());
+		mv.addObject("fav", life);
+		System.out.println("life.size() :" + life.size());
+		
+		List<Map<String,Object>> shop = timelineService.selectAccountTimelineShop(commandMap.getMap());
+		mv.addObject("shop", shop);
+		System.out.println("shop.size() :" + shop.size());
+		
+		List<Map<String,Object>> style = timelineService.selectAccountTimelineStyle(commandMap.getMap());
+		mv.addObject("style", style);
+		System.out.println("style.size() :" + style.size());
+		
+		mv.addObject("map", commandMap.getMap());
+		return mv; 
+	}
 	@RequestMapping(value="/form")
 	public ModelAndView accountTimelineForm(CommandMap commandMap, HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView("/front/account/profile/timeline/account_profile_timeline_form");

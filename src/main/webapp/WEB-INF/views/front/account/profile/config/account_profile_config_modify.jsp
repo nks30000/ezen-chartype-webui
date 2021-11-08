@@ -22,6 +22,23 @@
 	<script language="JavaScript" src="/charType/resources/script/editScript.js"></script>
 	
 	<script>
+	
+		function withdrawUser() {
+			
+			var frm = document.getElementById('frm');
+			
+			frm.action = "${CONTEXT_PATH}/member/deleteMember";
+			console.log(frm.action);
+			if(checkIt() != false) {
+				if(confirm("정말 떠나시겠습니까?")){
+					frm.submit();
+				} else{
+					alert("요청을 취소하셨습니다.");
+					window.location.reload();//페이지 새로고침
+				}
+			}
+			
+		}
 		window.onload = function() {
 			
 			//nick 검증
@@ -93,7 +110,7 @@
             </div>
             <div class="card-body">
               <%-- <spring:hasBindErrors name="mem"/> --%>
-				<form method="post" name="userinput" onSubmit="return checkIt()" enctype="multipart/form-data">
+				<form method="post" id="frm" name="userinput" onSubmit="return checkIt()" enctype="multipart/form-data">
 					<input type="hidden" name="id" value="${mem.id}"/>
                 	<h6 class="heading-small text-muted mb-4">User information</h6>
 	                <div class="pl-lg-4">
@@ -239,7 +256,7 @@
                 </div>
                 
                 <div class="">
-                	<input type="submit" OnClick="window.location='memberDelete.do'" class="btn btn-block btn-primary" value="Withdrawal"/>
+                	<input type="button" OnClick="withdrawUser()" class="btn btn-block btn-primary" value="Withdrawal"/>
                 </div>
                 
               </form>

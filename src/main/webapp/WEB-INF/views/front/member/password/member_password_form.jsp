@@ -61,10 +61,28 @@
   </style>
   
   <script>
-	function goBack(-1) {
+	function goBack() {
 		history.go(-1);
 	}
+	function checkUserInput (){
+		
+	}
   	window.onload = function(){
+  		//이메일 검증
+  		document.getElementById("userInput").addEventListener("change", function(){
+  			var userInput = this.value;
+  			console.log(userInput);
+  			
+  			var result  = checkUserInput(userInput);
+  			var html = "";
+  			/* 
+  			0: 검증 실패, 1: 검증 성공 
+  			*/
+  			if(result == 0){
+  				html = "이메일 형식을 확인해주세요." 
+  			}
+  			document.getElementById("email"+"Message").innerHTML = html;
+  		});
   	}
   </script>
   </head>
@@ -86,6 +104,9 @@
 					<label class="input-ph-c input-ph-c__block">
 	                    <input type="text" class="form-control" id="user_input" name="user_input" value="${mem.id }" placeholder="이메일또는 전화번호, 닉네임">
 	                    <span class="input-ph-c__txt">이메일 전화번호 또는 닉네임</span>
+	                    <div>
+	                    	<p id="userInputMessage"></p>
+	                    </div>
 					</label>
 					<div class="text-center">
 						<button type="submit" class="btn btn-primary btn-link btn-wd btn-lg">비밀번호 재발급</button>
