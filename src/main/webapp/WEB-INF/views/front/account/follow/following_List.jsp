@@ -48,7 +48,8 @@
 		                            <span class="followers">${row.FOLLOWCNT} followers</span></div>
 		                        </div>
 		                        <div class="d-flex flex-row align-items-center mt-2">
-		                        	<button class="btn btn-outline-primary btn-sm" type="button">Follow</button>
+		                        	<button class="btn btn-primary btn-sm active" type="button" id="btnRequestUnfollow" data-target="${row.ID}" >unfollowing</button>
+		                        	<!-- <button class="btn btn-outline-primary btn-sm" type="submit">Delete</button> -->
 		                        </div>
 		                    </div>
                     	</c:forEach>
@@ -66,12 +67,27 @@
   </body>
   <script src="<c:url value='/js/common.js'/>" charset="utf-8"></script>
 	<script type="text/javascript">   
+	$('#btnRequestUnfollow').click(function(e){
+		var url = "/charType/follow/deleteFollow?fId="+e.target.getAttribute("data-target");
+		$.ajax({
+			url : url,    
+			type : "GET",   
+			async : false, 
+			success : function(data, status) {
+				window.location.reload();
+				console.log(data)
+			}
+		});
+// 		window.location = "/charType/follow/deleteFollow?fId="+e.target.getAttribute("data-target");
+	})
 	
 	function openWin(param){  
 		parent.openWin(param);
 		window.location.href = "/charType/front/account/profile/timeline?user_id="+param;
 
 	}  
+	
+	
 
 	</script>    
 </html>

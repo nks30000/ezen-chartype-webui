@@ -15,8 +15,10 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,12 +45,31 @@ public class FollowController {
 		commandMap.put("follow_Id", fId);
 		commandMap.put("following_Id", fId);
 		commandMap.put("pageId", fId);
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("session_mem_id");
+		commandMap.put("userId", userId);
 		
 		
 		// 팔로우 유무 체크
 		List<Map<String, Object>> followList = followService.followerViewData(commandMap.getMap());
 		
+		
+		int index = 0;
+		System.out.println("userId:"+userId);
+		for(Map<String, Object> row : followList) {
+			String rowId = (String) row.get("ID");
+			System.out.println("rowId: "+rowId);
+			
+			CommandMap rowMap = new CommandMap();
+			rowMap.put("follow_id", rowId );
+			rowMap.put("following_id", userId  );
+			int rowFollowCnt = followService.followExist(rowMap.getMap());
+			row.put("rowFollowCnt", rowFollowCnt);
+			followList.set(index, row);
+			index++; 
+		}
 		commandMap.put("followList", followList);
+		
 	
 		int followLCnt = followList.size();
 		commandMap.put("followLCnt", followLCnt);
@@ -95,12 +116,14 @@ public class FollowController {
 		followService.followDel(commandMap.getMap());
 		
 		mv.setViewName("redirect:/front/account/profile/timeline/" + fId);
+		
 		return mv;
 
 	}
 
 	// 팔로우
 	@RequestMapping(value = "/requestFollow")
+	@ResponseBody
 	public ModelAndView requestFollow(CommandMap commandMap, HttpServletRequest request) throws Exception {
 
 		ModelAndView mv = new ModelAndView();
@@ -113,8 +136,10 @@ public class FollowController {
 		commandMap.put("follow_id", fId);
 
 		followService.followReg(commandMap.getMap());
-		
+		System.out.println(request.getRequestURI());
 		mv.setViewName("redirect:/front/account/profile/timeline/" + fId);
+		
+		
 		return mv;
 
 	}
