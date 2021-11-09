@@ -63,7 +63,12 @@
             
             
             
-  <div class="page-header header-filter" data-parallax="true" style="background-image:url('http://wallpapere.org/wp-content/uploads/2012/02/black-and-white-city-night.png');"></div>
+  <div class="page-header header-filter" data-parallax="true" style="
+	  <c:choose>
+		  <c:when test='${map.member.prof_img != null}'>background-image:url('/img/${map.member.prof_img}');</c:when>
+		  <c:otherwise>background-image:url('http://wallpapere.org/wp-content/uploads/2012/02/black-and-white-city-night.png');</c:otherwise>
+	  </c:choose>">
+  </div>
   <div class="main main-raised">
     <div class="profile-content">
       <div class="container">
@@ -72,18 +77,18 @@
             <div class="profile">
               <div class="avatar">
               <c:choose>
-              	<c:when test="${list[0].PROF_IMG == null}">
+              	<c:when test="${map.member.prof_img == null}">
                 <img src="https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTU0NjQzOTk4OTQ4OTkyMzQy/ansel-elgort-poses-for-a-portrait-during-the-baby-driver-premiere-2017-sxsw-conference-and-festivals-on-march-11-2017-in-austin-texas-photo-by-matt-winkelmeyer_getty-imagesfor-sxsw-square.jpg" alt="Circle Image" class="img-raised rounded-circle img-fluid">
               	</c:when>
               <c:otherwise>
-              	 <img src="/img/${list[0].PROF_IMG}" alt="Circle Image" class="img-raised rounded-circle img-fluid">
+              	 <img src="/img/${map.member.prof_img}" alt="Circle Image" class="img-raised rounded-circle img-fluid">
               </c:otherwise>
               </c:choose>
               
               </div>
               <div class="name">
-                <h3 class="title"> ${list[0].NICK}  </h3>
-                <h6>${list[0].MBTI}</h6>
+                <h3 class="title"> ${map.member.nick}  </h3>
+                <h6>${map.member.mbti}</h6>
                 <a href="javascript:void(0);" onclick="alramModal('alram')" >알림</a>
                 <a href="#pablo" class="btn btn-just-icon btn-link btn-twitter"><i class="fa fa-twitter"></i></a>
                 <a href="#pablo" class="btn btn-just-icon btn-link btn-pinterest"><i class="fa fa-pinterest"></i></a>
@@ -92,7 +97,7 @@
           </div>
         </div>
         <div class="description text-center">
-          <p>${list[0].INTRO}</p>
+          <p>${map.member.intro}</p>
         </div>
         		<div class="text-center">
 	        		<%-- <c:when test="${map.following_id == sessionScope.session_mem_id}"> --%>
