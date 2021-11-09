@@ -115,6 +115,7 @@ public class TimelineController {
 		
 		commandMap.put("ID", pageId);
 		mv.addObject("ID", pageId);
+		
 		commandMap.put("member", memberService.getMem(pageId));
 		
 //		List<Map<String,Object>> list = timelineService.selectAccountTimeline(commandMap.getMap(), request);
