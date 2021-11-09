@@ -26,7 +26,7 @@ public class CommunityController {
 	
 	
 	@RequestMapping(value="/list") 
-	public ModelAndView accountTimelineMain(CommandMap commandMap, HttpServletRequest request) throws Exception{ 
+	public ModelAndView communityTimelineList(CommandMap commandMap, HttpServletRequest request) throws Exception{ 
 		ModelAndView mv = new ModelAndView("/front/community/timeline/community_timeline_list"); 
 				
 		List<Map<String,Object>> list = communityService.selectListCommunityTimeline(commandMap.getMap());
@@ -34,4 +34,17 @@ public class CommunityController {
 		
 		return mv;
 	}
+	
+	@RequestMapping(value="/search") 
+	public ModelAndView communityStorySearch(CommandMap commandMap, HttpServletRequest request) throws Exception{ 
+		ModelAndView mv = new ModelAndView("/front/community/timeline/community_timeline_search"); 
+				
+		List<Map<String,Object>> nick = communityService.communityStorySearchNick(commandMap.getMap(), request);
+		mv.addObject("nick", nick);
+		
+		return mv;
+	}
+	
+	
+	
 }
