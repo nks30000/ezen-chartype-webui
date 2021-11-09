@@ -71,4 +71,25 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet> -->
 	
+  <error-page>
+          <error-code>400</error-code>
+          <location>/WEB-INF/views/common/error/common_error.jsp</location>
+ 	</error-page>
+	<error-page>
+          <error-code>404</error-code>
+          <location>/WEB-INF/views/common/error/common_error.jsp</location>
+ 	</error-page> 
+ 	<error-page>
+          <error-code>405</error-code>
+          <location>/WEB-INF/views/common/error/common_error.jsp</location>
+ 	</error-page>
+ 	<error-page>
+          <error-code>500</error-code>
+          <location>/WEB-INF/views/common/error/common_error.jsp</location>
+ 	</error-page>
+ 	<error-page>
+          <error-code>503</error-code>
+          <location>/WEB-INF/views/common/error/common_error.jsp</location>
+ 	</error-page>
+	
 </web-app>
