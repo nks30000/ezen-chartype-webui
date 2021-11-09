@@ -78,6 +78,7 @@ PUBLIC " - //mybatis.org//DTD Config 3.0//EN"
 	    <mapper resource="charType/mybatis/config/TimelineSQL.xml" />
 	    <mapper resource="charType/mybatis/config/CommunitySQL.xml" />
 	    <mapper resource="charType/mybatis/config/FollowSQL.xml" />
+	    <mapper resource="charType/mybatis/config/admin.xml" />
 	    
 	</mappers>
 </configuration>
