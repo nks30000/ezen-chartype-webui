@@ -128,6 +128,10 @@
 					</div>            		                                       
                </div>
 				
+	          					        		        	        		
+<c:choose>
+ <c:when test="${map.member.private_yn=='N'}">	          					        		        	        		      
+				
         <div class="row">
           <div class="col-md-6 ml-auto mr-auto">
             <div class="profile-tabs">
@@ -238,11 +242,9 @@
 
 
 <!-- ============================================================================================== -->
-        
-        
+       
+
         <div class="tab-content tab-space">
-        
-    
 		<div class="tab-pane active text-center gallery" id="life">
 		    <section class="pinBoot2">
 
@@ -382,8 +384,274 @@
           	
           	
           </div>
-          
           </div>
+</c:when>
+
+<c:when test="${map.member.private_yn=='Y'}">
+ 	<c:if test="${map.privateCheck == 1}">
+		
+        <div class="row">
+          <div class="col-md-6 ml-auto mr-auto">
+            <div class="profile-tabs">
+              <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" href="#life" role="tab" data-toggle="tab">
+                    <i class="material-icons">camera</i>
+                    Life
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link " href="#fav" role="tab" data-toggle="tab">
+                    <i class="material-icons">favorite</i>
+                    Favorite
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#shop" role="tab" data-toggle="tab">
+                    <i class="material-icons">palette</i>
+                    Shop List
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#style" role="tab" data-toggle="tab">
+                    <i class="material-icons">style</i>
+                    Style
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+ <!-- ============================================================================================== -->
+
+
+
+ <c:choose>
+              	<c:when test="${ID == sessionScope.session_mem_id}">
+                
+ 
+ <form id="frm" name="frm" enctype="multipart/form-data">
+                     <div class="card gedf-card">
+                        <div class="card-header">
+                            <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="true">Make
+                                        a publication</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="images-tab" data-toggle="tab" role="tab" aria-controls="images" aria-selected="false" href="#images">Images</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content" id="myTabContent">
+                            
+                          	  <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+                                   <div class="form-group">
+                                   <label class="sr-only" for="message">post</label>
+                                   <textarea class="form-control" id="TITLE" name="TITLE" rows="1" placeholder="Write your title"></textarea>
+                                   <textarea class="form-control" id="CONTENT" name="CONTENT" rows="3" placeholder="What are you thinking?"></textarea>
+                                 			
+                             </div>
+                             </div>
+                            
+                         
+                                        
+                             
+        			   <input type="hidden" id="ID" name="ID" value="${sessionScope.session_mem_id}">
+    				   <input type="hidden" id="NICK" name="NICK" value="${sessionScope.session_mem_nick}">
+    				   <input type="hidden" id="MBTI" name="MBTI" value="${sessionScope.session_mem_mbti}">
+
+                                
+                                <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
+                                    <div class="form-group">
+                                        <div class="custom-file">
+                                        	<div id="fileDiv">
+                                            	<p>
+                                            	<input type="file" name="file_0">
+                                 				<a href="#this" class="btn" id="deleteFile">delete</a>
+                                            	</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="py-4"></div>
+                                </div>
+                                  <label for="CATEGORY">Choose a category:</label>
+								<select name="CATEGORY" id="CATEGORY">
+  									<option value="LIFE">LIFE</option>
+  									<option value="FAVORITE">FAVORITE</option>
+  									<option value="SHOP">SHOP LIST</option>
+  									<option value="STYLE">STYLE</option>
+								</select>
+                            </div>
+                            <div class="btn-toolbar justify-content-between">
+                                <div class="btn-group">
+                                <a href=#this class="btn btn-primary" id="addFile">add file</a>
+                                    <a href=#this class="btn btn-primary" id="write">share</a>
+                                </div>   
+                            </div>
+                        </div>
+                    </div>
+			 </form>
+</c:when>
+</c:choose>   
+
+
+
+
+<!-- ============================================================================================== -->
+       
+
+        <div class="tab-content tab-space">
+		<div class="tab-pane active text-center gallery" id="life">
+		    <section class="pinBoot2">
+
+           <c:choose>
+					<c:when test="${fn:length(life) > 0}">
+					<c:forEach items="${life}" var="timelineLife">
+             			<article class="white-panel"><img src="/img/${timelineLife.SAVED_NM}" alt="" />
+        				<h4><a href="#">${timelineLife.TITLE}</a></h4>
+       					 <p>${timelineLife.CONTENT}</p>
+      					</article>
+<%--               			<button id="delete" onclick="location.href='delete?num=${timelineFav.BOARD_NUM}'">delete</button>
+ --%>       				
+ 					</c:forEach>
+					</c:when>
+						<c:otherwise>
+							조회된 결과가 없습니다.
+           				</c:otherwise>
+           	 </c:choose>
+  		 </section>
+		</div>
+
+
+
+        
+
+        
+        
+        
+          <%-- <div class="tab-pane active text-center gallery" id="life">
+            <div class="row">
+              <div class="col-md-3 ml-auto">
+              	<c:choose>
+					<c:when test="${fn:length(life) > 0}">
+					<c:forEach items="${life }" var="timelineLife" begin="0" step="2">
+              			<img src ="/img/${timelineLife.SAVED_NM}">
+              			<button id="delete" onclick="location.href='delete?num=${timelineLife.BOARD_NUM}'">delete</button>
+       				  </c:forEach>
+					</c:when>
+						<c:otherwise>
+							조회된 결과가 없습니다.
+           				</c:otherwise>
+           	 </c:choose>
+              </div>
+              <div class="col-md-3 mr-auto">
+                <c:choose>
+					<c:when test="${fn:length(life) > 0}">
+					<c:forEach items="${life}" var="timelineLife" begin="1" step="2">
+              			<img src ="/img/${timelineLife.SAVED_NM}">
+              			<button id="delete" onclick="location.href='delete?num=${timelineLife.BOARD_NUM}'">delete</button>
+       				  </c:forEach>
+					</c:when>
+						<c:otherwise>
+							조회된 결과가 없습니다.
+           				</c:otherwise>
+           		 </c:choose>
+              </div> 
+            </div>
+          </div> --%>
+          
+<!-- ============================================================================================== -->
+          
+          <div class="tab-pane text-center gallery" id="fav">
+	  	   <section class="pinBoot2">
+
+			     <c:choose>
+			    
+					<c:when test="${fn:length(fav) > 0}">
+					<c:forEach items="${fav}" var="timelineFav">
+             			<article class="white-panel"><img src="/img/${timelineFav.SAVED_NM}" alt=""/>
+        				<h4><a href="#">${timelineFav.TITLE}</a></h4>
+       					 <p>${timelineFav.CONTENT}</p>
+      					</article>
+<%--               			<button id="delete" onclick="location.href='delete?num=${timelineFav.BOARD_NUM}'">delete</button>
+ --%>       				
+ 					</c:forEach>
+					</c:when>
+						<c:otherwise>
+							조회된 결과가 없습니다.
+           				</c:otherwise>
+           				
+           	 </c:choose>
+		
+          </section>
+          </div>
+          
+ <!-- ============================================================================================== -->
+          
+          
+        <div class="tab-pane text-center gallery" id="shop">
+          <section class="pinBoot2">
+
+           <c:choose>
+					<c:when test="${fn:length(shop) > 0}">
+					<c:forEach items="${shop}" var="timelineShop">
+             			<article class="white-panel"><img src="/img/${timelineShop.SAVED_NM}" alt="">
+        				<h4><a href="#">${timelineShop.TITLE}</a></h4>
+       					 <p>${timelineShop.CONTENT}</p>
+      					</article>
+<%--               			<button id="delete" onclick="location.href='delete?num=${timelineFav.BOARD_NUM}'">delete</button>
+ --%>       				
+ 					</c:forEach>
+					</c:when>
+						<c:otherwise>
+							조회된 결과가 없습니다.
+           				</c:otherwise>
+           	 </c:choose>
+    </section>
+	</div>
+          
+       
+           <!-- ============================================================================================== -->
+          
+          <div class="tab-pane text-center gallery" id="style">
+          	          <section class="pinBoot2">
+
+           <c:choose>
+					<c:when test="${fn:length(style) > 0}">
+					<c:forEach items="${style}" var="timelineStyle">
+             			<article class="white-panel"><img src="/img/${timelineStyle.SAVED_NM}" alt="">
+        				<h4><a href="#">${timelineStyle.TITLE}</a></h4>
+       					 <p>${timelineStyle.CONTENT}</p>
+      					</article>
+<%--               			<button id="delete" onclick="location.href='delete?num=${timelineFav.BOARD_NUM}'">delete</button>
+ --%>       				
+ 					</c:forEach>
+					</c:when>
+						<c:otherwise>
+							조회된 결과가 없습니다.
+           				</c:otherwise>
+           	 </c:choose>
+    </section>
+          	
+          	
+          	
+          	
+          	
+          	
+          	
+          </div>
+          </div>
+		
+		
+    </c:if>
+    
+    <c:if test="${map.privateCheck == 0}">
+    이 계정은 비공개 계정입니다.
+    </c:if>
+    </c:when>
+    </c:choose>
           </div>
           </div>
           

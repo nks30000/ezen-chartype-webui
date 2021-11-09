@@ -62,6 +62,10 @@ public class TimelineDAO extends AbstractDAO{
 		return (List<Map<String, Object>>)selectList("timeline.selectAccountTimelineStyle", map);
 
 	}
+	@SuppressWarnings("unchecked")
+	public Integer privateCheck(Map<String, Object> map) {
+		return (Integer) selectOne("timeline.privateCheck", map);
+	}
 	
 
 }

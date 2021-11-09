@@ -105,6 +105,11 @@ public class TimelineServiceImpl implements TimelineService {
 		return timelineDAO.selectAccountTimelineStyle(map); 
 	}
 
+	@Override
+	public Integer privateCheck(Map<String, Object> map) throws Exception {
+		return timelineDAO.privateCheck(map);
+	}
+
 
 
 }

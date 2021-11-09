@@ -25,5 +25,7 @@ public interface TimelineService {
 	List<Map<String, Object>> selectAccountTimelineStyle(Map<String, Object> map) throws Exception;
 	
 
+	Integer privateCheck(Map<String, Object> map)
+			throws Exception;
 
 }
