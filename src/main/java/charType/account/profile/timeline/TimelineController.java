@@ -96,7 +96,11 @@ public class TimelineController {
 			//팔로우 상태인지를 검사 
 			int followYN = followService.followExist(commandMap.getMap());
 			commandMap.put("followYN", followYN);
+			int privateCheck = timelineService.privateCheck(commandMap.getMap());
+			commandMap.put("privateCheck", privateCheck);
 		}
+		
+
 		
 		
 		//pagdId의 팔로워 수 	
@@ -111,10 +115,11 @@ public class TimelineController {
 		
 		commandMap.put("ID", pageId);
 		mv.addObject("ID", pageId);
+		commandMap.put("member", memberService.getMem(pageId));
 		
-		List<Map<String,Object>> list = timelineService.selectAccountTimeline(commandMap.getMap(), request);
-		mv.addObject("list", list);
-		System.out.println("list.size() :" + list.size());
+//		List<Map<String,Object>> list = timelineService.selectAccountTimeline(commandMap.getMap(), request);
+//		mv.addObject("list", list);
+//		System.out.println("list.size() :" + list.size());
 		List<Map<String,Object>> life = timelineService.selectAccountTimelineLife(commandMap.getMap());
 		mv.addObject("life", life);
 		System.out.println("life.size() :" + life.size());

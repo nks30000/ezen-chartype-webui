@@ -63,7 +63,12 @@
             
             
             
-  <div class="page-header header-filter" data-parallax="true" style="background-image:url('http://wallpapere.org/wp-content/uploads/2012/02/black-and-white-city-night.png');"></div>
+  <div class="page-header header-filter" data-parallax="true" style="
+	  <c:choose>
+		  <c:when test='${map.member.prof_img != null}'>background-image:url('/img/${map.member.prof_img}');</c:when>
+		  <c:otherwise>background-image:url('http://wallpapere.org/wp-content/uploads/2012/02/black-and-white-city-night.png');</c:otherwise>
+	  </c:choose>">
+  </div>
   <div class="main main-raised">
     <div class="profile-content">
       <div class="container">
@@ -72,19 +77,19 @@
             <div class="profile">
               <div class="avatar">
               <c:choose>
-              	<c:when test="${list[0].PROF_IMG == null}">
+              	<c:when test="${map.member.prof_img == null}">
                 <img src="https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTU0NjQzOTk4OTQ4OTkyMzQy/ansel-elgort-poses-for-a-portrait-during-the-baby-driver-premiere-2017-sxsw-conference-and-festivals-on-march-11-2017-in-austin-texas-photo-by-matt-winkelmeyer_getty-imagesfor-sxsw-square.jpg" alt="Circle Image" class="img-raised rounded-circle img-fluid">
               	</c:when>
               <c:otherwise>
-              	 <img src="/img/${list[0].PROF_IMG}" alt="Circle Image" class="img-raised rounded-circle img-fluid">
+              	 <img src="/img/${map.member.prof_img}" alt="Circle Image" class="img-raised rounded-circle img-fluid">
               </c:otherwise>
               </c:choose>
               
               </div>
               <div class="name">
-                <h3 class="title"> ${list[0].NICK}  </h3>
-                <h6>${list[0].MBTI}</h6>
-                <a href="#pablo" class="btn btn-just-icon btn-link btn-dribbble"><i class="fa fa-dribbble"></i></a>
+                <h3 class="title"> ${map.member.nick}  </h3>
+                <h6>${map.member.mbti}</h6>
+                <a href="javascript:void(0);" onclick="alramModal('alram')" >알림</a>
                 <a href="#pablo" class="btn btn-just-icon btn-link btn-twitter"><i class="fa fa-twitter"></i></a>
                 <a href="#pablo" class="btn btn-just-icon btn-link btn-pinterest"><i class="fa fa-pinterest"></i></a>
               </div>
@@ -92,7 +97,7 @@
           </div>
         </div>
         <div class="description text-center">
-          <p>${list[0].INTRO}</p>
+          <p>${map.member.intro}</p>
         </div>
         		<div class="text-center">
 	        		<%-- <c:when test="${map.following_id == sessionScope.session_mem_id}"> --%>
@@ -156,6 +161,8 @@
           </div>
         </div>
  <!-- ============================================================================================== -->
+
+
 
  <c:choose>
               	<c:when test="${ID == sessionScope.session_mem_id}">
@@ -231,6 +238,8 @@
 
 
 <!-- ============================================================================================== -->
+        
+        
         <div class="tab-content tab-space">
         
     
@@ -415,6 +424,7 @@
 	    </div>
 	  </div>
 	</div>
+	<%@ include file="/WEB-INF/include-body.jspf" %>
 </body>
 
 
@@ -446,6 +456,10 @@
 		
 		$('#btnRequestUnfollow').click(function(){
 			window.location = "/charType/follow/deleteFollow?fId=${map.pageId}";
+		})
+		
+		$('#btnalram').click(function(){
+			window.location = "/charType/alram/list/like?ALRAM_ID=${sessionScope.session_mem_id}";
 		})
 		
 	});
@@ -501,7 +515,40 @@
 			window.location.href = "/charType/front/account/profile/timeline/"+param;
 //	 	    window.open("/charType/front/account/profile/timeline?user_id="+param, "userId", "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );  
 		}  
+		
+function alramModal(param) {
+			
+			var uri = "";
+			var html = "";
+			
+			if(param== "alram"){
+				uri="/charType/alram/list/like?ALRAM_ID=${sessionScope.session_mem_id}";
+			}else if(param== "alram") {
+				uri="/charType/alram/list/like?ALRAM_ID=${sessionScope.session_mem_id}";
+			}
+			
+			html = "<iframe src='"+ uri +"' style='height: 500px;'></iframe>";
+			
+			$("#exampleModalCenter").find(".modal-content").html(html);
+			
+			$("#exampleModalCenter").modal('show');
+		}
+		
 
+		function openWin(param){  
+			window.location.href = "/charType/front/account/profile/timeline/"+param;
+//	 	    window.open("/charType/front/account/profile/timeline?user_id="+param, "userId", "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );  
+		}  
+
+		function fn_readBoardV2(alram_id, alram_num, alram_contnum){
+	    	console.log(alram_num+","+alram_id+","+alram_contnum);
+	       	var comSubmit = new ComSubmit();
+	    	comSubmit.setUrl("<c:url value='/alram/list/readBoard'/>");
+	    	comSubmit.addParam("ALRAM_ID", alram_id);
+	    	comSubmit.addParam("ALRAM_NUM", alram_num);
+	    	comSubmit.addParam("ALRAM_CONTNUM", alram_contnum);
+	    	comSubmit.submit(); 
+	    }
 	</script>
 
 
