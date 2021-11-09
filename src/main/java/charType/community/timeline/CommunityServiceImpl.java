@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,13 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public List<Map<String, Object>> selectListCommunityTimeline(Map<String, Object> map) throws Exception {
 		return communityDAO.selectListCommunityTimeline(map); 
+	}
+
+
+
+	@Override
+	public List<Map<String, Object>> communityStorySearchNick(Map<String, Object> map, HttpServletRequest request) throws Exception {
+		return communityDAO.searchNickCommunityTimeline(map); 	
 	}
 
 }
