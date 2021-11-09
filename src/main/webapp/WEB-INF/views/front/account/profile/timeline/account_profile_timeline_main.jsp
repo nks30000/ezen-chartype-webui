@@ -84,7 +84,7 @@
               <div class="name">
                 <h3 class="title"> ${list[0].NICK}  </h3>
                 <h6>${list[0].MBTI}</h6>
-                <a href="#pablo" class="btn btn-just-icon btn-link btn-dribbble"><i class="fa fa-dribbble"></i></a>
+                <a href="javascript:void(0);" onclick="alramModal('alram')" >알림</a>
                 <a href="#pablo" class="btn btn-just-icon btn-link btn-twitter"><i class="fa fa-twitter"></i></a>
                 <a href="#pablo" class="btn btn-just-icon btn-link btn-pinterest"><i class="fa fa-pinterest"></i></a>
               </div>
@@ -415,6 +415,7 @@
 	    </div>
 	  </div>
 	</div>
+	<%@ include file="/WEB-INF/include-body.jspf" %>
 </body>
 
 
@@ -446,6 +447,10 @@
 		
 		$('#btnRequestUnfollow').click(function(){
 			window.location = "/charType/follow/deleteFollow?fId=${map.pageId}";
+		})
+		
+		$('#btnalram').click(function(){
+			window.location = "/charType/alram/list/like?ALRAM_ID=${sessionScope.session_mem_id}";
 		})
 		
 	});
@@ -501,7 +506,40 @@
 			window.location.href = "/charType/front/account/profile/timeline/"+param;
 //	 	    window.open("/charType/front/account/profile/timeline?user_id="+param, "userId", "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );  
 		}  
+		
+function alramModal(param) {
+			
+			var uri = "";
+			var html = "";
+			
+			if(param== "alram"){
+				uri="/charType/alram/list/like?ALRAM_ID=${sessionScope.session_mem_id}";
+			}else if(param== "alram") {
+				uri="/charType/alram/list/like?ALRAM_ID=${sessionScope.session_mem_id}";
+			}
+			
+			html = "<iframe src='"+ uri +"' style='height: 500px;'></iframe>";
+			
+			$("#exampleModalCenter").find(".modal-content").html(html);
+			
+			$("#exampleModalCenter").modal('show');
+		}
+		
 
+		function openWin(param){  
+			window.location.href = "/charType/front/account/profile/timeline/"+param;
+//	 	    window.open("/charType/front/account/profile/timeline?user_id="+param, "userId", "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );  
+		}  
+
+		function fn_readBoardV2(alram_id, alram_num, alram_contnum){
+	    	console.log(alram_num+","+alram_id+","+alram_contnum);
+	       	var comSubmit = new ComSubmit();
+	    	comSubmit.setUrl("<c:url value='/alram/list/readBoard'/>");
+	    	comSubmit.addParam("ALRAM_ID", alram_id);
+	    	comSubmit.addParam("ALRAM_NUM", alram_num);
+	    	comSubmit.addParam("ALRAM_CONTNUM", alram_contnum);
+	    	comSubmit.submit(); 
+	    }
 	</script>
 
 

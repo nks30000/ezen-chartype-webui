@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="alram">
+
+
+<select id="alramCheck" resultType="hashmap" parameterType="hashmap">
+SELECT
+	ALRAM_NUM,
+	ALRAM_INDEX_NO,
+	ALRAM_ID,
+	ALRAM_CONTNUM,
+	REG_ID,
+	REGDATE,
+	READDATE
+FROM 
+	TB_ALRAM
+WHERE 
+	ALRAM_INDEX_NO = #{ALRAM_INDEX_NO} and ALRAM_CONTNUM = #{ALRAM_CONTNUM} and ALRAM_ID = #{ALRAM_ID} and READDATE is null </select>
+
+
+<select id="alramLoad" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+SELECT
+	ALRAM_NUM,
+	ALRAM_INDEX_NO,
+	ALRAM_ID,
+	ALRAM_CONTNUM,
+	REG_ID,
+	REGDATE,
+	READDATE
+FROM 
+	TB_ALRAM
+WHERE
+	 ALRAM_ID = #{ALRAM_ID} AND READDATE is null order by REGDATE DESC </select>
+
+<select id="selectAlramOne" resultType="hashmap" parameterType="hashmap">
+SELECT 
+	ALRAM_NUM,
+	ALRAM_INDEX_NO,
+	ALRAM_ID,
+	ALRAM_CONTNUM,
+	REG_ID,
+	REGDATE,
+	READDATE
+FROM 
+	TB_ALRAM
+WHERE 
+	ALRAM_NUM = #{ALRAM_NUM} 
+</select>
+
+<insert id="regAlram" parameterType="hashmap">
+INSERT INTO tb_alarm(
+	ALRAM_NUM, 
+	ALRAM_INDEX_NO, 
+	ALRAM_CONTNUM, 
+	ALRAM_ID, 
+	REG_ID, 
+	REGDATE
+	)
+VALUES(
+	SEQ_TB_ALRAM_ALRAM_NUM.nextval, 
+	#{ALRAM_INDEX_NO}, 
+	#{ALRAM_CONTNUM}, 
+	#{ALRAM_ID}, 
+	#{REG_ID}, 
+	SYSDATE
+	) 
+</insert>
+
+<!-- <update id="updateRegIdAlram" parameterType="hashmap">
+UPDATE 
+	TB_ALRAM 
+SET 
+	REGDATE = SYSDATE
+WHERE 
+	ALRAM_NUM = #{ALRAM_NUM} </update> -->
+
+<update id="readAlram" parameterType="hashmap">
+UPDATE 
+	TB_ALRAM 
+SET 
+	READDATE = SYSDATE 
+WHERE 
+	ALRAM_NUM = #{ALRAM_NUM} </update> 
+
+</mapper>
