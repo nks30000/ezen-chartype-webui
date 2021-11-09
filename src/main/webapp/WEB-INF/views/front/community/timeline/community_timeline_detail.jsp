@@ -1,26 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<title>bloggers</title>
+
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+	<!-- Jquery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="<c:url value='/js/common.js'/>" charset="utf-8"></script>
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-
-	<!-- Jquery -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>      
-    <script src="<c:url value='/js/common.js'/>" charset="utf-8"></script>    
+    
     
     <link href="https://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/charType/resources/css/popup.css">
-     <link rel="stylesheet" href="/charType/resources/js/popup.js"> 
-    
-    <!-- <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>  -->
-    <script src="<c:url value='/js/common.js'/>" charset="utf-8"></script>
+    <link rel="stylesheet" href="/charType/resources/js/popup.js">
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script> -->
     
 </head>
 <body>
@@ -28,7 +32,7 @@
     <!------ Include the above in your HEAD tag ---------->
     
 <!--     <button type="button" id="openPopup"  data-toggle="modal" data-target="#modalBoard">게시글 팝업 띄우기</button> -->
-      <!-- <button type="button" id="openPopup" >게시글 팝업 띄우기</button>  -->
+     <!-- <button type="button" id="openPopup" >게시글 팝업 띄우기</button>  -->
     <div class="modal img-modal" id="modalBoard">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -125,8 +129,8 @@
     <form id="commonForm" name="commonForm"></form>
     
     <p class="text-center text-muted">Updated Dec. 5th 2016 with basic responsive styles</p>
-    
-	<script type="text/javascript">	
+	<script type="text/javascript">
+	
 	/* 이미지 슬라이드 */
 	$(function(){
 	    // This code is not even almost production ready. It's 2am here, and it's a cheap proof-of-concept if anything.
@@ -154,13 +158,22 @@
 	        
 	        return false;
 	    })
+
 	});
 	
 	$(document).ready(function(){
 		
-/*  		 $("#openPopup").click(function(){			//팝업
-			$("#modalBoard").modal('show');		
-		}) 	 */ 	
+/* 		 $("#openPopup").click(function(){				//팝업
+			var BOARD_NUM = ${BOARD_NUM};
+			$.ajax({
+				url : "/charType/community/timeline/detail",
+				type : "post",
+				data : BOARD_NUM,
+				success : function(data) {
+					$("#modalBoard").modal('show');
+				}				
+			});					
+		}) */	 	
 		
 		$("#writeComment").on("click", function(e){ /* 댓글 작성 */
 			e.preventDefault();
@@ -206,7 +219,7 @@
 		var comSubmit = new ComSubmit("comment");
 		comSubmit.setUrl("<c:url value='/community/timeline/commentWrite' />");
 		comSubmit.submit();
-	}
+
 	
 	function fn_deleteComment(obj){		
 		var comSubmit = new ComSubmit();
@@ -233,11 +246,9 @@
 		comSubmit.submit();	 
 	}
  	
- 	function fn_modifyTimeline(obj){  		
- 		var html = "";
- 		html += "<textarea id='modifyContents' ></textarea>"
-		html += "<a href='#this' class='btn' name='updateContents'>수정</a>"
- 		$("#timelineContent").html(html);
+ 	function fn_modifyTimeline(obj){
+ 		$("#timelineContent").html("<textarea id='modifyContents' value='${timelineMap.CONTENT }'><textarea>"
+ 				+"<a href='#this' class='btn' name='updateContents'>수정</a>");
  		$("a[name='updateContents']").on("click", function(e){ /* 수정 완료하기 */
 		 	e.preventDefault();
 			fn_updateContents($(this));		
@@ -261,6 +272,20 @@
 		comSubmit.submit();	
  	}
 	</script>
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 </body>
 </html>

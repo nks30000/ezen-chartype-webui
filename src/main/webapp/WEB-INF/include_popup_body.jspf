@@ -234,9 +234,8 @@
 					if( i == 0){
 						console.log(imgList[i].SAVED_NM);
 						html += '<img class="img-responsive " src="/img/'+imgList[i].SAVED_NM+'">'
-					} else {
-						html += '<img class="img-responsive hidden" src="/img/'+imgList[i].SAVED_NM+'" />'
-					}
+					} 
+						html += '<img class="img-responsive hidden" src="/img/'+imgList[i].SAVED_NM+'" />'				
 				} 
 				html += '<a href="" class="img-modal-btn left"><i class="glyphicon glyphicon-chevron-left"></i></a>'
 	            html += '<a href="" class="img-modal-btn right"><i class="glyphicon glyphicon-chevron-right"></i></a>'
@@ -310,7 +309,9 @@
 			success : function(data) {
 				fn_openPopup(BOARD_NUM, ID);
 			}
-		});		
+		});
+		
+		
 	}
 	
 	//댓글 삭제
@@ -341,7 +342,6 @@
 		});  
 	} 
 	
-	//댓글 수정 완료
 	function fn_updateComment(obj){	
 		var BOARD_NUM = $("#commentBoardNum").val();
 		var ID = $("#commentBoardId").val();
@@ -388,7 +388,6 @@
 		});		
  	}
  	
- 	//게시글 삭제
  	function fn_deleteTimeline(){
  		var BOARD_NUM = $("#commentBoardNum").val();
  		alert(BOARD_NUM);
@@ -402,7 +401,6 @@
 		});
  	}
  	
- 	//다른 사용자의 마이페이지로 이동
  	function fn_openAccountTimeline(obj){
  		var aaa = obj.parent().find("#ID").val();
  		alert(aaa);

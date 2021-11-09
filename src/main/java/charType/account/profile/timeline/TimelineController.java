@@ -96,7 +96,11 @@ public class TimelineController {
 			//팔로우 상태인지를 검사 
 			int followYN = followService.followExist(commandMap.getMap());
 			commandMap.put("followYN", followYN);
+			int privateCheck = timelineService.privateCheck(commandMap.getMap());
+			commandMap.put("privateCheck", privateCheck);
 		}
+		
+
 		
 		
 		//pagdId의 팔로워 수 	
