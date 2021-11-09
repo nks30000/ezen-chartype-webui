@@ -1,5 +1,6 @@
 package charType.popup;
 
+import charType.account.profile.timeline.TimelineService;
 import charType.utils.common.mapper.CommandMap;
 
 import java.util.Map;
@@ -8,14 +9,12 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,12 +25,16 @@ import javax.servlet.http.HttpServletRequest;
 public class PopupController {
 	
 	@Resource(name="popupService")
-	private PopupService popupService;	
+	private PopupService popupService;
+	
+	@Resource(name="timelineService")
+	private TimelineService timelineService;
 	
 	//게시글 보기
 	@RequestMapping(value="/detail")
-	public @ResponseBody ModelAndView communityBoardDetail( CommandMap commandMap, HttpServletRequest request)
-		throws Exception {
+	public ModelAndView communityBoardDetail( CommandMap commandMap, HttpServletRequest request)
+		throws Exception {		
+		
 		ModelAndView mv = new ModelAndView("/front/community/timeline/community_timeline_detail");
 		
 		if(commandMap.isEmpty()) {
@@ -51,11 +54,12 @@ public class PopupController {
 		
 		} else {
 			Map<String, Object> timelineMap = popupService.selectOneCommunityTimeline(commandMap.getMap());
-			mv.addObject("timelineMap", timelineMap);
 			List<Map<String, Object>> commentList = popupService.selectComment(commandMap.getMap());
+			List<Map<String, Object>> imgList = popupService.selectOneCommunityTimelineImage(commandMap.getMap());
+			
 			int commentCnt = commentList.size();	 
 			timelineMap.put("commentCnt", commentCnt);
-			List<Map<String, Object>> imgList = popupService.selectOneCommunityTimelineImage(commandMap.getMap());
+			
 			mv.addObject("timelineMap", timelineMap); 		//게시글
 			mv.addObject("commentList",commentList);		//댓글리스트
 			mv.addObject("imgList", imgList);
@@ -91,6 +95,8 @@ public class PopupController {
 	@RequestMapping(value="/modify")
 	public ModelAndView accountTimelineModify(CommandMap commandMap)
 		throws Exception {
+		
+		
 		ModelAndView mv = new ModelAndView("redirect:/community/timeline/detail");
 		
 		popupService.modifyAccountTimeLine(commandMap.getMap());
@@ -104,6 +110,20 @@ public class PopupController {
 			ModelAndView mv = new ModelAndView("jsonView");
 			
 			popupService.modifyAccountTimeLine(commandMap.getMap());
+			return mv;
+		}
+		
+		//팝업 시 게시글 삭제
+		@RequestMapping(value="/popup/delete")
+		public ModelAndView accountTimelineDel(@RequestParam("BOARD_NUM") int BOARD_NUM) throws Exception{
+			ModelAndView mv = new ModelAndView("jsonView");
+			
+			timelineService.delComment(BOARD_NUM);
+			
+			timelineService.delTimelineFile(BOARD_NUM);
+			
+			timelineService.delAccountTimeline(BOARD_NUM);			
+			
 			return mv;
 		}
 	
