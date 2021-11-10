@@ -70,8 +70,8 @@ body {
     }
 
 img {
-  width: 150px;
-  height: auto;
+/*   width: 150px; */
+/*   height: auto; */
 }
 .white-panel {
   background: white;

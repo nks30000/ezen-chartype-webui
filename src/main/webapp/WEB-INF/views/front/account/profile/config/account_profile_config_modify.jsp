@@ -76,6 +76,7 @@
 						<i class="fa fa-plus-square-o"></i>
 					</a>
 				</li>
+        	<%-- 
         	<c:if test="${sessionScope.session_mem_id != null }">
 				<li class="nav-item">
 					<a href="/charType/account/profile/config/modify" class="nav-link">
@@ -92,7 +93,8 @@
 						<i class="material-icons">apps</i> Main
 					</a>
 				</li>
-        	</c:if>
+        	</c:if> 
+        	--%>
         	<li class="nav-item">
 				<div class="dropdown">
 				  <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

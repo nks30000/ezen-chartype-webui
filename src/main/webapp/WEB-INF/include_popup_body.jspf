@@ -104,7 +104,6 @@
     
     <form id="commonForm" name="commonForm"></form>
     
-    <p class="text-center text-muted">Updated Dec. 5th 2016 with basic responsive styles</p>
 	<script type="text/javascript">
 	
 	/* 이미지 슬라이드 */
