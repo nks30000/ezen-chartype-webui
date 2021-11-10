@@ -23,7 +23,7 @@
 <body>
 	<ul > 
             <li class="nav-item">
-          		<a href="/charType/front/account/profile/timeline" class="nav-link">
+          		<a href="/charType/front/account/profile/timeline/${sessionScope.session_mem_id}" class="nav-link">
          	    My page
             	</a>
     		 </li>        
