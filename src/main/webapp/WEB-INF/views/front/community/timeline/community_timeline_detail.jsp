@@ -8,7 +8,7 @@
 	<meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>${timelineMap.TITLE }</title>
 
 	<!-- Jquery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>      
@@ -18,6 +18,7 @@
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/charType/resources/css/popup.css">
     <link rel="stylesheet" href="/charType/resources/js/popup.js"> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
     
     <!-- <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>  -->
     <script src="<c:url value='/js/common.js'/>" charset="utf-8"></script>
@@ -56,11 +57,23 @@
                   <div class="img-poster clearfix" >
                     <a href=""><img class="img-circle" src="/img/${timelineMap.PROF_IMG}"/></a>                    
                     <strong><a href="#this" name="myPage">${timelineMap.NICK}</a>
-                    <input type="hidden" id="ID" value="${timelineMap.ID}"></strong><span>${timelineMap.MBTI}</span>
+                    <input type="hidden" id="ID" value="${timelineMap.ID}"></strong>
+                    <span>${timelineMap.MBTI} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #${timelineMap.CATEGORY }</span>
                     <span>${timelineMap.CREATE_DT }</span>
                     <br>
-                    <p id="timelineContent">${timelineMap.CONTENT }</p>
-                    <span>댓글 수 : ${timelineMap.commentCnt }</span> <!-- 총 댓글 수 -->
+                    <p id="timelineContent">${timelineMap.CONTENT }</p>                    
+                    <c:choose>
+                    <c:when test="${timelineMap.likeCheck == 0 }">           
+                   	<span><a href="#this" name="likeTimeline"><i class="bi bi-heart" style="font-size: 2rem; color: red;"></i></a>
+					${timelineMap.likeCnt} &nbsp;&nbsp;
+					<i class="bi bi-chat" style="font-size: 2rem; color: cornflowerblue;"></i> ${timelineMap.commentCnt }</span>
+					</c:when>
+					<c:otherwise>
+					<span><a href="#this" name="deleteLikeTimeline"><i class="bi bi-heart-fill" style="font-size: 2rem; color: red;"></i></a>					
+					${timelineMap.likeCnt} &nbsp;&nbsp;
+                    <i class="bi bi-chat" style="font-size: 2rem; color: cornflowerblue;"></i> ${timelineMap.commentCnt }</span> <!-- 총 댓글 수 -->
+                    </c:otherwise>
+                    </c:choose>
                     <!-- 자신의 게시글 수정가능 -->
                    <c:if test="${sessionScope.session_mem_id == timelineMap.ID }">
                     <a href="#this" class="btn" id="modifyTimeline" >글수정</a>
@@ -188,6 +201,18 @@
 			fn_openAccountTimeline($(this));
 		});
 		
+		//게시글 좋아요 추가
+		$("a[name='likeTimeline']").on("click", function(e){
+			e.preventDefault();
+			fn_likeTimeline($(this));
+		});
+		
+		//게시글 좋아요 삭제
+		$("a[name='deleteLikeTimeline']").on("click", function(e){
+			e.preventDefault();
+			fn_deleteLikeTimeline($(this));
+		});
+		
 	});
 /* 	function fn_openWriteComment(){
 		var comment = $("form[name='comment']").serialize();
@@ -259,13 +284,41 @@
  	}
  	
  	function fn_openAccountTimeline(obj){
- 		var aaa = obj.parent().find("#ID").val();
- 		alert(aaa);
+ 		var id = obj.parent().find("#ID").val(); 		
  		var comSubmit = new ComSubmit();
- 		comSubmit.setUrl("<c:url value='/front/account/profile/timeline	' />");		
-		comSubmit.addParam("ID", obj.parent().find("#ID").val());		
+ 		comSubmit.setUrl("<c:url value='/front/account/profile/timeline/"+id+"' />");		
+		comSubmit.addParam("ID", id);		
 		comSubmit.submit();	
  	}
+ 	
+ 	//게시글 좋아요 추가
+ 	function fn_likeTimeline(obj){
+ 		var boardNum = $("input[name='BOARD_NUM']").val();
+ 		var userId = $("input[name='ID']").val();
+ 		$.ajax({
+ 			url : "/charType/like/timeline/insertLike",
+ 			type : "post",
+ 			data : {"BOARD_NUM" : boardNum , "USER_ID" : userId},
+ 			success : function(data) {
+ 				location.reload();
+ 			} 			
+ 		});
+ 	}
+ 	
+ 	//게시글 좋아요 삭제
+ 	function fn_deleteLikeTimeline(obj){ 		
+ 		var boardNum = $("input[name='BOARD_NUM']").val();
+ 		var userId = $("input[name='ID']").val();
+ 		$.ajax({
+ 			url : "/charType/like/timeline/deleteLike",
+ 			type : "post",
+ 			data : {"BOARD_NUM" : boardNum , "USER_ID" : userId},
+ 			success : function(data) {
+ 				location.reload();
+ 			} 			
+ 		});
+ 	}
+ 	
 	</script>
 
 </body>

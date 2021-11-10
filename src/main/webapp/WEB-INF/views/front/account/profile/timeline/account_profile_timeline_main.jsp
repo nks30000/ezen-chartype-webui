@@ -6,6 +6,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<%@ include file="/WEB-INF/include_popup_header.jspf" %>
+	
+
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
   <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
@@ -252,7 +255,10 @@
 					<c:when test="${fn:length(life) > 0}">
 					<c:forEach items="${life}" var="timelineLife">
              			<article class="white-panel"><img src="/img/${timelineLife.SAVED_NM}" alt="" />
-        				<h4><a href="#">${timelineLife.TITLE}</a></h4>
+        				<h4><a href="#" name="openPopup">${timelineLife.TITLE}</a>
+        				<input type="hidden" name="BOARD_NUM" id="subBoardNum" value="${timelineLife.BOARD_NUM }">
+        				<input type="hidden" name="ID" id="subId" value="${timelineLife.ID }" >
+        				</h4>
        					 <p>${timelineLife.CONTENT}</p>
       					</article>
 <%--               			<button id="delete" onclick="location.href='delete?num=${timelineFav.BOARD_NUM}'">delete</button>
@@ -314,7 +320,10 @@
 					<c:when test="${fn:length(fav) > 0}">
 					<c:forEach items="${fav}" var="timelineFav">
              			<article class="white-panel"><img src="/img/${timelineFav.SAVED_NM}" alt=""/>
-        				<h4><a href="#">${timelineFav.TITLE}</a></h4>
+        				<h4><a href="#" name="openPopup">${timelineFav.TITLE}</a>
+        				<input type="hidden" name="BOARD_NUM" id="subBoardNum" value="${timelineFav.BOARD_NUM }">
+        				<input type="hidden" name="ID" id="subId" value="${timelineFav.ID }" >
+        				</h4>
        					 <p>${timelineFav.CONTENT}</p>
       					</article>
 <%--               			<button id="delete" onclick="location.href='delete?num=${timelineFav.BOARD_NUM}'">delete</button>
@@ -340,7 +349,10 @@
 					<c:when test="${fn:length(shop) > 0}">
 					<c:forEach items="${shop}" var="timelineShop">
              			<article class="white-panel"><img src="/img/${timelineShop.SAVED_NM}" alt="">
-        				<h4><a href="#">${timelineShop.TITLE}</a></h4>
+        				<h4><a href="#" name="openPopup">${timelineShop.TITLE}</a>
+        				<input type="hidden" name="BOARD_NUM" id="subBoardNum" value="${timelineShop.BOARD_NUM }">
+        				<input type="hidden" name="ID" id="subId" value="${timelineShop.ID }" >
+        				</h4>
        					 <p>${timelineShop.CONTENT}</p>
       					</article>
 <%--               			<button id="delete" onclick="location.href='delete?num=${timelineFav.BOARD_NUM}'">delete</button>
@@ -364,7 +376,10 @@
 					<c:when test="${fn:length(style) > 0}">
 					<c:forEach items="${style}" var="timelineStyle">
              			<article class="white-panel"><img src="/img/${timelineStyle.SAVED_NM}" alt="">
-        				<h4><a href="#">${timelineStyle.TITLE}</a></h4>
+        				<h4><a href="#" name="openPopup">${timelineStyle.TITLE}</a>
+        				<input type="hidden" name="BOARD_NUM" id="subBoardNum" value="${timelineStyle.BOARD_NUM }">
+        				<input type="hidden" name="ID" id="subId" value="${timelineStyle.ID }" >
+        				</h4>
        					 <p>${timelineStyle.CONTENT}</p>
       					</article>
 <%--               			<button id="delete" onclick="location.href='delete?num=${timelineFav.BOARD_NUM}'">delete</button>
@@ -510,7 +525,10 @@
 					<c:when test="${fn:length(life) > 0}">
 					<c:forEach items="${life}" var="timelineLife">
              			<article class="white-panel"><img src="/img/${timelineLife.SAVED_NM}" alt="" />
-        				<h4><a href="#">${timelineLife.TITLE}</a></h4>
+        				<h4><a href="#" name="openPopup">${timelineLife.TITLE}</a>
+        				<input type="hidden" name="BOARD_NUM" id="subBoardNum" value="${timelineLife.BOARD_NUM }">
+        				<input type="hidden" name="ID" id="subId" value="${timelineLife.ID }" >
+        				</h4>
        					 <p>${timelineLife.CONTENT}</p>
       					</article>
 <%--               			<button id="delete" onclick="location.href='delete?num=${timelineFav.BOARD_NUM}'">delete</button>
@@ -572,7 +590,10 @@
 					<c:when test="${fn:length(fav) > 0}">
 					<c:forEach items="${fav}" var="timelineFav">
              			<article class="white-panel"><img src="/img/${timelineFav.SAVED_NM}" alt=""/>
-        				<h4><a href="#">${timelineFav.TITLE}</a></h4>
+        				<h4><a href="#" name="openPopup">${timelineFav.TITLE}</a>
+        				<input type="hidden" name="BOARD_NUM" id="subBoardNum" value="${timelineFav.BOARD_NUM }">
+        				<input type="hidden" name="ID" id="subId" value="${timelineFav.ID }" >
+        				</h4>
        					 <p>${timelineFav.CONTENT}</p>
       					</article>
 <%--               			<button id="delete" onclick="location.href='delete?num=${timelineFav.BOARD_NUM}'">delete</button>
@@ -598,7 +619,10 @@
 					<c:when test="${fn:length(shop) > 0}">
 					<c:forEach items="${shop}" var="timelineShop">
              			<article class="white-panel"><img src="/img/${timelineShop.SAVED_NM}" alt="">
-        				<h4><a href="#">${timelineShop.TITLE}</a></h4>
+        				<h4><a href="#" name="openPopup">${timelineShop.TITLE}</a>
+        				<input type="hidden" name="BOARD_NUM" id="subBoardNum" value="${timelineShop.BOARD_NUM }">
+        				<input type="hidden" name="ID" id="subId" value="${timelineShop.ID }" >
+        				</h4>
        					 <p>${timelineShop.CONTENT}</p>
       					</article>
 <%--               			<button id="delete" onclick="location.href='delete?num=${timelineFav.BOARD_NUM}'">delete</button>
@@ -622,7 +646,10 @@
 					<c:when test="${fn:length(style) > 0}">
 					<c:forEach items="${style}" var="timelineStyle">
              			<article class="white-panel"><img src="/img/${timelineStyle.SAVED_NM}" alt="">
-        				<h4><a href="#">${timelineStyle.TITLE}</a></h4>
+        				<h4><a href="#" name="openPopup">${timelineStyle.TITLE}</a>
+        				<input type="hidden" name="BOARD_NUM" id="subBoardNum" value="${timelineStyle.BOARD_NUM }">
+        				<input type="hidden" name="ID" id="subId" value="${timelineStyle.ID }" >
+        				</h4>
        					 <p>${timelineStyle.CONTENT}</p>
       					</article>
 <%--               			<button id="delete" onclick="location.href='delete?num=${timelineFav.BOARD_NUM}'">delete</button>
@@ -661,7 +688,8 @@
   </footer>
 
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
@@ -691,6 +719,7 @@
 	  </div>
 	</div>
 	<%@ include file="/WEB-INF/include-body.jspf" %>
+	<%@ include file="/WEB-INF/include_popup_body.jspf" %>
 </body>
 
 

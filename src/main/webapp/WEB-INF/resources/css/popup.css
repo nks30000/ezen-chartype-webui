@@ -4,7 +4,7 @@ html, body { height: 100%;}
 
 /* So that the modal is displayed in the preview.. You can probably remove this and the above rule */
 .img-modal {
-  display: block;
+	display: block;
 }
 
 .img-modal .modal-dialog {
@@ -157,7 +157,7 @@ html, body { height: 100%;}
     }
     
     .img-modal .modal-image {
-        height: calc(100% - 100px);
+        height: calc(100% - 50px);
     }
     
     .img-modal .modal-meta {
