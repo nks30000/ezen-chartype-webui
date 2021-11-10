@@ -817,6 +817,15 @@ function alramModal(param) {
 	    	comSubmit.addParam("ALRAM_CONTNUM", alram_contnum);
 	    	comSubmit.submit(); 
 	    }
+		
+		function fn_readFollowV2(reg_id, alram_num){
+	    	console.log(reg_id+","+alram_num);
+	       	var comSubmit = new ComSubmit();
+	    	comSubmit.setUrl("<c:url value='/alram/list/readFollow'/>");
+	    	comSubmit.addParam("REG_ID", reg_id);
+	    	comSubmit.addParam("ALRAM_NUM", alram_num);
+	    	comSubmit.submit(); 
+	    }
 	</script>
 
 
