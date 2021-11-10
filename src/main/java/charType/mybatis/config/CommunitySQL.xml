@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		TB_BOARD.BOARD_NUM, 
         TITLE, 
         TB_BOARD.ID, 
-        NICK, 
+        TB_BOARD.NICK, 
         CONTENT, 
         HIT_CNT, 
         CATEGORY, 
@@ -20,11 +20,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         IMG_NUM,
         ORIGINAL_NM,
         FILE_SIZE,
+        PRIVATE_YN,
         SAVED_NM
-		from TB_BOARD, TB_BOARD_IMG
+		from TB_BOARD, TB_BOARD_IMG, TB_USER
 		where TB_BOARD.BOARD_NUM = TB_BOARD_IMG.BOARD_NUM
+        and TB_BOARD_IMG.IMG_VAL is null
+        and TB_BOARD.ID = TB_USER.ID
+        and PRIVATE_YN='N'
         ORDER BY TB_BOARD.CREATE_DT DESC
-				]]>
+		]]>
+	</select>
+	
+	<select id="privateListCommunityTimeline" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		<![CDATA[
+		SELECT
+		TB_BOARD.BOARD_NUM, 
+        TITLE, 
+        TB_BOARD.ID, 
+        TB_BOARD.NICK, 
+        CONTENT, 
+        HIT_CNT, 
+        CATEGORY, 
+        TB_BOARD.MBTI, 
+        LIKE_CNT, 
+        CREATE_DT,
+        IMG_NUM,
+        ORIGINAL_NM,
+        FILE_SIZE,
+        PRIVATE_YN,
+        SAVED_NM
+		from TB_BOARD, TB_BOARD_IMG, TB_USER, TB_FOLLOW
+		where TB_BOARD.BOARD_NUM = TB_BOARD_IMG.BOARD_NUM
+        and TB_BOARD_IMG.IMG_VAL is null
+        and TB_BOARD.ID = TB_USER.ID
+        and private_YN='Y'
+        and TB_FOLLOW.FOLLOWING_ID = TB_USER.ID
+        and TB_FOLLOW.FOLLOW_ID = #{ID}
+        ORDER BY TB_BOARD.CREATE_DT DESC
+		]]>
 	</select>
 	
 

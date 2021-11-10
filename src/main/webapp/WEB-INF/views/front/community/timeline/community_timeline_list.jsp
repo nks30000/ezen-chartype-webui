@@ -94,8 +94,10 @@
 
 			<c:choose>
 			<c:when test="${fn:length(list) > 0}">
+			<c:if test="${fn:length(list) > 0}">
 				<c:forEach items="${list}" var="communityList">
-					<article class="white-panel"><img src="/img/${communityList.SAVED_NM}" alt="" />
+ 				
+ 					<article class="white-panel"><img src="/img/${communityList.SAVED_NM}" alt="" />
         				<h4><a href="#this" name="openPopup">${communityList.TITLE}</a>
         				<input type="hidden" name="BOARD_NUM" id="subBoardNum" value="${communityList.BOARD_NUM }">
         				<input type="hidden" name="ID" id="subId" value="${communityList.ID }" >      					
@@ -103,9 +105,20 @@
         				<!-- 게시판 팝업을 위한 전송 데이터 -->
        						 <p>${communityList.CONTENT}</p>
       				</article>
-<%--               			<button id="delete" onclick="location.href='delete?num=${timelineFav.BOARD_NUM}'">delete</button>
- --%>       				
  				</c:forEach>
+			</c:if>
+				<c:if test="${fn:length(priv) > 0}">
+				<c:forEach items="${priv}" var="communityList">
+ 					<article class="white-panel"><img src="/img/${communityList.SAVED_NM}" alt="" />
+        				<h4><a href="#this" name="openPopup">${communityList.TITLE}</a>
+        				<input type="hidden" name="BOARD_NUM" id="subBoardNum" value="${communityList.BOARD_NUM }">
+        				<input type="hidden" name="ID" id="subId" value="${communityList.ID }" >      					
+        				</h4>
+        				<!-- 게시판 팝업을 위한 전송 데이터 -->
+       						 <p>${communityList.CONTENT}</p>
+      				</article>
+ 				</c:forEach>
+			</c:if>
 			</c:when>
 			<c:otherwise>
 							조회된 결과가 없습니다.

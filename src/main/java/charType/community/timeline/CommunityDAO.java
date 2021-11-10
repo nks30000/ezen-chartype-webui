@@ -21,4 +21,7 @@ public class CommunityDAO extends AbstractDAO{
 		return (List<Map<String, Object>>)selectList("community.selectNickCommunityTimeline", map);
 		
 	}
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> selectPrivateListCommunityTimeline(Map<String, Object> map) {
+		return (List<Map<String, Object>>)selectList("community.privateListCommunityTimeline", map);	}
 }
