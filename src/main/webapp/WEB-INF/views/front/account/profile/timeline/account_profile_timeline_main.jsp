@@ -6,7 +6,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<%@ include file="/WEB-INF/include_popup_header.jspf" %>
 	
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
@@ -15,6 +14,7 @@
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
   <link rel="stylesgeet" href="https://rawgit.com/creativetimofficial/material-kit/master/assets/css/material-kit.css">
   <link rel="stylesheet" href="/charType/resources/css/desktop.css">
+	<%@ include file="/WEB-INF/include_popup_header.jspf" %>
 <!--   <link rel="stylesheet" href="/charType/resources/css/profile.css"> -->
   <!-- 
   
