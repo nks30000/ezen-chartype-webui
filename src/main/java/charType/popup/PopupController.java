@@ -2,6 +2,7 @@ package charType.popup;
 
 import charType.like.LikeService;
 import charType.account.profile.timeline.TimelineService;
+import charType.alram.AlramService;
 import charType.utils.common.mapper.CommandMap;
 
 import java.util.Map;
@@ -34,6 +35,9 @@ public class PopupController {
 	
 	@Resource(name="likeService")
 	private LikeService likeService;
+	
+	@Resource(name="alramService")
+	private AlramService alramService;
 	
 	//게시글 보기
 	@RequestMapping(value="/detail")
@@ -152,10 +156,23 @@ public class PopupController {
 		throws Exception {
 		String board_num = (String) commandMap.get("BOARD_NUM");
 		String id = (String) commandMap.get("ID");
+		String board_id = (String) commandMap.get("BOARD_ID");
+		System.out.println(board_id+","+id);
 		
 		ModelAndView mv = new ModelAndView("redirect:/community/timeline/detail?BOARD_NUM="+board_num+"&ID="+id);
 		
 		popupService.writeComment(commandMap.getMap());		
+		
+		
+		commandMap.put("REG_ID", id);
+		commandMap.put("ALRAM_ID", board_id);
+		commandMap.put("ALRAM_CONTNUM", board_num);
+		commandMap.put("ALRAM_INDEX_NO", 1);
+		
+		System.out.println(commandMap.get("REG_ID")+","+commandMap.get("ALRAM_ID"));
+		
+		alramService.regAlram(commandMap.getMap());
+		
 		return mv;
 	}
 	
@@ -165,7 +182,21 @@ public class PopupController {
 			throws Exception {
 			ModelAndView mv = new ModelAndView("jsonView");
 			
-			popupService.writeComment(commandMap.getMap());		
+			String board_num = (String) commandMap.get("BOARD_NUM");
+			String id = (String) commandMap.get("ID");
+			String board_id = (String) commandMap.get("BOARD_ID");
+			System.out.println(board_id+","+id);
+			
+			popupService.writeComment(commandMap.getMap());	
+			
+			commandMap.put("REG_ID", id);
+			commandMap.put("ALRAM_ID", board_id);
+			commandMap.put("ALRAM_CONTNUM", board_num);
+			commandMap.put("ALRAM_INDEX_NO", 1);
+			
+			System.out.println(commandMap.get("REG_ID")+","+commandMap.get("ALRAM_ID"));
+			
+			alramService.regAlram(commandMap.getMap());
 			return mv;
 		}	
 	

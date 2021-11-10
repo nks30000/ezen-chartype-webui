@@ -139,7 +139,7 @@
     	comSubmit.addParam("ALRAM_CONTNUM", alram_contnum);
     	comSubmit.submit(); 
     }
-    function fn_readBoardV2(alram_id, alram_num, alram_contnum){
+    /* function fn_readBoardV2(alram_id, alram_num, alram_contnum){
     	console.log(alram_num+","+alram_id+","+alram_contnum);
        	var comSubmit = new ComSubmit();
     	comSubmit.setUrl("<c:url value='/alram/list/readBoard'/>");
@@ -147,7 +147,7 @@
     	comSubmit.addParam("ALRAM_NUM", alram_num);
     	comSubmit.addParam("ALRAM_CONTNUM", alram_contnum);
     	comSubmit.submit(); 
-    }
+    } */
     
     function fn_readFollow(obj){
     	var reg_id = obj.parent().find("#reg_id").val();

@@ -456,7 +456,7 @@
  		$.ajax({
  			url : "/charType/like/timeline/insertLike",
  			type : "post",
- 			data : {"BOARD_NUM" : boardNum , "USER_ID" : userId},
+ 			data : {"BOARD_NUM" : boardNum , "USER_ID" : userId , "BOARD_ID" : id},
  			success : function(data) {
  				fn_openPopup(boardNum, id);
  			} 			
