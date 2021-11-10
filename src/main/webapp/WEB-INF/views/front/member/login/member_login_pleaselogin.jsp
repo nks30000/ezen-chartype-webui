@@ -16,6 +16,9 @@
 <script type="text/javascript">
 	alert("로그인이 필요한 서비스입니다. 먼저 로그인 해주세요.");
 	
+	if(parent != null){
+		parent.window.location.href = "${CONTEXT_PATH}/member/login/form";
+	}
 	location.href = "${CONTEXT_PATH}/member/login/form";
 
 </script>

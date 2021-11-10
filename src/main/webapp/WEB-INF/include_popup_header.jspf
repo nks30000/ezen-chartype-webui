@@ -4,7 +4,7 @@
     
 <!-- <link href="https://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
 <link rel="stylesheet" href="/charType/resources/css/popup.css">
-<!-- <link rel="stylesheet" href="/charType/resources/js/popup.js"> -->
+<link rel="stylesheet" href="/charType/resources/script/popup.js">
 <!-- <script src="https://netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
 <script src="<c:url value='/js/common.js'/>" charset="utf-8"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">

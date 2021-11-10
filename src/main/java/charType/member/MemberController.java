@@ -113,7 +113,7 @@ public class MemberController {
 				session.setAttribute("session_mem_prof_img", m.getProf_img());
 				session.setAttribute("session_mem_back_img", m.getBack_img());
 				
-				mv.setViewName("redirect:/front/account/profile/timeline");//mypage
+				mv.setViewName("redirect:/front/account/profile/timeline/"+ m.getId());//mypage
 			}
 			else {
 				//비밀번호 틀림
