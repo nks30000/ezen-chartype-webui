@@ -39,11 +39,11 @@
                     <span>${timelineMap.CREATE_DT }</span>
                     <br>
                     <p id="timelineContent">${timelineMap.CONTENT }</p>
-                    <span>댓글 수 : ${timelineMap.commentCnt }</span> <!-- 총 댓글 수 -->
                     <!-- 자신의 게시글 수정가능 -->
                    <c:if test="${sessionScope.session_mem_id == timelineMap.ID }">
                     <a href="#this" class="btn" id="modifyTimeline" >글수정</a>
                      </c:if>               
+                    <span>Comments &nbsp; ${timelineMap.commentCnt }</span> <!-- 총 댓글 수 -->
                   </div>
     				<!-- 댓글 리스트 가져오기 -->
     			<div id="commentList">
@@ -59,14 +59,14 @@
                         <span>${comment.MBTI }</span>
                         <p id="comment_contents">${comment.CONTENTS }</p>                        
                         <span class="date sub-text">${comment.REGDATE }</span>                        
-                        <div id="hidden">
+                        <div id="hidden" class="text-left">
                         	<!-- 자신의 댓글 수정 삭제 기능 -->
                         	<c:choose>
                         	<c:when test="${sessionScope.session_mem_id == comment.ID }">
-                        		<a href="#this" class="btn" id="deleteComment"
-                        			name="deleteComment">삭제</a>
-                        		<a href="#this" class="btn" id="modifyComment"
-                        			name="modifyComment">수정</a>
+                        		<a href="#this" class="ml-1" id="deleteComment"
+                        			name="deleteComment"><i class="fa fa-trash"></i><span class="sr-only">삭제</span></a>
+                        		<a href="#this" class="ml-1" id="modifyComment"
+                        			name="modifyComment"><i class="fa fa-pencil"></i><span class="sr-only">수정</span></a>
                         		<input type="hidden" id="COMMENT_NUM" 
                         			value="${comment.COMMENT_NUM }">
                         	</c:when>
@@ -84,9 +84,9 @@
                 </div>
                 <!-- 댓글 입력 -->
                 <form id="comment" name="comment">
-                <div class="modal-meta-bottom">
+                <div class="modal-meta-bottom mt-3">
                   <input type="text" class="form-control" name="CONTENTS" placeholder="Leave a commment.."/>
-                  <a href="#this" class="btn" id="writeComment">작성</a>                  
+                  <a href="#this" class="btn btn-secondary btn-block btn-sm" id="writeComment">Submit</a>                  
                   <input type="hidden" name="BOARD_NUM" id="commentBoardNum" value="${timelineMap.BOARD_NUM }" >
                   <input type="hidden" name="BOARD_ID" id="commentBoardId" value="${timelineMap.ID }" >
                   <input type="hidden" name="ID" id="commentId" value="${sessionScope.session_mem_id }" >                  
@@ -201,6 +201,8 @@
         var hour = date.getHours();
         var minute = date.getMinutes();
         var second = date.getSeconds();
+        var year = date.getFullYear();
+        
 
         month = month >= 10 ? month : '0' + month;
         day = day >= 10 ? day : '0' + day;
@@ -208,7 +210,7 @@
         minute = minute >= 10 ? minute : '0' + minute;
         second = second >= 10 ? second : '0' + second;
 
-        return date.getFullYear() + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+        return month + '.' + day + ' ' + hour + ':' + minute;
 }
 	
 	//요청시 팝업 화면 데이터 설정
@@ -240,6 +242,11 @@
 	            if(timelineContents == null){
 	            	timelineContents = "";
 	            }
+	            var timelineMBTI = timelineMap.MBTI;
+	            if(timelineMBTI == null){
+	            	timelineMBTI = "";
+	            }
+	            
 				//게시글 이미지 출력
 				 for (i = 0; i < imgList.length ; i++){	
 					if( i == 0){
@@ -257,7 +264,7 @@
 	            html += '<a href=""><img class="img-circle" src="/img/'+timelineMap.PROF_IMG+'"/></a>'
 	            html += '<strong><a href="#this" name="myPage">'+timelineMap.NICK+'</a>'
 	            html += '<input type="hidden" id="ID" value="'+timelineMap.ID+'"></strong>'
-	            html += '<span>'+timelineMap.MBTI+'&nbsp;&nbsp;&nbsp;&nbsp; #'+timelineMap.CATEGORY+'</span>'
+	            html += '<span>'+timelineMBTI+'&nbsp;&nbsp;&nbsp;&nbsp; #'+timelineMap.CATEGORY+'</span>'
 	            html += '<span>'+ create_dt +'</span>'
 	            html += '<br>'
 	           	html += '<p id="timelineContent">'+timelineContents+'</p>'
@@ -265,18 +272,20 @@
 	           	if(timelineMap.likeCheck == 0){
 	           		html += '<span><a href="#this" name="likeTimeline"><i class="bi bi-heart" style="font-size: 1rem; color: red;"></i></a>'
 	           		html += ' '+timelineMap.likeCnt+'&nbsp;&nbsp;'
-	           		html += '<i class="bi bi-chat" style="font-size: 1rem; color: cornflowerblue;"></i> '+timelineMap.commentCnt+'</span>'
+// 	           		html += '<i class="bi bi-chat" style="font-size: 1rem; color: cornflowerblue;"></i> '+timelineMap.commentCnt+'</span>'
 	           	} else {
 	           		html += '<span><a href="#this" name="deleteLikeTimeline"><i class="bi bi-heart-fill" style="font-size: 1rem; color: red;"></i></a>'
 	           		html += ' '+timelineMap.likeCnt+' &nbsp;&nbsp;'
-	           		html += '<i class="bi bi-chat" style="font-size: 1rem; color: cornflowerblue;"></i> '+timelineMap.commentCnt+' </span>'
+// 	           		html += '<i class="bi bi-chat" style="font-size: 1rem; color: cornflowerblue;"></i> '+timelineMap.commentCnt+' </span>'
 	           	}
 	           	html += ''
-	           	html += '<span>댓글 수 : '+timelineMap.commentCnt +'</span>'
 	           	//게시글 ID = 로그인 ID 가 같을 경우 글 수정 가능
 	           	if(sessionId == timelineMap.ID){
-	           	html += '<a href="#this" class="btn" id="modifyTimeline" >글수정</a>'
-	           	html += '<a href="#this" class="btn" id="deleteTimeline" >글삭제</a>'
+	           	html += '<div class="d-flex justify-content-between align-items-center">';
+	           	html += '<a href="#this" class="btn btn-secondary btn-sm btn-block" id="modifyTimeline" >Edit</a>'
+	           	html += '<a href="#this" class="btn btn-secondary btn-sm btn-block" id="deleteTimeline" >Delete</a>'
+	           	html += '</div>'
+	           	html += '<span>Comments &nbsp; '+timelineMap.commentCnt +'</span>'
 	           	}
 	            $("#timeline").html(html); //게시글 입력
 	            //댓글 입력
@@ -284,8 +293,12 @@
 	            html += '<ul class="img-comment-list">'
 	            for (i = 0; i < commentList.length ; i++) {
 	            	
-	            	 var regDate = new Date(commentList[i].REGDATE);
+	            	var regDate = new Date(commentList[i].REGDATE);
 	            	var commentRegDate = dateFormat(regDate);
+	            	var commentMBTI = commentList[i].MBTI;
+	            	if (commentMBTI == null){
+	            		commentMBTI = "";
+	            	}
 	            	
 	            	html += '<li>'
 	            	html += '<div class="comment-img">'
@@ -294,13 +307,17 @@
 	            	html += '<div class="comment-text">'
 	            	html += '<strong><a href="#this" name="myPage">'+commentList[i].NICK +'</a>'
 	            	html += '<input type="hidden" id="ID" value="'+commentList[i].ID+'"></strong>'
-	            	html += '<span>'+commentList[i].MBTI +'</span>'
+	            	html += '<span>'+commentMBTI +'</span>'
 	            	html += '<p id="comment_contents">'+commentList[i].CONTENTS+'</p>'
 	            	html += '<span class="date sub-text">'+commentRegDate+'</span>'
-	            	html += '<div id="hidden">'
+	            	html += '<div id="hidden" class="text-left">'
+// 	            		<a href="#this" class="btn" id="deleteComment"
+//                 			name="deleteComment"><i class="fa fa-trash"></i><span class="sc-only">삭제</span></a>
+//                 		<a href="#this" class="btn" id="modifyComment"
+//                 			name="modifyComment"><i class="fa fa-pancil"></i><span class="sc-only">수정</span></a>
 	            	if(sessionId == commentList[i].ID){
-	            		html += '<a href="#this" class="btn" id="deleteComment" name="deleteComment">삭제</a>'
-	            		html += '<a href="#this" class="btn" id="modifyComment" name="modifyComment">수정</a>'
+	            		html += '<a href="#this" class="ml-1" id="deleteComment" name="deleteComment"><i class="fa fa-trash"></i><span class="sr-only">삭제</span></a>'
+	            		html += '<a href="#this" class="ml-1" id="modifyComment" name="modifyComment"><i class="fa fa-pencil"></i><span class="sr-only">수정</span></a>'
 	            		html += '<input type="hidden" id="COMMENT_NUM" value="'+commentList[i].COMMENT_NUM+'">'
 	            	}
 	            	html += '</div>'
@@ -355,7 +372,7 @@
   	function fn_modifyComment(obj){
 		var comment = obj.parent().parent().find("#comment_contents").text();
 		var html = "<input type='text' name='CONTENTS' id='CONTENTS' value='"+comment+"'>"
-		html += "<a href='#this' class='btn' name='updateComment'>작성</a>";
+		html += "<a href='javascript:void(0);' class='btn btn-secondary btn-block btn-sm' name='updateComment'>Submit</a>";
 		obj.parent().parent().find("#comment_contents").html(html);
 		$(document).on("click","a[name='updateComment']", function(e){ /* 수정 완료하기 */
 		 	e.preventDefault();
