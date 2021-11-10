@@ -65,7 +65,7 @@ PUBLIC " - //mybatis.org//DTD Config 3.0//EN"
 	    <mapper resource="mybatis/config/CollectionSQL.xml" />
 	    <mapper resource="mybatis/config/LikeSQL.xml" />
 	    <mapper resource="mybatis/config/FollowSQL.xml" />
-	    <mapper resource="mybatis/config/AlramSQL.xml" />
+	    
 	    <mapper resource="mybatis/config/AdminSQL.xml" />
 	    <mapper resource="mybatis/config/ShopSQL.xml" />
 	    <mapper resource="mybatis/config/OrderSQL.xml" />
@@ -79,6 +79,7 @@ PUBLIC " - //mybatis.org//DTD Config 3.0//EN"
 	    <mapper resource="charType/mybatis/config/CommunitySQL.xml" />
 	    <mapper resource="charType/mybatis/config/FollowSQL.xml" />
 	    <mapper resource="charType/mybatis/config/admin.xml" />
+	    <mapper resource="charType/mybatis/config/AlramSQL.xml" />
 	    
 	</mappers>
 </configuration>
