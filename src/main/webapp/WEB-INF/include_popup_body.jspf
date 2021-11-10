@@ -20,7 +20,7 @@
                 	<img class="img-responsive " src="/img/${timelineImg.SAVED_NM}">
                 	</c:when>
                 	<c:otherwise>
-                	<img class="img-responsive hidden" src="/img/${timelineImg.SAVED_NM}" />
+                	<img class="img-responsive d-none" src="/img/${timelineImg.SAVED_NM}" />
                 	</c:otherwise>
                 	</c:choose>                
                 </c:forEach>
@@ -117,8 +117,8 @@
 	        next = cur.next('img');
 	        par = cur.parent();
 	        if (!next.length) { next = $(cur.parent().find("img").get(0)) }
-	        cur.addClass('hidden');
-	        next.removeClass('hidden');
+	        cur.addClass('d-none');
+	        next.removeClass('d-none');
 	        
 	        return false;
 	    })
@@ -130,8 +130,8 @@
 	        par = cur.parent();
 	        children = cur.parent().find("img");
 	        if (!next.length) { next = $(children.get(children.length-1)) }
-	        cur.addClass('hidden');
-	        next.removeClass('hidden');
+	        cur.addClass('d-none');
+	        next.removeClass('d-none');
 	        
 	        return false;
 	    })
@@ -182,6 +182,17 @@
 			fn_openAccountTimeline($(this));
 		});
 		
+		//게시글 좋아요 추가
+		$(document).on("click","a[name='likeTimeline']", function(e){
+			e.preventDefault();
+			fn_likeTimeline($(this));
+		});
+		
+		//게시글 좋아요 삭제
+		$(document).on("click","a[name='deleteLikeTimeline']", function(e){
+			e.preventDefault();
+			fn_deleteLikeTimeline($(this));
+		});
 	});
 
 	//등록날짜 포멧터
@@ -210,12 +221,10 @@
 		var sessionProfImg = $("#commentProfImg").val();
 		/* var str = obj.parent().parent().find("form[name='subData']").serialize(); */
 		var str = { "BOARD_NUM" : BOARD_NUM, "ID" : ID };
-		console.log(str);
-		
+		console.log(str);		
  		/* var BOARD_NUM = obj.parent().find("#BOARD_NUM").val();
 		var ID = obj.parent().find("#ID").val();
-		alert(BOARD_NUM); */
-		alert(sessionId + sessionNick + sessionMBTI + sessionProfImg);		
+		alert(BOARD_NUM); */				
 		$.ajax({
 			url : "/charType/community/timeline/popup",
 			type : "post",
@@ -228,14 +237,17 @@
 				var html = "";
 				var date = new Date(timelineMap.CREATE_DT);					
 	            var create_dt = dateFormat(date);
-	            
+	            var timelineContents = timelineMap.CONTENT;
+	            if(timelineContents == null){
+	            	timelineContents = "";
+	            }
 				//게시글 이미지 출력
 				 for (i = 0; i < imgList.length ; i++){	
 					if( i == 0){
 						console.log(imgList[i].SAVED_NM);
 						html += '<img class="img-responsive " src="/img/'+imgList[i].SAVED_NM+'">'
 					} else {
-						html += '<img class="img-responsive hidden" src="/img/'+imgList[i].SAVED_NM+'" />'
+						html += '<img class="img-responsive d-none" src="/img/'+imgList[i].SAVED_NM+'" />'
 					}
 				} 
 				html += '<a href="" class="img-modal-btn left"><i class="glyphicon glyphicon-chevron-left"></i></a>'
@@ -245,10 +257,22 @@
 	            //게시글	            
 	            html += '<a href=""><img class="img-circle" src="/img/'+timelineMap.PROF_IMG+'"/></a>'
 	            html += '<strong><a href="#this" name="myPage">'+timelineMap.NICK+'</a>'
-	            html += '<input type="hidden" id="ID" value="'+timelineMap.ID+'"></strong><span>'+timelineMap.MBTI+'</span>'
+	            html += '<input type="hidden" id="ID" value="'+timelineMap.ID+'"></strong>'
+	            html += '<span>'+timelineMap.MBTI+'&nbsp;&nbsp;&nbsp;&nbsp; #'+timelineMap.CATEGORY+'</span>'
 	            html += '<span>'+ create_dt +'</span>'
 	            html += '<br>'
-	           	html += '<p id="timelineContent">'+timelineMap.CONTENT+'</p>'
+	           	html += '<p id="timelineContent">'+timelineContents+'</p>'
+	           	//좋아요 버튼
+	           	if(timelineMap.likeCheck == 0){
+	           		html += '<span><a href="#this" name="likeTimeline"><i class="bi bi-heart" style="font-size: 1rem; color: red;"></i></a>'
+	           		html += ' '+timelineMap.likeCnt+'&nbsp;&nbsp;'
+	           		html += '<i class="bi bi-chat" style="font-size: 1rem; color: cornflowerblue;"></i> '+timelineMap.commentCnt+'</span>'
+	           	} else {
+	           		html += '<span><a href="#this" name="deleteLikeTimeline"><i class="bi bi-heart-fill" style="font-size: 1rem; color: red;"></i></a>'
+	           		html += ' '+timelineMap.likeCnt+' &nbsp;&nbsp;'
+	           		html += '<i class="bi bi-chat" style="font-size: 1rem; color: cornflowerblue;"></i> '+timelineMap.commentCnt+' </span>'
+	           	}
+	           	html += ''
 	           	html += '<span>댓글 수 : '+timelineMap.commentCnt +'</span>'
 	           	//게시글 ID = 로그인 ID 가 같을 경우 글 수정 가능
 	           	if(sessionId == timelineMap.ID){
@@ -317,8 +341,7 @@
 	function fn_deleteComment(obj){	
 		var BOARD_NUM = $("#commentBoardNum").val();
 		var ID = $("#commentBoardId").val();
-		var COMMENT_NUM = obj.parent().find("#COMMENT_NUM").val();
-		alert(COMMENT_NUM);
+		var COMMENT_NUM = obj.parent().find("#COMMENT_NUM").val();		
 		$.ajax({
 			url : "/charType/community/timeline/popup/commentDelete",
 			type : "post",
@@ -376,8 +399,7 @@
  	function fn_updateContents(obj){ 		
  		var BOARD_NUM = $("#commentBoardNum").val();
 		var ID = $("#commentBoardId").val();
-		var CONTENT = $("#modifyContents").val();
-		alert(CONTENT);
+		var CONTENT = $("#modifyContents").val();		
 		$.ajax({
 			url : "/charType/community/timeline/popup/modify",
 			type : "post",
@@ -391,7 +413,6 @@
  	//게시글 삭제
  	function fn_deleteTimeline(){
  		var BOARD_NUM = $("#commentBoardNum").val();
- 		alert(BOARD_NUM);
  		$.ajax({
 			url : "/charType/community/timeline/popup/delete",
 			type : "post",
@@ -404,11 +425,41 @@
  	
  	//다른 사용자의 마이페이지로 이동
  	function fn_openAccountTimeline(obj){
- 		var aaa = obj.parent().find("#ID").val();
- 		alert(aaa);
+ 		var id = obj.parent().find("#ID").val(); 		
  		var comSubmit = new ComSubmit();
- 		comSubmit.setUrl("<c:url value='/front/account/profile/timeline	' />");		
-		comSubmit.addParam("ID", obj.parent().find("#ID").val());		
+ 		comSubmit.setUrl("<c:url value='/front/account/profile/timeline/"+id+"' />");		
+		comSubmit.addParam("ID", id);		
 		comSubmit.submit();	
  	}
+ 	
+ 	//게시글 좋아요 추가
+ 	function fn_likeTimeline(obj){
+ 		var boardNum = $("#commentBoardNum").val();
+ 		var id = $("#commentBoardId").val();
+ 		var userId = $("#commentId").val();
+ 		$.ajax({
+ 			url : "/charType/like/timeline/insertLike",
+ 			type : "post",
+ 			data : {"BOARD_NUM" : boardNum , "USER_ID" : userId},
+ 			success : function(data) {
+ 				fn_openPopup(boardNum, id);
+ 			} 			
+ 		});
+ 	}
+ 	
+ 	//게시글 좋아요 삭제 
+ 	function fn_deleteLikeTimeline(obj){ 		
+ 		var boardNum = $("#commentBoardNum").val();
+ 		var id = $("#commentBoardId").val();
+ 		var userId = $("#commentId").val();
+ 		$.ajax({
+ 			url : "/charType/like/timeline/deleteLike",
+ 			type : "post",
+ 			data : {"BOARD_NUM" : boardNum , "USER_ID" : userId},
+ 			success : function(data) {
+ 				fn_openPopup(boardNum, id);
+ 			} 			
+ 		});
+ 	}
+ 	
 	</script>

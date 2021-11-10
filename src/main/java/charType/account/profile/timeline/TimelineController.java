@@ -98,9 +98,10 @@ public class TimelineController {
 			commandMap.put("followYN", followYN);
 			int privateCheck = timelineService.privateCheck(commandMap.getMap());
 			commandMap.put("privateCheck", privateCheck);
+		} else {
+			commandMap.put("privateCheck", 1);
 		}
 		
-
 		
 		
 		//pagdId의 팔로워 수 	
@@ -126,7 +127,7 @@ public class TimelineController {
 		System.out.println("life.size() :" + life.size());
 		
 		List<Map<String,Object>> fav = timelineService.selectAccountTimelineFav(commandMap.getMap());
-		mv.addObject("fav", life);
+		mv.addObject("fav", fav);
 		System.out.println("life.size() :" + life.size());
 		
 		List<Map<String,Object>> shop = timelineService.selectAccountTimelineShop(commandMap.getMap());
@@ -156,7 +157,9 @@ public class TimelineController {
 	
 	@RequestMapping(value="/write")
 	public ModelAndView accountTimelineWrite(CommandMap commandMap, HttpServletRequest request) throws Exception{
-		ModelAndView mv = new ModelAndView("redirect:/front/account/profile/timeline");
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("session_mem_id");
+		ModelAndView mv = new ModelAndView("redirect:/front/account/profile/timeline/"+userId);
 		
 		timelineService.writeAccountTimeline(commandMap.getMap(), request);
 		

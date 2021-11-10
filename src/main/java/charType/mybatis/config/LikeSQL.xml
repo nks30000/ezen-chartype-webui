@@ -9,12 +9,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		resultType="java.util.HashMap">
 		<![CDATA[
 		SELECT
-		    U.PROF_IMG,
-		    U.NICK,
-		    L.LIKE_NUM,
-		    L.ID,
-		    L.CONTENTS_NUM,
-		    L.DIV_NUM
+		    U.PROF_IMG as PROF_IMG,
+		    U.NICK as NICK,
+		    L.LIKE_NUM as  LIKE_NUM,
+		    L.ID as ID,
+		    L.CONTENTS_NUM as CONTENTS_NUM,
+		    L.DIV_NUM as DIV_NUM
 		FROM
 		    TB_USER U, TB_LIKE L
 		WHERE
@@ -37,7 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM
 			TB_LIKE
 		WHERE
-			DIV_NUM = 0 AND ID = #{ID} AND CONTENTS_NUM = ${BOARD_NUM}
+			DIV_NUM = 0 AND ID = #{USER_ID} AND CONTENTS_NUM = ${BOARD_NUM}
 		]]>
 	</select>
 
@@ -50,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			DIV_NUM)
 		VALUES
 			(SEQ_TB_LIKE_LIKE_NUM.NEXTVAL,
-			#{ID},
+			#{USER_ID},
 			#{BOARD_NUM},
 			0)
 		]]>
@@ -61,7 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE FROM
 			TB_LIKE
 		WHERE
-			LIKE_NUM = #{LIKE_NUM}
+			DIV_NUM = 0 AND ID = #{USER_ID} AND CONTENTS_NUM = ${BOARD_NUM}
 		]]>
 	</delete>	
 

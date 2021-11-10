@@ -73,6 +73,7 @@ PUBLIC " - //mybatis.org//DTD Config 3.0//EN"
 	    <mapper resource="mybatis/config/qnaSQL.xml" />
 	    <mapper resource="mybatis/config/PoliceSQL.xml" /> -->
 	    
+	    <mapper resource="charType/mybatis/config/LikeSQL.xml" />
 	    <mapper resource="charType/mybatis/config/PopupSQL.xml" />
 	    <mapper resource="charType/mybatis/config/memberSQL.xml" />
 	    <mapper resource="charType/mybatis/config/TimelineSQL.xml" />

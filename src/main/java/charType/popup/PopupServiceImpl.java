@@ -2,6 +2,7 @@ package charType.popup;
 
 import org.springframework.stereotype.Service;
 
+import charType.like.LikeDAO;
 import charType.popup.PopupService;
 
 import java.util.List;
@@ -13,13 +14,12 @@ import javax.annotation.Resource;
 public class PopupServiceImpl implements PopupService{
 	
 	@Resource(name="popupDAO")
-	private PopupDAO popupDAO;
-	
-	
+	private PopupDAO popupDAO;	
+
 	//팝업 게시글 가져오기
 	@Override
 	public Map<String, Object> selectOneCommunityTimeline(Map<String, Object> map)
-			throws Exception {
+			throws Exception {		
 		//프로필 이미지 파일명을 Map에 같이 담음
 		Map<String, Object> resultMap = popupDAO.selectOneCommunutyTimeline(map);
 		Map<String, Object> ProfImgMap = popupDAO.selectOneCommunityTimelineProfImg(map);

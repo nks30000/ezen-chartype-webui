@@ -29,9 +29,16 @@ public class CommunityController {
 	public ModelAndView communityTimelineList(CommandMap commandMap, HttpServletRequest request) throws Exception{ 
 		ModelAndView mv = new ModelAndView("/front/community/timeline/community_timeline_list"); 
 				
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("session_mem_id");
+		
+		commandMap.put("ID", userId);	
+		
 		List<Map<String,Object>> list = communityService.selectListCommunityTimeline(commandMap.getMap());
 		mv.addObject("list", list);
 		
+		List<Map<String,Object>> priv = communityService.selectPrivateCommunityTimeline(commandMap.getMap());
+		mv.addObject("priv", priv);
 		return mv;
 	}
 	

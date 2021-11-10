@@ -1,5 +1,6 @@
 package charType.popup;
 
+import charType.like.LikeService;
 import charType.account.profile.timeline.TimelineService;
 import charType.utils.common.mapper.CommandMap;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 
 
@@ -30,63 +32,79 @@ public class PopupController {
 	@Resource(name="timelineService")
 	private TimelineService timelineService;
 	
+	@Resource(name="likeService")
+	private LikeService likeService;
+	
 	//게시글 보기
 	@RequestMapping(value="/detail")
 	public ModelAndView communityBoardDetail( CommandMap commandMap, HttpServletRequest request)
 		throws Exception {		
 		
 		ModelAndView mv = new ModelAndView("/front/community/timeline/community_timeline_detail");
+		//현재 사용자가 해당 게시물에 좋아요를 하였는지 유무를 체크 하기 위해 세션값을 넣어줌
+		HttpSession session = request.getSession();
+		String userId = (String)session.getAttribute("session_mem_id");
+		Map<String, Object> likeCheckMap = commandMap.getMap();
+		likeCheckMap.put("USER_ID", userId);
 		
-		if(commandMap.isEmpty()) {
-			//파라미터없을때 임시 코드
-
-		
-		Map<String, Object> timelineMap = popupService.selectOneCommunityTimeline(commandMap.getMap());		
+		Map<String, Object> timelineMap = popupService.selectOneCommunityTimeline(commandMap.getMap());
 		List<Map<String, Object>> commentList = popupService.selectComment(commandMap.getMap());
 		List<Map<String, Object>> imgList = popupService.selectOneCommunityTimelineImage(commandMap.getMap());
+		List<Map<String, Object>> likeList = likeService.selectBoardLike(commandMap.getMap());
+				
+		//좋아요 유무 확인 = 0 없음, 1 있음
+		int likeCheck = likeService.selectTimelineLikeCheck(likeCheckMap);
+		timelineMap.put("likeCheck", likeCheck);
 		
-		int commentCnt = commentList.size(); 				//총 댓글수
+		//좋아요 수 입력
+		int likeCnt = likeList.size();
+		timelineMap.put("likeCnt", likeCnt);
+		
+		//댓글 수 입력
+		int commentCnt = commentList.size();	 
 		timelineMap.put("commentCnt", commentCnt);
 		
-		mv.addObject("timelineMap", timelineMap); 		//게시글
+		mv.addObject("likeList",likeList);							//좋아요 리스트
+		mv.addObject("timelineMap", timelineMap); 	//게시글
 		mv.addObject("commentList",commentList);		//댓글리스트
-		mv.addObject("imgList", imgList);						//게시글 이미지
+		mv.addObject("imgList", imgList);						//게시물 이미지 리스트
 		
-		} else {
-			Map<String, Object> timelineMap = popupService.selectOneCommunityTimeline(commandMap.getMap());
-			List<Map<String, Object>> commentList = popupService.selectComment(commandMap.getMap());
-			List<Map<String, Object>> imgList = popupService.selectOneCommunityTimelineImage(commandMap.getMap());
-			
-			int commentCnt = commentList.size();	 
-			timelineMap.put("commentCnt", commentCnt);
-			
-			mv.addObject("timelineMap", timelineMap); 		//게시글
-			mv.addObject("commentList",commentList);		//댓글리스트
-			mv.addObject("imgList", imgList);
-		}
 		return mv;
 	}
 	
 	//팝업 시 게시글 보기
 	@RequestMapping(value="/popup")
 	@ResponseBody
-	public ModelAndView communityBoardPopup(CommandMap commandMap) throws Exception{
+	public ModelAndView communityBoardPopup(CommandMap commandMap, HttpServletRequest request) throws Exception{
 		
-		ModelAndView mv = new ModelAndView("jsonView");
-		
-		/* String aaa = (String)commandMap.get("ID"); */
-		System.out.println(commandMap.getMap());
+		ModelAndView mv = new ModelAndView("jsonView");		
+		//현재 사용자가 해당 게시물에 좋아요를 하였는지 유무를 체크 하기 위해 세션값을 넣어줌
+		HttpSession session = request.getSession();
+		String userId = (String)session.getAttribute("session_mem_id");
+		Map<String, Object> likeCheckMap = commandMap.getMap();
+		likeCheckMap.put("USER_ID", userId);		
 		
 		Map<String, Object> timelineMap = popupService.selectOneCommunityTimeline(commandMap.getMap());		
 		List<Map<String, Object>> commentList = popupService.selectComment(commandMap.getMap());
 		List<Map<String, Object>> imgList = popupService.selectOneCommunityTimelineImage(commandMap.getMap());
+		List<Map<String, Object>> likeList = likeService.selectBoardLike(commandMap.getMap());
 		
+		//좋아요 유무 확인
+		int likeCheck = likeService.selectTimelineLikeCheck(likeCheckMap);
+		timelineMap.put("likeCheck", likeCheck);
+		
+		//좋아요 수 입력
+		int likeCnt = likeList.size();
+		timelineMap.put("likeCnt", likeCnt);
+		
+		//댓글 수 입력		
 		int commentCnt = commentList.size(); 				//총 댓글수
 		timelineMap.put("commentCnt", commentCnt);
 		
-		mv.addObject("timelineMap", timelineMap); 		//게시글
+		mv.addObject("likeList",likeList);							//좋아요 리스트
+		mv.addObject("timelineMap", timelineMap); 	//게시글
 		mv.addObject("commentList",commentList);		//댓글리스트
-		mv.addObject("imgList", imgList);						//게시글 이미지
+		mv.addObject("imgList", imgList);						//게시글 이미지 리스트
 		System.out.println("전송");
 		return mv;
 	}

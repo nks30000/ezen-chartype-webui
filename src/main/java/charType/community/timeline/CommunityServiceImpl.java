@@ -36,4 +36,11 @@ public class CommunityServiceImpl implements CommunityService {
 		return communityDAO.searchNickCommunityTimeline(map); 	
 	}
 
+
+
+	@Override
+	public List<Map<String, Object>> selectPrivateCommunityTimeline(Map<String, Object> map) throws Exception {
+		return communityDAO.selectPrivateListCommunityTimeline(map); 
+	}
+
 }
