@@ -1,17 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<c:set var="CONTEXT_PATH" value="${pageContext.request.contextPath}"/> 
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<%@ include file="/WEB-INF/include_popup_header.jspf" %>
+	
+
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
   <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
   <link rel="stylesgeet" href="https://rawgit.com/creativetimofficial/material-kit/master/assets/css/material-kit.css">
-  <link rel="stylesheet" href="/charType/resources/css/profile.css">
+  <link rel="stylesheet" href="/charType/resources/css/desktop.css">
+<!--   <link rel="stylesheet" href="/charType/resources/css/profile.css"> -->
   <!-- 
   
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -25,36 +29,83 @@
 </head>
 
 <body class="profile-page">
-  <nav class="navbar navbar-color-on-scroll navbar-transparent    fixed-top  navbar-expand-lg " color-on-scroll="100" id="sectionsNav">
+  <nav class="navbar navbar-color-on-scroll fixed-top navbar-expand-lg " color-on-scroll="100" id="sectionsNav">
     <div class="container">
-      <div class="navbar-translate">
-        <a class="navbar-brand" href="https://demos.creative-tim.com/material-kit/index.html" target="_blank">Material Kit </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-          <span class="navbar-toggler-icon"></span>
-          <span class="navbar-toggler-icon"></span>
-        </button>
+      <div class="navbar-left navbar-translate">
+        <a class="navbar-brand" href="${CONTEXT_PATH}/front/community/timeline/list"><span class="logo"></span><span class="sr-only">Material Kit </span></a>
       </div>
-
-<div class="collapse navbar-collapse">
+	  <div class="navbar-center collapse navbar-collase">
+	  	<%-- <form id="searchfrm" name="searchfrm" novalidate="novalidate">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-md-9 col-sm-36 p-0">
+                            <input type="text" id="searchtxt" name="searchtxt" class="form-control search-slt" placeholder="Search" ></input>
+                        </div>
+                  
+                        <div class="col-md-3 col-sm-12 p-0">
+                            <button type="button" class="btn btn-danger wrn-btn" id="search">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form> --%>
+        <form id="searchfrm" name="searchfrm" novalidate="novalidate">
+		  	<div class="input-group">
+			  	<input type="search" id="searchtxt" name="searchtxt" class="form-control" placeholder="Search"/>
+			  	<div class="input-group-btn">
+                    <button type="button" class="btn btn-primary" id="search">Search</button>
+                </div>
+		  	</div>
+        </form>
+	  </div>
+	  <div class="navbar-right collapse navbar-collapse">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a href="/charType/account/profile/config/modify" class="nav-link">
-              <i class="material-icons">apps</i> Edit Profile
-            </a>
-    		</li>
-           <li class="nav-item">
-            <a href="/charType/logout" class="nav-link">
-              <i class="material-icons">apps</i> Logout
-            </a>
-    		</li>
-          
-            <li class="nav-item">
-            <a href="/charType/front/community/timeline/list" class="nav-link">
-              <i class="material-icons">apps</i> Main
-            </a>
-    		</li>
-        
+        	<c:if test="${sessionScope.session_mem_id != null }">
+				<li class="nav-item">
+					<a href="/charType/front/community/timeline/list" class="nav-link">
+						<i class="fa fa-home"></i>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a href="javascript:void(0);" class="nav-link" onclick="alramModal('alram')" >
+						<i class="fa fa-heart-o"></i>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a href="javascript:void(0);" id="btnPopupWriteBoard" class="nav-link">
+						<i class="fa fa-plus-square-o"></i>
+					</a>
+				</li>
+				<!-- <li class="nav-item">
+					<a href="/charType/account/profile/config/modify" class="nav-link">
+						<i class="material-icons">apps</i> Edit Profile
+					</a>
+				</li>
+				<li class="nav-item">
+					<a href="/charType/logout" class="nav-link">
+						<i class="material-icons">apps</i> Logout
+					</a>
+				</li>
+				<li class="nav-item">
+					<a href="/charType/front/community/timeline/list" class="nav-link">
+						<i class="material-icons">apps</i> Main
+					</a>
+				</li> -->
+	        	<li class="nav-item">
+					<div class="dropdown">
+					  <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					    <i class="fa fa-user-circle"></i>
+					  </a>
+					
+					  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+					    <a class="dropdown-item" href="/charType/front/account/profile/timeline/${sessionScope.session_mem_id}"><i class="fa fa-user-circle-o  mr-2"></i>프로필</a>
+					    <a class="dropdown-item" href="/charType/account/profile/config/modify"><i class="fa fa-gear  mr-2"></i>설정</a>
+					    <a class="dropdown-item" href="/charType/logout"><i class="fa fa-sign-out  mr-2"></i>로그아웃</a>
+					  </div>
+					</div>
+				</li>
+        	</c:if> 
         </ul>
       </div>
     </div>
@@ -65,7 +116,7 @@
             
   <div class="page-header header-filter" data-parallax="true" style="
 	  <c:choose>
-		  <c:when test='${map.member.prof_img != null}'>background-image:url('/img/${map.member.prof_img}');</c:when>
+		  <c:when test='${map.member.prof_img != null}'>background-image:url('/img/${map.member.back_img}');</c:when>
 		  <c:otherwise>background-image:url('http://wallpapere.org/wp-content/uploads/2012/02/black-and-white-city-night.png');</c:otherwise>
 	  </c:choose>">
   </div>
@@ -87,11 +138,13 @@
               
               </div>
               <div class="name">
+                <h6><span class="badge badge-info">${map.member.mbti}</span></h6>
                 <h3 class="title"> ${map.member.nick}  </h3>
-                <h6>${map.member.mbti}</h6>
+                <!-- 
                 <a href="javascript:void(0);" onclick="alramModal('alram')" >알림</a>
                 <a href="#pablo" class="btn btn-just-icon btn-link btn-twitter"><i class="fa fa-twitter"></i></a>
-                <a href="#pablo" class="btn btn-just-icon btn-link btn-pinterest"><i class="fa fa-pinterest"></i></a>
+                <a href="#pablo" class="btn btn-just-icon btn-link btn-pinterest"><i class="fa fa-pinterest"></i></a> 
+                -->
               </div>
             </div>
           </div>
@@ -99,20 +152,7 @@
         <div class="description text-center">
           <p>${map.member.intro}</p>
         </div>
-        		<div class="text-center">
-	        		<%-- <c:when test="${map.following_id == sessionScope.session_mem_id}"> --%>
-	          		<c:if test="${map.following_id != map.follow_id}">
-	          			<!-- follow하지 않은상태-->	
-			        	<c:if test="${map.followYN == 0 }">			        
-			        		<button class="btn btn-outline-primary btn-sm" type="button" id="btnRequestFollow">follow</button>			        		
-			        	</c:if>
-			        	<!-- follow한 상태일때-->	
-			        	<c:if test="${map.followYN == 1 }">
-			           		<button class="btn btn-primary btn-sm active" type="button" id="btnRequestUnfollow" >following</button>
-			        	</c:if>			        		       
-					</c:if>
-					<%-- </c:when> --%>
-        		</div>
+        		
 				
 				<div class="name d-flex justify-content-center" >
 					<div class="text-center m-3">
@@ -120,13 +160,28 @@
 	 					<h3 class="title"> ${map.followCnt }</h3></a>      
 	                	<h6>Followers</h6> 
 					</div>
-                  
+                  	<div class="vertical-line"></div>
 					<div class="text-center m-3">
 						<a href="javascript:void(0);" onclick="followModal('following')" >
 	            		<h3 class="title"> ${map.followingCnt }</h3></a>              
 	                	<h6>Following</h6>
 					</div>            		                                       
                </div>
+               
+               <div class="text-center mt-3">
+	        		<%-- <c:when test="${map.following_id == sessionScope.session_mem_id}"> --%>
+	          		<c:if test="${map.following_id != map.follow_id}">
+	          			<!-- follow하지 않은상태-->	
+			        	<c:if test="${map.followYN == 0 }">			        
+			        		<button class="btn btn-dark btn-sm" type="button" id="btnRequestFollow">follow</button>			        		
+			        	</c:if>
+			        	<!-- follow한 상태일때-->	
+			        	<c:if test="${map.followYN == 1 }">
+			           		<button class="btn btn-dark btn-sm active" type="button" id="btnRequestUnfollow" >following</button>
+			        	</c:if>			        		       
+					</c:if>
+					<%-- </c:when> --%>
+        		</div>
 				
 	          					        		        	        		
 <c:choose>
@@ -172,6 +227,7 @@
               	<c:when test="${ID == sessionScope.session_mem_id}">
                 
  
+ <%-- 
  <form id="frm" name="frm" enctype="multipart/form-data">
                      <div class="card gedf-card">
                         <div class="card-header">
@@ -234,7 +290,8 @@
                             </div>
                         </div>
                     </div>
-			 </form>
+			 </form> 
+			 --%>
 </c:when>
 </c:choose>   
 
@@ -246,13 +303,16 @@
 
         <div class="tab-content tab-space">
 		<div class="tab-pane active text-center gallery" id="life">
-		    <section class="pinBoot2">
+		    <section class="pinBoot2 ui-pinboot">
 
            <c:choose>
 					<c:when test="${fn:length(life) > 0}">
 					<c:forEach items="${life}" var="timelineLife">
              			<article class="white-panel"><img src="/img/${timelineLife.SAVED_NM}" alt="" />
-        				<h4><a href="#">${timelineLife.TITLE}</a></h4>
+        				<h4><a href="#" name="openPopup">${timelineLife.TITLE}</a>
+        				<input type="hidden" name="BOARD_NUM" id="subBoardNum" value="${timelineLife.BOARD_NUM }">
+        				<input type="hidden" name="ID" id="subId" value="${timelineLife.ID }" >
+        				</h4>
        					 <p>${timelineLife.CONTENT}</p>
       					</article>
 <%--               			<button id="delete" onclick="location.href='delete?num=${timelineFav.BOARD_NUM}'">delete</button>
@@ -307,14 +367,17 @@
 <!-- ============================================================================================== -->
           
           <div class="tab-pane text-center gallery" id="fav">
-	  	   <section class="pinBoot2">
+	  	   <section class="pinBoot2 ui-pinboot">
 
 			     <c:choose>
 			    
 					<c:when test="${fn:length(fav) > 0}">
 					<c:forEach items="${fav}" var="timelineFav">
              			<article class="white-panel"><img src="/img/${timelineFav.SAVED_NM}" alt=""/>
-        				<h4><a href="#">${timelineFav.TITLE}</a></h4>
+        				<h4><a href="#" name="openPopup">${timelineFav.TITLE}</a>
+        				<input type="hidden" name="BOARD_NUM" id="subBoardNum" value="${timelineFav.BOARD_NUM }">
+        				<input type="hidden" name="ID" id="subId" value="${timelineFav.ID }" >
+        				</h4>
        					 <p>${timelineFav.CONTENT}</p>
       					</article>
 <%--               			<button id="delete" onclick="location.href='delete?num=${timelineFav.BOARD_NUM}'">delete</button>
@@ -334,13 +397,16 @@
           
           
         <div class="tab-pane text-center gallery" id="shop">
-          <section class="pinBoot2">
+          <section class="pinBoot2 ui-pinboot">
 
            <c:choose>
 					<c:when test="${fn:length(shop) > 0}">
 					<c:forEach items="${shop}" var="timelineShop">
              			<article class="white-panel"><img src="/img/${timelineShop.SAVED_NM}" alt="">
-        				<h4><a href="#">${timelineShop.TITLE}</a></h4>
+        				<h4><a href="#" name="openPopup">${timelineShop.TITLE}</a>
+        				<input type="hidden" name="BOARD_NUM" id="subBoardNum" value="${timelineShop.BOARD_NUM }">
+        				<input type="hidden" name="ID" id="subId" value="${timelineShop.ID }" >
+        				</h4>
        					 <p>${timelineShop.CONTENT}</p>
       					</article>
 <%--               			<button id="delete" onclick="location.href='delete?num=${timelineFav.BOARD_NUM}'">delete</button>
@@ -358,13 +424,16 @@
            <!-- ============================================================================================== -->
           
           <div class="tab-pane text-center gallery" id="style">
-          	          <section class="pinBoot2">
+          	          <section class="pinBoot2 ui-pinboot">
 
            <c:choose>
 					<c:when test="${fn:length(style) > 0}">
 					<c:forEach items="${style}" var="timelineStyle">
              			<article class="white-panel"><img src="/img/${timelineStyle.SAVED_NM}" alt="">
-        				<h4><a href="#">${timelineStyle.TITLE}</a></h4>
+        				<h4><a href="#" name="openPopup">${timelineStyle.TITLE}</a>
+        				<input type="hidden" name="BOARD_NUM" id="subBoardNum" value="${timelineStyle.BOARD_NUM }">
+        				<input type="hidden" name="ID" id="subId" value="${timelineStyle.ID }" >
+        				</h4>
        					 <p>${timelineStyle.CONTENT}</p>
       					</article>
 <%--               			<button id="delete" onclick="location.href='delete?num=${timelineFav.BOARD_NUM}'">delete</button>
@@ -504,13 +573,16 @@
 
         <div class="tab-content tab-space">
 		<div class="tab-pane active text-center gallery" id="life">
-		    <section class="pinBoot2">
+		    <section class="pinBoot2 ui-pinboot">
 
            <c:choose>
 					<c:when test="${fn:length(life) > 0}">
 					<c:forEach items="${life}" var="timelineLife">
              			<article class="white-panel"><img src="/img/${timelineLife.SAVED_NM}" alt="" />
-        				<h4><a href="#">${timelineLife.TITLE}</a></h4>
+        				<h4><a href="#" name="openPopup">${timelineLife.TITLE}</a>
+        				<input type="hidden" name="BOARD_NUM" id="subBoardNum" value="${timelineLife.BOARD_NUM }">
+        				<input type="hidden" name="ID" id="subId" value="${timelineLife.ID }" >
+        				</h4>
        					 <p>${timelineLife.CONTENT}</p>
       					</article>
 <%--               			<button id="delete" onclick="location.href='delete?num=${timelineFav.BOARD_NUM}'">delete</button>
@@ -565,14 +637,17 @@
 <!-- ============================================================================================== -->
           
           <div class="tab-pane text-center gallery" id="fav">
-	  	   <section class="pinBoot2">
+	  	   <section class="pinBoot2 ui-pinboot">
 
 			     <c:choose>
 			    
 					<c:when test="${fn:length(fav) > 0}">
 					<c:forEach items="${fav}" var="timelineFav">
              			<article class="white-panel"><img src="/img/${timelineFav.SAVED_NM}" alt=""/>
-        				<h4><a href="#">${timelineFav.TITLE}</a></h4>
+        				<h4><a href="#" name="openPopup">${timelineFav.TITLE}</a>
+        				<input type="hidden" name="BOARD_NUM" id="subBoardNum" value="${timelineFav.BOARD_NUM }">
+        				<input type="hidden" name="ID" id="subId" value="${timelineFav.ID }" >
+        				</h4>
        					 <p>${timelineFav.CONTENT}</p>
       					</article>
 <%--               			<button id="delete" onclick="location.href='delete?num=${timelineFav.BOARD_NUM}'">delete</button>
@@ -592,13 +667,16 @@
           
           
         <div class="tab-pane text-center gallery" id="shop">
-          <section class="pinBoot2">
+          <section class="pinBoot2 ui-pinboot">
 
            <c:choose>
 					<c:when test="${fn:length(shop) > 0}">
 					<c:forEach items="${shop}" var="timelineShop">
              			<article class="white-panel"><img src="/img/${timelineShop.SAVED_NM}" alt="">
-        				<h4><a href="#">${timelineShop.TITLE}</a></h4>
+        				<h4><a href="#" name="openPopup">${timelineShop.TITLE}</a>
+        				<input type="hidden" name="BOARD_NUM" id="subBoardNum" value="${timelineShop.BOARD_NUM }">
+        				<input type="hidden" name="ID" id="subId" value="${timelineShop.ID }" >
+        				</h4>
        					 <p>${timelineShop.CONTENT}</p>
       					</article>
 <%--               			<button id="delete" onclick="location.href='delete?num=${timelineFav.BOARD_NUM}'">delete</button>
@@ -616,13 +694,16 @@
            <!-- ============================================================================================== -->
           
           <div class="tab-pane text-center gallery" id="style">
-          	          <section class="pinBoot2">
+          	          <section class="pinBoot2 ui-pinboot">
 
            <c:choose>
 					<c:when test="${fn:length(style) > 0}">
 					<c:forEach items="${style}" var="timelineStyle">
              			<article class="white-panel"><img src="/img/${timelineStyle.SAVED_NM}" alt="">
-        				<h4><a href="#">${timelineStyle.TITLE}</a></h4>
+        				<h4><a href="#" name="openPopup">${timelineStyle.TITLE}</a>
+        				<input type="hidden" name="BOARD_NUM" id="subBoardNum" value="${timelineStyle.BOARD_NUM }">
+        				<input type="hidden" name="ID" id="subId" value="${timelineStyle.ID }" >
+        				</h4>
        					 <p>${timelineStyle.CONTENT}</p>
       					</article>
 <%--               			<button id="delete" onclick="location.href='delete?num=${timelineFav.BOARD_NUM}'">delete</button>
@@ -654,16 +735,92 @@
     </c:choose>
           </div>
           </div>
-          
-          
           </div>
+          
+	<div id="modalWrite" class="modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+				</div>
+				<div class="modal-body">
+					<form id="frm" name="frm" enctype="multipart/form-data">
+			            <div class="card gedf-card">
+			               <div class="card-header">
+			                   <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+			                       <li class="nav-item">
+			                           <a class="nav-link active" id="images-tab" data-toggle="tab" role="tab" aria-controls="images" aria-selected="false" href="#images">Images</a>
+			                       </li>
+			                       <li class="nav-item">
+			                           <a class="nav-link" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="true">Make
+			                               a publication</a>
+			                       </li>
+			                   </ul>
+			               </div>
+			               <div class="card-body">
+								<div class="tab-content" id="myTabContent">
+			                   
+								<div class="tab-pane fade" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+									<div class="form-group">
+										<label class="sr-only" for="message">post</label>
+										<textarea class="form-control" id="TITLE" name="TITLE" rows="1" placeholder="Write your title"></textarea>
+										<textarea class="form-control" id="CONTENT" name="CONTENT" rows="3" placeholder="What are you thinking?"></textarea>
+										   			
+									</div>
+								</div>
+								<input type="hidden" id="ID" name="ID" value="${sessionScope.session_mem_id}">
+								<input type="hidden" id="NICK" name="NICK" value="${sessionScope.session_mem_nick}">
+								<input type="hidden" id="MBTI" name="MBTI" value="${sessionScope.session_mem_mbti}">
+								<div class="tab-pane fade show active" id="images" role="tabpanel" aria-labelledby="images-tab">
+								    <div class="form-group">
+								        <div class="">
+								        	<div id="fileDiv" class="img-list">
+								            	<p class="img-item" id="imgWrap0">
+									            	<img alt="이미지" src="" id="img0">
+									            	<input type="file" name="file_0" id="file_0">
+									 				<a href="javascript:void(0);" class="btn btn-primary file-popup">add</a>
+									 				<a href="javascript:void(0);" class="btn btn-primary delete-file" id="deleteFile">delete</a>
+								            	</p>
+								            </div>
+								        </div>
+								    </div>
+								    <div class="py-4"></div>
+								</div>
+								<label for="CATEGORY">Choose a category:</label>
+								<select name="CATEGORY" id="CATEGORY" class="form-control">
+									<option value="LIFE">LIFE</option>
+									<option value="FAVORITE">FAVORITE</option>
+									<option value="SHOP">SHOP LIST</option>
+									<option value="STYLE">STYLE</option>
+								</select>
+								</div>
+								<div class="btn-toolbar justify-content-between">
+								    	<a href=#this class="btn btn-primary" id="addFile">add file</a>
+								    	<a href="javascript:void(0);" class="btn btn-primary" id="btnTabNext">Next</a>
+								    	
+								        <a href=#this class="btn btn-primary" id="write">share</a>
+								    <div class="btn-group">
+								    </div>   
+								</div>
+			                </div>
+			            </div>
+					</form>	
+				</div>
+			</div>
+		</div>
+	</div>       
 
+
+	
   <footer class="footer text-center ">
     <p>Made with <a href="https://demos.creative-tim.com/material-kit/index.html" target="_blank">Material Kit</a> by Creative Tim</p>
   </footer>
 
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
@@ -693,6 +850,7 @@
 	  </div>
 	</div>
 	<%@ include file="/WEB-INF/include-body.jspf" %>
+	<%@ include file="/WEB-INF/include_popup_body.jspf" %>
 </body>
 
 
@@ -702,6 +860,19 @@
 		var gfv_count = 1;
 	
 		$(document).ready(function(){
+			
+			initImgForm($("#imgWrap0"));
+			
+			
+			//글쓰기 팝업 next 버튼
+			$("#modalWrite").find("#btnTabNext").on("click", function(){
+				var nav = $(this).parents(".modal-content:first").find(".nav");
+				var navLink = $(this).parents(".modal-content:first").find(".nav-link.active");
+				var navItem = navLink.parent();
+				var index = navItem.index();
+				nav.find(".nav-item").eq(index+1).find(".nav-link").click();
+			}) 
+			
 			$("#list").on("click", function(e){ //목록으로 버튼
 				e.preventDefault();
 				fn_openBoardList();
@@ -714,7 +885,8 @@
 			
 			$("#addFile").on("click", function(e){ //파일 추가 버튼 
 				e.preventDefault(); 
-				fn_addFile(); });
+				fn_addFile(); 
+			});
 
 
 		$('#btnRequestFollow').click(function(){
@@ -728,6 +900,12 @@
 		
 		$('#btnalram').click(function(){
 			window.location = "/charType/alram/list/like?ALRAM_ID=${sessionScope.session_mem_id}";
+		})
+		$('#btnPopupWriteBoard').click(function(){
+			$("#modalWrite").modal({
+				backdrop:'static',
+				keyboard:false
+			});
 		})
 		
 	});
@@ -745,17 +923,44 @@
 		
 		
 		function fn_addFile(){
+			if( document.getElementById("file_"+ (gfv_count-1)).files.length == 0){
+				alert("빈 폼이 있어요")
+				return;
+			}
+			var itemId = "imgWrap"+gfv_count;
+			var formName = "file_"+gfv_count;
+			var delBtnId = "deleteFile"+gfv_count;
+			var thumbnailId = "img"+gfv_count;
+			var str = "<p id='"+itemId+"' class='img-item'><img src='' id='"+ thumbnailId+"'/><input type='file' id='"+formName+"' name='file_"+(gfv_count)+"'><a href='javascript:void(0);' class='btn btn-primary file-popup'>add</a><a href=''#this' class='btn btn-primary delete-file' id='deleteFile"+(gfv_count)+"' name='deleteFile'>delete</a></p>";
 			
-			var str = "<p><input type='file' name='file_"+(gfv_count++)+"'><a href=''#this' class='btn' id='deleteFile' name='deleteFile'>delete</a></p>";
 			$("#fileDiv").append(str);
-			$("a[name='deleteFile']").on("click", function(e){ //삭제 버튼
-				e.preventDefault();
-				fn_deleteFile($(this));
-			});
-		}
+			initImgForm($("#"+itemId));
+			
+// 			$("#"+itemId).find(".file-popup").click(function(){
+// 				e.preventDefault();
+// 				$('#'+formName).trigger("click");
+// 			});
+// 			$("#"+itemId).find(".delete-file").on("click", function(e){ //삭제 버튼
+// 				e.preventDefault();
+// 				fn_deleteFile($(this));
+// 			});
 
-		function fn_deleteFile(obj){ 
+// 			$("#"+itemId).find("input").on("change", function(e) {
+// 				uploadImgPreview(formName, thumbnailId );
+// 				$('#'+itemId).addClass("added");
+// 				$(e.target).siblings("img").show();
+// 			})
+			$('#'+formName).trigger("click");
+			gfv_count++;
+		}
+		
+		function fn_deleteFile(obj){
+			if($("#fileDiv").find(".img-item").length == 1){
+				alert("하나밖에 안남음")
+				return;
+			}
 			obj.parent().remove(); 
+			
 		}
 
 
@@ -784,7 +989,7 @@
 //	 	    window.open("/charType/front/account/profile/timeline?user_id="+param, "userId", "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );  
 		}  
 		
-function alramModal(param) {
+		function alramModal(param) {
 			
 			var uri = "";
 			var html = "";
@@ -817,8 +1022,8 @@ function alramModal(param) {
 	    	comSubmit.addParam("ALRAM_CONTNUM", alram_contnum);
 	    	comSubmit.submit(); 
 	    }
-		
-		function fn_readFollowV2(reg_id, alram_num){
+	    
+	    function fn_readFollowV2(reg_id, alram_num){
 	    	console.log(reg_id+","+alram_num);
 	       	var comSubmit = new ComSubmit();
 	    	comSubmit.setUrl("<c:url value='/alram/list/readFollow'/>");
@@ -826,6 +1031,45 @@ function alramModal(param) {
 	    	comSubmit.addParam("ALRAM_NUM", alram_num);
 	    	comSubmit.submit(); 
 	    }
+		
+		
+		function uploadImgPreview(id, trgId) {
+			// @breif 업로드 파일 읽기
+			let fileInfo = document.getElementById(id).files[0];
+			let reader = new FileReader();
+		    // @details readAsDataURL( )을 통해 파일을 읽어 들일때 onload가 실행
+		    reader.onload = function() {
+		    	if(reader.result != null) {
+			        document.getElementById(trgId).src = reader.result;
+		    	}
+		    };
+			if( fileInfo ) {
+		        // @details readAsDataURL( )을 통해 파일의 URL을 읽어온다.
+		        reader.readAsDataURL( fileInfo );
+		    } else {
+		    	fn_deleteFile($("#"+trgId));
+	    	}
+		}
+		
+		function initImgForm (el) {
+			var addBtn = el.find(".file-popup");
+			var delBtn = el.find(".delete-file");
+			
+			addBtn.click(function(e){
+				e.preventDefault();
+				el.find("input").trigger("click");
+			});
+			delBtn.on("click", function(e){ //삭제 버튼
+				e.preventDefault();
+				fn_deleteFile($(this));
+			});
+
+			el.find("input").on("change", function(e) {
+				uploadImgPreview($(this).attr("id"), $(e.target).siblings("img").attr("id") );
+				el.addClass("added");
+				$(e.target).siblings("img").show();
+			})
+		}
 	</script>
 
 
