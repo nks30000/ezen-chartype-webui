@@ -201,6 +201,8 @@
         var hour = date.getHours();
         var minute = date.getMinutes();
         var second = date.getSeconds();
+        var year = date.getFullYear();
+        
 
         month = month >= 10 ? month : '0' + month;
         day = day >= 10 ? day : '0' + day;
@@ -208,7 +210,7 @@
         minute = minute >= 10 ? minute : '0' + minute;
         second = second >= 10 ? second : '0' + second;
 
-        return date.getFullYear() + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+        return month + '.' + day + ' ' + hour + ':' + minute;
 }
 	
 	//요청시 팝업 화면 데이터 설정
@@ -240,6 +242,11 @@
 	            if(timelineContents == null){
 	            	timelineContents = "";
 	            }
+	            var timelineMBTI = timelineMap.MBTI;
+	            if(timelineMBTI == null){
+	            	timelineMBTI = "";
+	            }
+	            
 				//게시글 이미지 출력
 				 for (i = 0; i < imgList.length ; i++){	
 					if( i == 0){
@@ -257,7 +264,7 @@
 	            html += '<a href=""><img class="img-circle" src="/img/'+timelineMap.PROF_IMG+'"/></a>'
 	            html += '<strong><a href="#this" name="myPage">'+timelineMap.NICK+'</a>'
 	            html += '<input type="hidden" id="ID" value="'+timelineMap.ID+'"></strong>'
-	            html += '<span>'+timelineMap.MBTI+'&nbsp;&nbsp;&nbsp;&nbsp; #'+timelineMap.CATEGORY+'</span>'
+	            html += '<span>'+timelineMBTI+'&nbsp;&nbsp;&nbsp;&nbsp; #'+timelineMap.CATEGORY+'</span>'
 	            html += '<span>'+ create_dt +'</span>'
 	            html += '<br>'
 	           	html += '<p id="timelineContent">'+timelineContents+'</p>'
@@ -284,8 +291,12 @@
 	            html += '<ul class="img-comment-list">'
 	            for (i = 0; i < commentList.length ; i++) {
 	            	
-	            	 var regDate = new Date(commentList[i].REGDATE);
+	            	var regDate = new Date(commentList[i].REGDATE);
 	            	var commentRegDate = dateFormat(regDate);
+	            	var commentMBTI = commentList[i].MBTI;
+	            	if (commentMBTI == null){
+	            		commentMBTI = "";
+	            	}
 	            	
 	            	html += '<li>'
 	            	html += '<div class="comment-img">'
@@ -294,7 +305,7 @@
 	            	html += '<div class="comment-text">'
 	            	html += '<strong><a href="#this" name="myPage">'+commentList[i].NICK +'</a>'
 	            	html += '<input type="hidden" id="ID" value="'+commentList[i].ID+'"></strong>'
-	            	html += '<span>'+commentList[i].MBTI +'</span>'
+	            	html += '<span>'+commentMBTI +'</span>'
 	            	html += '<p id="comment_contents">'+commentList[i].CONTENTS+'</p>'
 	            	html += '<span class="date sub-text">'+commentRegDate+'</span>'
 	            	html += '<div id="hidden">'

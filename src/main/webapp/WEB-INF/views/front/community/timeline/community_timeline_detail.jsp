@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -53,13 +54,14 @@
               <!-- 게시글 정보 가져오기 -->
               <div class="col-md-4 modal-meta">
                 <div class="modal-meta-top">
-                  <button type="button" class="close"  data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                  <!-- <button type="button" class="close"  data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button> -->
                   <div class="img-poster clearfix" >
                     <a href=""><img class="img-circle" src="/img/${timelineMap.PROF_IMG}"/></a>                    
                     <strong><a href="#this" name="myPage">${timelineMap.NICK}</a>
                     <input type="hidden" id="ID" value="${timelineMap.ID}"></strong>
                     <span>${timelineMap.MBTI} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #${timelineMap.CATEGORY }</span>
-                    <span>${timelineMap.CREATE_DT }</span>
+                    <fmt:formatDate var="timelineCreateDt" value="${timelineMap.CREATE_DT}" pattern="MM.dd HH:mm"/>
+                    <span>${timelineCreateDt }</span>
                     <br>
                     <p id="timelineContent">${timelineMap.CONTENT }</p>                    
                     <c:choose>
@@ -91,8 +93,9 @@
                         <strong><a href="#this" name="myPage">${comment.NICK }</a>
                         <input type="hidden" id="ID" value="${comment.ID}"></strong>
                         <span>${comment.MBTI }</span>
-                        <p id="comment_contents">${comment.CONTENTS }</p>                        
-                        <span class="date sub-text">${comment.REGDATE }</span>                        
+                        <p id="comment_contents">${comment.CONTENTS }</p>
+                        <fmt:formatDate var="commentRegDate" value="${comment.REGDATE}" pattern="MM.dd HH:mm"/>                       
+                        <span class="date sub-text">${commentRegDate }</span>                        
                         <div id="hidden">
                         	<!-- 자신의 댓글 수정 삭제 기능 -->
                         	<c:choose>
@@ -171,6 +174,8 @@
 	});
 	
 	$(document).ready(function(){
+		
+		$("#modalBoard").modal('show');
 		
 /*  		 $("#openPopup").click(function(){			//팝업
 			$("#modalBoard").modal('show');		
@@ -257,7 +262,7 @@
 		var comSubmit = new ComSubmit();		
 		comSubmit.setUrl("<c:url value='/community/timeline/commentModify' />");
 		comSubmit.addParam("COMMENT_NUM", obj.parent().find("#COMMENT_NUM").val());
-		comSubmit.addParam("CONTENTS", obj.parent().find("#CONTENTS").val()+'<span>(수정됨)</span>');
+		comSubmit.addParam("CONTENTS", obj.parent().find("#CONTENTS").val());
 		comSubmit.addParam("BOARD_NUM",$("input[name='BOARD_NUM']").val());
  		comSubmit.addParam("ID",$("input[name='BOARD_ID']").val());
 		comSubmit.submit();	 
