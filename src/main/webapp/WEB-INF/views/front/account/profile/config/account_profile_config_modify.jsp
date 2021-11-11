@@ -118,9 +118,6 @@
     <div class="container mt-7">
       <!-- Table -->
       <div class="row">
-        <div class="col-xl-8 m-auto">
-			<h2 class="mb-5">My Profile Card</h2>
-		</div>
         <div class="col-xl-8 m-auto order-xl-1">
           <div class="card bg-secondary shadow">
             <div class="card-header bg-white border-0">
@@ -188,7 +185,7 @@
                 
 	                <div class="pl-lg-4">
 	                	<div class="form-group">
-	                		<label class="form-control-label">공개여부</label>
+	                		<label class="form-control-label">비공개설정</label>
 	                		<div>
 	                			<div>
 <%-- 									<input type="checkbox" name="private_yn" <c:if test='${mem.private_yn eq "Y"}'>checked</c:if>/> <span>공개여부</span> --%>

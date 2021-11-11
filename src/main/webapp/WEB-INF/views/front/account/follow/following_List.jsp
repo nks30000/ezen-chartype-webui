@@ -48,7 +48,7 @@
 		                            <span class="followers">${row.FOLLOWING_CNT} followers</span></div>
 		                        </div>
 		                        <div class="d-flex flex-row align-items-center mt-2">
-		                        	<button class="btn btn-primary btn-sm active" type="button" id="btnRequestUnfollow" data-target="${row.ID}" >unfollowing</button>
+		                        	<button class="btn btn-primary btn-sm active" type="button" id="btnRequestUnfollow" data-target="${row.ID}" >unfollow</button>
 		                        	<!-- <button class="btn btn-outline-primary btn-sm" type="submit">Delete</button> -->
 		                        </div>
 		                    </div>

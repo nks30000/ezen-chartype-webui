@@ -8,6 +8,9 @@
     <div class="modal img-modal" id="modalBoard">
       <div class="modal-dialog modal-lg" >     
         <div class="modal-content">
+          <div class="modal-control-panel">
+          	<button type="button" class="close float-left"  data-dismiss="modal"><i class="fa fa-angle-left"></i><span class="sr-only">Close</span></button>
+          </div>
           <div class="modal-body">
             <div class="row">
               <div class="col-md-8 modal-image" id="image">              	

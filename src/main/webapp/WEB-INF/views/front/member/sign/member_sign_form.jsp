@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="${CONTEXT_PATH}/resources/css/sign-in.css">
 	<script language="JavaScript" src="${CONTEXT_PATH}/resources/script/script.js" charset="UTF-8"></script>
 	<script>
-	/* 공개여부설정 */
+	/* 비공개 설정 UI */
 	$(function() {
 		$('#radioBtn a').on('click', function(){
 		    var sel = $(this).data('title');
@@ -54,56 +54,57 @@
           <span class="navbar-toggler-icon"></span>
         </button>
       </div>
-
-	  <div class="collapse navbar-collapse">
-        <ul class="navbar-nav ml-auto">
-				<li class="nav-item">
-					<a href="/charType/front/community/timeline/list" class="nav-link">
-						<i class="fa fa-home"></i>
-					</a>
+	  <c:if test="${sessionScope.session_mem_id != null }">
+		  <div class="collapse navbar-collapse">
+	        <ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a href="/charType/front/community/timeline/list" class="nav-link">
+							<i class="fa fa-home"></i>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="/charType/account/profile/config/modify" class="nav-link">
+							<i class="fa fa-heart-o"></i>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="/charType/account/profile/config/modify" class="nav-link">
+							<i class="fa fa-plus-square-o"></i>
+						</a>
+					</li>
+	        	<c:if test="${sessionScope.session_mem_id != null }">
+					<li class="nav-item">
+						<a href="/charType/account/profile/config/modify" class="nav-link">
+							<i class="material-icons">apps</i> Edit Profile
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="/charType/logout" class="nav-link">
+							<i class="material-icons">apps</i> Logout
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="/charType/front/community/timeline/list" class="nav-link">
+							<i class="material-icons">apps</i> Main
+						</a>
+					</li>
+	        	</c:if>
+	        	<li class="nav-item">
+					<div class="dropdown">
+					  <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					    <i class="fa fa-user-circle"></i>
+					  </a>
+					
+					  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+					    <a class="dropdown-item" href="/charType/front/account/profile/timeline/${sessionScope.session_mem_id}"><i class="fa fa-user-circle-o  mr-2"></i>프로필</a>
+					    <a class="dropdown-item" href="/charType/front/account/profile/timeline/${sessionScope.session_mem_id}"><i class="fa fa-gear  mr-2"></i>설정</a>
+					    <a class="dropdown-item" href="/charType/logout"><i class="fa fa-sign-out  mr-2"></i>로그아웃</a>
+					  </div>
+					</div>
 				</li>
-				<li class="nav-item">
-					<a href="/charType/account/profile/config/modify" class="nav-link">
-						<i class="fa fa-heart-o"></i>
-					</a>
-				</li>
-				<li class="nav-item">
-					<a href="/charType/account/profile/config/modify" class="nav-link">
-						<i class="fa fa-plus-square-o"></i>
-					</a>
-				</li>
-        	<c:if test="${sessionScope.session_mem_id != null }">
-				<li class="nav-item">
-					<a href="/charType/account/profile/config/modify" class="nav-link">
-						<i class="material-icons">apps</i> Edit Profile
-					</a>
-				</li>
-				<li class="nav-item">
-					<a href="/charType/logout" class="nav-link">
-						<i class="material-icons">apps</i> Logout
-					</a>
-				</li>
-				<li class="nav-item">
-					<a href="/charType/front/community/timeline/list" class="nav-link">
-						<i class="material-icons">apps</i> Main
-					</a>
-				</li>
-        	</c:if>
-        	<li class="nav-item">
-				<div class="dropdown">
-				  <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				    <i class="fa fa-user-circle"></i>
-				  </a>
-				
-				  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-				    <a class="dropdown-item" href="/charType/front/account/profile/timeline/${sessionScope.session_mem_id}"><i class="fa fa-user-circle-o  mr-2"></i>프로필</a>
-				    <a class="dropdown-item" href="/charType/front/account/profile/timeline/${sessionScope.session_mem_id}"><i class="fa fa-gear  mr-2"></i>설정</a>
-				    <a class="dropdown-item" href="/charType/logout"><i class="fa fa-sign-out  mr-2"></i>로그아웃</a>
-				  </div>
-				</div>
-			</li>
-        </ul>
-      </div>
+	        </ul>
+	      </div>
+	  </c:if>
     </div>
   </nav>
   <div class="main-content">
@@ -195,7 +196,7 @@
                 
                 <div class="pl-lg-4">
                 	<div class="form-group">
-                		<label class="form-control-label">공개설정</label>
+                		<label class="form-control-label">비공개설정</label>
                 		<div>
                 			<div>
 <%-- 		                		<input type="checkbox" name="private_yn" <c:if test="${mem.private_yn eq 'Y'}">checked</c:if>/> <span>공개여부</span> --%>

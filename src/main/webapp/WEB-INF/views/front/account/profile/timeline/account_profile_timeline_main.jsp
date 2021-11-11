@@ -16,11 +16,6 @@
   <link rel="stylesheet" href="/charType/resources/css/desktop.css">
 	<%@ include file="/WEB-INF/include_popup_header.jspf" %>
 <!--   <link rel="stylesheet" href="/charType/resources/css/profile.css"> -->
-  <!-- 
-  
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
 
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -32,7 +27,7 @@
 <script src="/charType/resources/script/communityTimeline.js"></script>
 
 
-
+<link rel="stylesheet" href="/charType/resources/css/communityTimeline.css">
 <link rel="stylesheet" href="/charType/resources/css/timeline.css">
   
   
@@ -313,7 +308,7 @@
 
         <div class="tab-content tab-space">
 		<div class="tab-pane active text-center gallery" id="life">
-		    <section class="pinBoot2 ui-pinboot">
+		    <section class="pinBoot ui-pinboot">
 
            <c:choose>
 					<c:when test="${fn:length(life) > 0}">
@@ -377,7 +372,7 @@
 <!-- ============================================================================================== -->
           
           <div class="tab-pane text-center gallery" id="fav">
-	  	   <section class="pinBoot2 ui-pinboot">
+	  	   <section class="pinBoot ui-pinboot">
 
 			     <c:choose>
 			    
@@ -407,7 +402,7 @@
           
           
         <div class="tab-pane text-center gallery" id="shop">
-          <section class="pinBoot2 ui-pinboot">
+          <section class="pinBoot ui-pinboot">
 
            <c:choose>
 					<c:when test="${fn:length(shop) > 0}">
@@ -434,7 +429,7 @@
            <!-- ============================================================================================== -->
           
           <div class="tab-pane text-center gallery" id="style">
-          	          <section class="pinBoot2 ui-pinboot">
+          	          <section class="pinBoot ui-pinboot">
 
            <c:choose>
 					<c:when test="${fn:length(style) > 0}">
@@ -583,7 +578,7 @@
 
         <div class="tab-content tab-space">
 		<div class="tab-pane active text-center gallery" id="life">
-		    <section class="pinBoot2 ui-pinboot">
+		    <section class="pinBoot ui-pinboot">
 
            <c:choose>
 					<c:when test="${fn:length(life) > 0}">
@@ -647,7 +642,7 @@
 <!-- ============================================================================================== -->
           
           <div class="tab-pane text-center gallery" id="fav">
-	  	   <section class="pinBoot2 ui-pinboot">
+	  	   <section class="pinBoot ui-pinboot">
 
 			     <c:choose>
 			    
@@ -677,7 +672,7 @@
           
           
         <div class="tab-pane text-center gallery" id="shop">
-          <section class="pinBoot2 ui-pinboot">
+          <section class="pinBoot ui-pinboot">
 
            <c:choose>
 					<c:when test="${fn:length(shop) > 0}">
@@ -704,7 +699,7 @@
            <!-- ============================================================================================== -->
           
           <div class="tab-pane text-center gallery" id="style">
-          	          <section class="pinBoot2 ui-pinboot">
+          	          <section class="pinBoot ui-pinboot">
 
            <c:choose>
 					<c:when test="${fn:length(style) > 0}">
@@ -750,11 +745,15 @@
 	<div id="modalWrite" class="modal">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			          <span aria-hidden="true">&times;</span>
-			        </button>
-				</div>
+			
+				<div class="modal-control-panel">
+		        	<button type="button" class="close float-left"  data-dismiss="modal"><i class="fa fa-angle-left"></i><span class="sr-only">Close</span></button>
+		        </div>
+<!-- 				<div class="modal-header"> -->
+<!-- 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
+<!-- 			          <span aria-hidden="true">&times;</span> -->
+<!-- 			        </button> -->
+<!-- 				</div> -->
 				<div class="modal-body">
 					<form id="frm" name="frm" enctype="multipart/form-data">
 			            <div class="card gedf-card">
@@ -807,6 +806,7 @@
 								</select>
 								</div>
 								<div class="btn-toolbar justify-content-between">
+								    	<a href="javascript:void(0);" class="btn btn-primary" id="btnReset">Reset</a>
 								    	<a href=#this class="btn btn-primary" id="addFile">add file</a>
 								    	<a href="javascript:void(0);" class="btn btn-primary" id="btnTabNext">Next</a>
 								    	
@@ -909,6 +909,20 @@
 				keyboard:false
 			});
 		})
+		$('#btnReset').click(function(){
+			document.getElementById('frm').reset();
+			
+			$("#frm").find("input[type='file']").each(function(index, el) {
+				console.log(el)
+				$(el).parent().removeClass("added");
+				$(el).siblings("img").attr("src", "");
+			})
+			if ($("#fileDiv").find(".img-item").length > 1 ) {
+				$("#fileDiv").find(".img-item:first").siblings().remove();
+			}
+		})
+		
+		
 		
 	});
 		
@@ -1069,7 +1083,7 @@
 			el.find("input").on("change", function(e) {
 				uploadImgPreview($(this).attr("id"), $(e.target).siblings("img").attr("id") );
 				el.addClass("added");
-				$(e.target).siblings("img").show();
+// 				$(e.target).siblings("img").show();
 			})
 		}
 	</script>
