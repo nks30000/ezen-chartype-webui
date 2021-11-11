@@ -504,4 +504,11 @@ footer p a:hover {
 }
 .blockIt{
 	position:relative;
+	overflow:hidden;
+}
+.blockIt .white-panel {
+	transition: top, left;
+	transition-duration: 0.2s;
+	transition-timing-function: linear;
+	
 }
