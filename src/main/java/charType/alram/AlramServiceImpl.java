@@ -45,6 +45,11 @@ public class AlramServiceImpl implements AlramService {
 	public void readAlram(Map<String, Object> map) throws Exception {
 		alramDAO.readAlram(map);
 	}
+
+	@Override
+	public List<Map<String, Object>> alramFollowLoad(Map<String, Object> map) throws Exception {
+		return alramDAO.alramFollowLoad(map);
+	}
 	
 	
 	

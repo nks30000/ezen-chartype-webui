@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/WEB-INF/include-header.jspf" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,32 +28,57 @@
             <div class="col-md-6">
                 <div class="p-3 bg-white text-center">
                     <div><img src="https://i.imgur.com/yFeV2ed.png">
-                        <h1>Trendz</h1>
+                        <h1>ALARM</h1>
                     </div>
-                    <p>Follow some beautiful soul who&nbsp;<br>have some interests like you!<br><br></p>
+                  
+                    
+                       <!-- ===================================  좋아요 댓글 알람   ========================================= -->
+                    
+                    
                     <c:forEach var = "alram" items="${alramList}">
                     <div class="d-flex flex-row justify-content-between align-items-center">
                         <div class="d-flex flex-row align-items-center">
-                        <img class="rounded-circle" src="https://i.imgur.com/KmT515u.jpg" width="55">
+                        <img class="rounded-circle" src="/img/${alram.PROF_IMG}" width="55" height="55">
                             <div class="d-flex flex-column align-items-start ml-2">
                             <span class="font-weight-bold">                            
                             	${alram.REG_ID} 
                             </span>
                             <span class="followers">
                                 <c:if test="${alram.ALRAM_INDEX_NO == 1}">
-                            		<a href="#this" name="readBoard"> ${alram.REG_ID} 님이 게시물에 댓글을 작성했습니다</a>
+                            		<a href="#this" name="readBoard"> ${alram.REG_ID} 님이 ${alram.TITLE} 게시물에 <strong>댓글을</strong> 작성했습니다</a>
                             		<input type="hidden" id="alram_id" value="${alram.ALRAM_ID}">
                             		<input type="hidden" id="alram_num" value="${alram.ALRAM_NUM}">
                             		<input type="hidden" id="alram_contnum" value="${alram.ALRAM_CONTNUM}">
                             	</c:if>
                             	
                             	<c:if test="${alram.ALRAM_INDEX_NO == 2}">
-                            		<a href="#this" name="readBoard"> ${alram.REG_ID} 님이 좋아요를 눌렀습니다</a>
+                            		<a href="#this" name="readBoard"> ${alram.REG_ID} 님이 ${alram.TITLE} 게시물에 <b>좋아요를</b> 눌렀습니다</a>
                             		<input type="hidden" id="alram_id" value="${alram.ALRAM_ID}">
                             		<input type="hidden" id="alram_num" value="${alram.ALRAM_NUM}">
                             		<input type="hidden" id="alram_contnum" value="${alram.ALRAM_CONTNUM}">
                             	</c:if>
                             	
+                            	                           
+                            </span>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row align-items-center mt-2">
+                        	<a href="#this" class="btn btn-primary btn-sm readAlram">확인</a>
+                        	<input type="hidden" id="alram_num" value="${alram.ALRAM_NUM}">                        					
+						</div>
+                    </div>
+                    </c:forEach>
+           
+                    <!-- ===================================  필로우 알람   ========================================= -->
+                    <c:forEach var = "alram" items="${alramFollowList}">
+                    <div class="d-flex flex-row justify-content-between align-items-center">
+                        <div class="d-flex flex-row align-items-center">
+                        <img class="rounded-circle" src="/img/${alram.PROF_IMG}" width="55" height="55">
+                            <div class="d-flex flex-column align-items-start ml-2">
+                            <span class="font-weight-bold">                            
+                            	${alram.REG_ID} 
+                            </span>
+                            <span class="followers">
                             	<c:if test="${alram.ALRAM_INDEX_NO == 3}">	
                             		<a href="javascript:void(0);" name="readFollow"> ${alram.REG_ID} 님이 팔로우를 신청했습니다 </a>
                             		<input type="hidden" id="reg_id" value="${alram.REG_ID}">
@@ -68,18 +94,9 @@
 						</div>
                     </div>
                     </c:forEach>
-                    <div class="d-flex flex-row justify-content-between align-items-center mt-2">
-                        <div class="d-flex flex-row align-items-center"><img class="rounded-circle" src="https://i.imgur.com/I6WnkOv.jpg" width="55">
-                            <div class="d-flex flex-column align-items-start ml-2"><span class="font-weight-bold">Scarlet</span><span class="followers">18570 Followers</span></div>
-                        </div>
-                        <div class="d-flex flex-row align-items-center mt-2"><button class="btn btn-primary btn-sm" type="button">Following</button></div>
-                    </div>
                     
-                    <div class="d-flex flex-row justify-content-between align-items-center mt-2">
-                        <div class="d-flex flex-row align-items-center"><img class="rounded-circle" src="https://i.imgur.com/eEo8asG.jpg" width="55">
-                            <div class="d-flex flex-column align-items-start ml-2"><span class="font-weight-bold">Soffie Morne</span><span class="followers">12550 Followers</span></div>
-                        </div>
-                        <div class="d-flex flex-row align-items-center mt-2"><button class="btn btn-outline-primary btn-sm" type="button">Follow</button></div>
+                    
+         <!-- ============================================================================ -->
                     </div>
                 </div>
             </div>

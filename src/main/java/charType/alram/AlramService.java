@@ -18,6 +18,8 @@ public interface AlramService {
 	
 	void readAlram(Map<String, Object> map)throws Exception;
 
+	List<Map<String, Object>> alramFollowLoad(Map<String, Object> map)throws Exception;
+
 	
 
 	

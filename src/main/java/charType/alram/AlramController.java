@@ -39,6 +39,9 @@ public class AlramController {
 			
 			List<Map<String, Object>> alramList = alramService.alramLoad(commandMap.getMap());
 			mv.addObject("alramList", alramList);
+			List<Map<String, Object>> alramFollowList = alramService.alramFollowLoad(commandMap.getMap());
+			mv.addObject("alramFollowList", alramFollowList);
+			
 		}
 		return mv;
 	}

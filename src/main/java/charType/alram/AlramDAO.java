@@ -37,6 +37,10 @@ public class AlramDAO extends AbstractDAO{
 	public void readAlram(Map<String, Object> map)throws Exception{
 		update("alram.readAlram", map);
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> alramFollowLoad(Map<String, Object> map) {
+		return (List<Map<String,Object>>) selectList("alram.alramFollowLoad", map);	}
 	
 	
 	

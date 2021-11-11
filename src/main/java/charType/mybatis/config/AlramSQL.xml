@@ -30,11 +30,33 @@ SELECT
 	ALRAM_CONTNUM,
 	REG_ID,
 	REGDATE,
-	READDATE
+	READDATE,
+	U.PROF_IMG,
+    B.BOARD_NUM,
+    B.TITLE
 FROM 
-	TB_ALRAM
+	TB_ALRAM, TB_USER U, TB_BOARD B
 WHERE
-	 ALRAM_ID = #{ALRAM_ID} AND READDATE is null order by REGDATE DESC </select>
+	 ALRAM_ID = #{ALRAM_ID} 
+     AND READDATE is null 
+     AND U.ID = #{ALRAM_ID}  
+     AND B.BOARD_NUM = tb_alram.alram_contnum
+     order by REGDATE DESC
+      </select>
+
+<select id="alramFollowLoad" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+	SELECT
+	*
+	FROM 
+	TB_ALRAM A, TB_USER U
+	WHERE
+	 A.ALRAM_ID = 'user1' 
+     AND READDATE is null 
+     AND U.ID = 'user1'  
+     AND ALRAM_CONTNUM = 0
+     
+     order by REGDATE DESC
+      </select>
 
 <select id="selectAlramOne" resultType="hashmap" parameterType="hashmap">
 SELECT 
