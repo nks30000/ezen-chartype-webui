@@ -183,11 +183,11 @@ public class MemberController {
 //			return mv;
 //		}
 		
-		if( mem.getPrivate_yn() ==  null) {
-			mem.setPrivate_yn("N");
-		} else {
-			mem.setPrivate_yn("Y");
-		}
+//		if( mem.getPrivate_yn() ==  null) {
+//			mem.setPrivate_yn("N");
+//		} else {
+//			mem.setPrivate_yn("Y");
+//		}
 		
 		
 		MemberModel m = memberService.insertUser(mem);
