@@ -18,7 +18,8 @@ SELECT
 FROM 
 	TB_ALRAM
 WHERE 
-	ALRAM_INDEX_NO = #{ALRAM_INDEX_NO} and ALRAM_CONTNUM = #{ALRAM_CONTNUM} and ALRAM_ID = #{ALRAM_ID} and READDATE is null </select>
+	ALRAM_INDEX_NO = #{ALRAM_INDEX_NO} and ALRAM_CONTNUM = #{ALRAM_CONTNUM} and ALRAM_ID = #{ALRAM_ID}
+	and REG_ID = #{REG_ID} and READDATE is null </select>
 
 
 <select id="alramLoad" resultType="java.util.HashMap" parameterType="java.util.HashMap">
@@ -51,7 +52,7 @@ WHERE
 </select>
 
 <insert id="regAlram" parameterType="hashmap">
-INSERT INTO tb_alarm(
+INSERT INTO TB_ALRAM(
 	ALRAM_NUM, 
 	ALRAM_INDEX_NO, 
 	ALRAM_CONTNUM, 
@@ -60,7 +61,7 @@ INSERT INTO tb_alarm(
 	REGDATE
 	)
 VALUES(
-	SEQ_TB_ALRAM_ALRAM_NUM.nextval, 
+	SEQ_TB_ALARM_ALARM_NUM.nextval, 
 	#{ALRAM_INDEX_NO}, 
 	#{ALRAM_CONTNUM}, 
 	#{ALRAM_ID}, 

@@ -10,10 +10,6 @@ html *{
     text-transform: uppercase;
 }
 
-.name h6 {
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
 
 .navbar {
     border: 0;
@@ -240,10 +236,6 @@ p {
 .profile-page .gallery img {
     width: 100%;
     margin-bottom: 2.142rem;
-}
-
-.profile-page .profile .name{
-    margin-top: -80px;
 }
 
 img.rounded {

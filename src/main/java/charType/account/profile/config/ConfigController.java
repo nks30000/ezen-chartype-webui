@@ -54,11 +54,11 @@ public class ConfigController {
 		mem.setId(id);	
 		
 		//공개여부설정 처리
-		if( mem.getPrivate_yn() ==  null) {
-			mem.setPrivate_yn("N");
-		} else {
-			mem.setPrivate_yn("Y");
-		}
+//		if( mem.getPrivate_yn() ==  null) {
+//			mem.setPrivate_yn("N");
+//		} else {
+//			mem.setPrivate_yn("Y");
+//		}
 		
 		memberService.updatemodify(mem);
 		mem = memberService.selectIdMember(mem.getId());
@@ -68,7 +68,7 @@ public class ConfigController {
 		
 		memberService.updateProfileImg(commandMap.getMap(), request);
 		
-		mv.setViewName("redirect:/front/account/profile/timeline");
+		mv.setViewName("redirect:/front/account/profile/timeline/"+id);
 		return mv;
 	}
 	

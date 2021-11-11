@@ -63,3 +63,40 @@ if(document.writeform.passwd.value==""){
   return false;
 }
 }   */
+
+function editCheckIt() {
+        var userinput = eval("document.userinput");
+        
+        if(!userinput.nick.value) {
+            alert("사용자 닉네임을 입력하세요");
+            return false;
+        }
+        
+        
+        if(!userinput.email.value) {
+            alert("이메일을 입력하세요");
+            return false;
+        }
+        
+       
+        if(!userinput.password.value ) {
+            alert("비밀번호를 입력하세요");
+            return false;
+        }
+        
+        if(userinput.password.value != userinput.confirmPassword.value)
+        {
+            alert("비밀번호를 동일하게 입력하세요");
+            return false;
+        }
+        
+        
+        if(!userinput.phone.value ) {
+            alert("핸드폰 번호를 입력하세요");
+            return false;
+        
+        }
+      
+    }
+
+

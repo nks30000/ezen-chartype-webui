@@ -1,5 +1,6 @@
 package charType.account.follow;
 
+import charType.alram.AlramService;
 import charType.member.MemberDao;
 import charType.member.MemberModel;
 import charType.member.MemberService;
@@ -34,6 +35,9 @@ public class FollowController {
 
 	@Resource(name = "memberService")
 	private MemberService memberService;
+	
+	@Resource(name="alramService")
+	private AlramService alramService;
 
 	// 팔로우 리스트
 	@RequestMapping(value = "/follow_list/{fId}")
@@ -134,8 +138,20 @@ public class FollowController {
 		//follow_id: 팔로우 당하는사람
 		commandMap.put("following_id", userId);
 		commandMap.put("follow_id", fId);
-
 		followService.followReg(commandMap.getMap());
+		
+		int contNum = 0;
+		int indexNum = 3;
+		commandMap.put("REG_ID", userId);
+		commandMap.put("ALRAM_ID", fId);
+		commandMap.put("ALRAM_CONTNUM", 0);
+		commandMap.put("ALRAM_INDEX_NO", 3);
+		
+		System.out.println(commandMap.get("REG_ID")+","+commandMap.get("ALRAM_ID"));
+		
+		alramService.regAlram(commandMap.getMap());
+		
+		
 		System.out.println(request.getRequestURI());
 		mv.setViewName("redirect:/front/account/profile/timeline/" + fId);
 		

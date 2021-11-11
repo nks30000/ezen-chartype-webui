@@ -15,22 +15,101 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesgeet" href="https://rawgit.com/creativetimofficial/material-kit/master/assets/css/material-kit.css">
+    
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+    
+    <link rel="stylesheet" href="${CONTEXT_PATH}/resources/css/desktop.css">
     <link rel="stylesheet" href="${CONTEXT_PATH}/resources/css/sign-in.css">
 	<script language="JavaScript" src="${CONTEXT_PATH}/resources/script/script.js" charset="UTF-8"></script>
-	<!-- jquery -->
-	<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-	
+	<script>
+	/* 공개여부설정 */
+	$(function() {
+		$('#radioBtn a').on('click', function(){
+		    var sel = $(this).data('title');
+		    var tog = $(this).data('toggle');
+		    $('#'+tog).prop('value', sel);
+		    
+		    $('a[data-toggle="'+tog+'"]').not('[data-title="'+sel+'"]').removeClass('active').addClass('notActive');
+		    $('a[data-toggle="'+tog+'"][data-title="'+sel+'"]').removeClass('notActive').addClass('active');
+		})
+	})
+	</script>
 </head>
 
 <body>
+   <nav class="navbar navbar-color-on-scroll fixed-top  navbar-expand-lg " color-on-scroll="100" id="sectionsNav">
+    <div class="container">
+      <div class="navbar-translate">
+        <a class="navbar-brand" href="${CONTEXT_PATH}/front/community/timeline/list"><span class="logo"></span><span class="sr-only">Material Kit </span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+          <span class="navbar-toggler-icon"></span>
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+
+	  <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ml-auto">
+				<li class="nav-item">
+					<a href="/charType/front/community/timeline/list" class="nav-link">
+						<i class="fa fa-home"></i>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a href="/charType/account/profile/config/modify" class="nav-link">
+						<i class="fa fa-heart-o"></i>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a href="/charType/account/profile/config/modify" class="nav-link">
+						<i class="fa fa-plus-square-o"></i>
+					</a>
+				</li>
+        	<c:if test="${sessionScope.session_mem_id != null }">
+				<li class="nav-item">
+					<a href="/charType/account/profile/config/modify" class="nav-link">
+						<i class="material-icons">apps</i> Edit Profile
+					</a>
+				</li>
+				<li class="nav-item">
+					<a href="/charType/logout" class="nav-link">
+						<i class="material-icons">apps</i> Logout
+					</a>
+				</li>
+				<li class="nav-item">
+					<a href="/charType/front/community/timeline/list" class="nav-link">
+						<i class="material-icons">apps</i> Main
+					</a>
+				</li>
+        	</c:if>
+        	<li class="nav-item">
+				<div class="dropdown">
+				  <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    <i class="fa fa-user-circle"></i>
+				  </a>
+				
+				  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+				    <a class="dropdown-item" href="/charType/front/account/profile/timeline/${sessionScope.session_mem_id}"><i class="fa fa-user-circle-o  mr-2"></i>프로필</a>
+				    <a class="dropdown-item" href="/charType/front/account/profile/timeline/${sessionScope.session_mem_id}"><i class="fa fa-gear  mr-2"></i>설정</a>
+				    <a class="dropdown-item" href="/charType/logout"><i class="fa fa-sign-out  mr-2"></i>로그아웃</a>
+				  </div>
+				</div>
+			</li>
+        </ul>
+      </div>
+    </div>
+  </nav>
   <div class="main-content">
     <div class="container mt-7">
       <!-- Table -->
       <div class="row">
-		<div class="col-xl-8 m-auto">
-			<h2 class="mb-5">My Profile Card</h2>
-		</div>
         <div class="col-xl-8 m-auto order-xl-1">
           <div class="card bg-secondary shadow">
             <div class="card-header bg-white border-0">
@@ -48,12 +127,12 @@
                 <div class="pl-lg-4">
                   <div class="row">
                     <div class="col-lg-6">
-                      <div class="form-group focused">
+                      <div class="form-group ">
                         <label class="form-control-label">
                         ID *
 <!--                         <input type="button" name="confirmId" value="중복확인" OnClick="openConfirmId(this.form)"  class="btn btn-sm btn-primary ml-1"> -->
                         </label>
-                        <div class="input-group">
+                        <div>
 	                        <input type="text"  id="id" name="id" value="${mem.id }" class="form-control form-control-alternative" placeholder="ID">
 	                        <div>
 								<p id="idMessage"></p>
@@ -116,21 +195,26 @@
                 
                 <div class="pl-lg-4">
                 	<div class="form-group">
-                		<label class="form-control-label">Private Y/N</label>
+                		<label class="form-control-label">공개설정</label>
                 		<div>
                 			<div>
 <%-- 		                		<input type="checkbox" name="private_yn" <c:if test="${mem.private_yn eq 'Y'}">checked</c:if>/> <span>공개여부</span> --%>
-		                		<input type="checkbox" name="private_yn" /> <span>Private Y/N</span>
-		                		
                 			</div>
+	                		<div class="input-group">
+			    				<div id="radioBtn" class="btn-group">
+			    					<a class="btn btn-primary btn-sm active" data-toggle="happy" data-title="Y">YES</a>
+			    					<a class="btn btn-primary btn-sm notActive" data-toggle="happy" data-title="N">NO</a>
+			    				</div>
+			    				<input type="hidden" name="private_yn" id="happy" value="Y">
+			    			</div>
                 		</div>
                 	</div>
                 	<div class="row">
-	                    <div class="col-4">
+	                    <div class="col-lg-4">
 	                    	<div class="form-group ">
 			                    <label class="form-control-label">Profile Image</label>
 			                    <br/>
-			                    <div class="text-center my-4">
+			                    <div class="text-center">
 				                	<img id="thumbnailImg" width="400" src="${ BASIC_PROFIMG }" alt="mem_img" class="img-circle"  style="width:100px; height: 100px; vertical-align: left" />
 				                	
 				                	<button type="button" id="btnResetProfImg" style="display:none;">reset</button>
@@ -143,7 +227,7 @@
 			  					<br><br>
 		                	</div>
 	                    </div>
-	                    <div class="col-8">
+	                    <div class="col-lg-8">
 	                      <div class="form-group">
 	                        <label class="form-control-label">
 	                       	PHONE *
@@ -173,7 +257,7 @@
                  	<hr>
 					<div class="form-group focused">
 						<label class="form-control-label">About Me</label>
-						<textarea rows="4" class="form-control form-control-alternative" name="intro" placeholder="A few words about you ...">${mem.intro }</textarea>
+						<textarea class="form-control form-control-alternative" name="intro" placeholder="A few words about you ...">${mem.intro }</textarea>
 					</div>
 					<div class="row">
 	                    <div class="col-lg-6">

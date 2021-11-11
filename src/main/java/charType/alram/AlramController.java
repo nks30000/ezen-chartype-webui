@@ -21,6 +21,7 @@ public class AlramController {
 	@Resource(name="alramService")
 	private AlramService alramService;
 	
+	
 	@RequestMapping(value="/like")
 	public ModelAndView alramDetail(CommandMap commandMap, HttpServletRequest request)
 	throws Exception{
