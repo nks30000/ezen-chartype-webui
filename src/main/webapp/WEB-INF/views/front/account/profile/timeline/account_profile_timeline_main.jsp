@@ -504,6 +504,7 @@
               	<c:when test="${ID == sessionScope.session_mem_id}">
                 
  
+ <%-- 
  <form id="frm" name="frm" enctype="multipart/form-data">
                      <div class="card gedf-card">
                         <div class="card-header">
@@ -566,7 +567,8 @@
                             </div>
                         </div>
                     </div>
-			 </form>
+			 </form> 
+ --%>
 </c:when>
 </c:choose>   
 
