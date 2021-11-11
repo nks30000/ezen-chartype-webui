@@ -186,10 +186,10 @@
 
   <div class="row">
   <hr>
-     <section class="pinBoot ui-pinboot">
 
 			<c:choose>
 			<c:when test="${fn:length(list) > 0}">
+     			<section class="pinBoot ui-pinboot">
 			<c:if test="${fn:length(list) > 0}">
 				<c:forEach items="${list}" var="communityList">
  				
@@ -215,12 +215,14 @@
       				</article>
  				</c:forEach>
 			</c:if>
+	    	</section>
 			</c:when>
 			<c:otherwise>
-							조회된 결과가 없습니다.
+				<div class="text-center">
+					조회된 결과가 없습니다.
+				</div>
            	</c:otherwise>
            	</c:choose>
-    	</section>
   </div>
 </div>
 

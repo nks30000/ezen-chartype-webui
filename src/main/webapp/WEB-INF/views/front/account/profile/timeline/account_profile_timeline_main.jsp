@@ -25,6 +25,7 @@
   <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
 <script src="<c:url value='/js/common.js'/>" charset="utf-8"></script>
 <script src="/charType/resources/script/communityTimeline.js"></script>
+<script src="/charType/resources/script/blocksit.js"></script>
 
 
 <link rel="stylesheet" href="/charType/resources/css/communityTimeline.css">
@@ -308,7 +309,7 @@
 
         <div class="tab-content tab-space">
 		<div class="tab-pane active text-center gallery" id="life">
-		    <section class="pinBoot ui-pinboot">
+		    <section class="pinBoot ui-pinboot ml-1">
 
            <c:choose>
 					<c:when test="${fn:length(life) > 0}">
@@ -372,7 +373,7 @@
 <!-- ============================================================================================== -->
           
           <div class="tab-pane text-center gallery" id="fav">
-	  	   <section class="pinBoot ui-pinboot">
+	  	   <section class="pinBoot ui-pinboot ml-1">
 
 			     <c:choose>
 			    
@@ -402,7 +403,7 @@
           
           
         <div class="tab-pane text-center gallery" id="shop">
-          <section class="pinBoot ui-pinboot">
+          <section class="pinBoot ui-pinboot ml-1">
 
            <c:choose>
 					<c:when test="${fn:length(shop) > 0}">
@@ -429,7 +430,7 @@
            <!-- ============================================================================================== -->
           
           <div class="tab-pane text-center gallery" id="style">
-          	          <section class="pinBoot ui-pinboot">
+          	          <section class="pinBoot ui-pinboot ml-1">
 
            <c:choose>
 					<c:when test="${fn:length(style) > 0}">
@@ -580,7 +581,7 @@
 
         <div class="tab-content tab-space">
 		<div class="tab-pane active text-center gallery" id="life">
-		    <section class="pinBoot ui-pinboot">
+		    <section class="pinBoot ui-pinboot ml-1">
 
            <c:choose>
 					<c:when test="${fn:length(life) > 0}">
@@ -644,7 +645,7 @@
 <!-- ============================================================================================== -->
           
           <div class="tab-pane text-center gallery" id="fav">
-	  	   <section class="pinBoot ui-pinboot">
+	  	   <section class="pinBoot ui-pinboot ml-1">
 
 			     <c:choose>
 			    
@@ -674,7 +675,7 @@
           
           
         <div class="tab-pane text-center gallery" id="shop">
-          <section class="pinBoot ui-pinboot">
+          <section class="pinBoot ui-pinboot ml-1">
 
            <c:choose>
 					<c:when test="${fn:length(shop) > 0}">
@@ -701,7 +702,7 @@
            <!-- ============================================================================================== -->
           
           <div class="tab-pane text-center gallery" id="style">
-          	          <section class="pinBoot ui-pinboot">
+          	          <section class="pinBoot ui-pinboot ml-1">
 
            <c:choose>
 					<c:when test="${fn:length(style) > 0}">
@@ -925,13 +926,55 @@
 		})
 		
 		$('.profile-tabs').find('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-		  e.target // newly activated tab
-		  e.relatedTarget // previous active tab
-		  $($(e.target).attr('href')).find(".pinBoot").pinterest_grid();
+		    var container = $($(e.target).attr('href')).find(".pinBoot");
+			gridInit(container);
 		})
 		
-	});
+		gridInit($(".pinBoot"));
 		
+	});
+		function gridInit (el) {
+			var container = $(".pinBoot");
+			
+			if (el) {
+				container = el;
+			}
+			
+		    var timer
+			var option = {
+			        numOfCol: 3,
+			        offsetX: 0,
+			        offsetY: 10,
+			        blockElement: '.white-panel'
+			    }
+			var wth = container[0].offsetWidth;
+			
+			var setcol = function () {
+				if(wth > 900) {
+					option.numOfCol = 4
+				} else if(wth > 700) {
+					option.numOfCol = 3
+				} else if(wth > 600) {
+					option.numOfCol = 2
+				} else {
+					option.numOfCol = 1
+				}
+			}
+			
+			
+			container.BlocksIt(option);
+			
+			$(window).resize(function() {
+				
+				wth = container[0].offsetWidth;
+				
+				setcol();
+				
+				timer = setTimeout( function(){
+					container.BlocksIt(option);
+				}, 500)
+			})
+		}
 		function fn_openBoardList(){
 			var comSubmit = new ComSubmit();
 			comSubmit.submit();
