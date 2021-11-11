@@ -19,6 +19,7 @@ public class LikeController {
 	@Resource(name="alramService")
 	private AlramService alramService;
 	
+	//좋아요 추가
 	@RequestMapping(value="/timeline/insertLike")
 	public ModelAndView insertLikeTimeline(CommandMap commandMap)
 		throws Exception{
@@ -41,6 +42,7 @@ public class LikeController {
 		return mv;
 	}
 	
+	//좋아요 삭제
 	@RequestMapping(value="/timeline/deleteLike")
 	public ModelAndView deleteLikeTimeline(CommandMap commandMap)
 		throws Exception{

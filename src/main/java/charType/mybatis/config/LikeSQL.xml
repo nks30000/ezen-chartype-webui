@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM
 		    TB_USER U, TB_LIKE L
 		WHERE
-		    U.ID = L.ID AND U.ID IN 
+		    U.ID = L.ID AND L.CONTENTS_NUM = #{BOARD_NUM} AND U.ID IN 
 		    	(SELECT			
 					ID			
 				FROM

@@ -144,7 +144,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 	</update> -->
 	<update id="memberDelete" parameterType="java.lang.String" >
 		UPDATE TB_USER SET
-			DEL_YN = 'Y'
+			DELETE_YN = 'Y'
 			WHERE ID = #{id}
 	</update>
 	
