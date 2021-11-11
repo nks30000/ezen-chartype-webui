@@ -1,5 +1,5 @@
 $(document).ready(function() {
-$('.pinBoot').pinterest_grid({
+$('.pinBoot:first').pinterest_grid({
 no_columns: 4,
 padding_x: 10,
 padding_y: 10,
@@ -55,6 +55,7 @@ http://www.jqueryscript.net/layout/Simple-jQuery-Plugin-To-Create-Pinterest-Styl
     }
 
     Plugin.prototype.init = function () {
+		console.log('init')
         var self = this,
             resize_finish;
 
