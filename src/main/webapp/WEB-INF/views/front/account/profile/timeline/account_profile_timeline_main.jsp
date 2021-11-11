@@ -939,9 +939,9 @@
 			var wth = container[0].offsetWidth;
 			
 			var setcol = function () {
-				if(wth > 900) {
+				if(wth > 1000) {
 					option.numOfCol = 4
-				} else if(wth > 700) {
+				} else if(wth > 900) {
 					option.numOfCol = 3
 				} else if(wth > 600) {
 					option.numOfCol = 2
