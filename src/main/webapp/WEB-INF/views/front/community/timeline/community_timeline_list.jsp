@@ -188,7 +188,7 @@
   <hr>
 
 			<c:choose>
-			<c:when test="${fn:length(list) > 0}">
+			<c:when test="${fn:length(list) > 0 || fn:length(priv) > 0}">
      			<section class="pinBoot ui-pinboot">
 			<c:if test="${fn:length(list) > 0}">
 				<c:forEach items="${list}" var="communityList">
