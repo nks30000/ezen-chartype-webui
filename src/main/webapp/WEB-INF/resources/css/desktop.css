@@ -172,6 +172,32 @@ a .material-icons {
 .img-fluid, .img-thumbnail {
     max-width: 100%;
     height: auto;
+    
+}
+.img-recom{
+	position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+.integration-list > div{
+	text-align:center;
+}
+.integration-list > div > div{
+	position:relative;
+}
+.integration-list > div > div::after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}
+.integration-list > div >p {
+	text-align:center;
+	margin-top: 10px;
 }
 
 .title {

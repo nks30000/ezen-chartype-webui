@@ -157,7 +157,7 @@
               
               </div>
               <div class="name">
-                <h6><span class="badge badge-info">${map.member.mbti}</span></h6>
+                <h6><button class="btn btn-dark btn-sm active" type="button" id="btnRequestMBTI" />${map.member.mbti}</h6>
                 <h3 class="title"> ${map.member.nick}  </h3>
                 <!-- 
                 <a href="javascript:void(0);" onclick="alramModal('alram')" >알림</a>
