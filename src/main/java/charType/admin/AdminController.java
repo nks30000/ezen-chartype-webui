@@ -21,13 +21,13 @@ import charType.admin.AdminDAO;
 import charType.utils.common.mapper.CommandMap;
 
 @Controller
-@RequestMapping(value="/admin/member")
+@RequestMapping(value="/admin")
 public class AdminController {
 	
 	@Resource(name="adminService") 
 	private AdminService adminService; 
 	
-	@RequestMapping(value="/memberlist") 
+	@RequestMapping(value="/member/memberlist") 
 	public ModelAndView adminMemberList(CommandMap commandMap, HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView("/admin/member/admin_member_list");
 		
@@ -43,6 +43,14 @@ public class AdminController {
 		return mv;
 		
 		
-}
+	}
+	@RequestMapping(value="/error/notadmin") 
+	public ModelAndView notAdmin(CommandMap commandMap, HttpServletRequest request) throws Exception{
+		ModelAndView mv = new ModelAndView("/admin/error/admin_error_notadmin");
+		
+		return mv;
+		
+		
+	}
 
 }

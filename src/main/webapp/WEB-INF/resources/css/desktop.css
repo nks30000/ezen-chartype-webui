@@ -531,6 +531,7 @@ footer p a:hover {
 .blockIt{
 	position:relative;
 	overflow:hidden;
+	min-height: 700px;
 }
 .blockIt .white-panel {
 	transition: top, left;

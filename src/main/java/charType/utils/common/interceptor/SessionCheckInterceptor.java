@@ -1,4 +1,4 @@
-package charType.utils.common.session;
+package charType.utils.common.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

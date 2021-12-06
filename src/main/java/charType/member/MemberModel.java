@@ -15,6 +15,7 @@ public class MemberModel {
 	private String intro;
 	private String prof_img;
 	private String back_img;
+	private String admin_yn;
 	private Date reg_dt;
 	private Date del_dt;
 		
@@ -97,6 +98,13 @@ public class MemberModel {
 	public void setDel_dt(Date del_dt) {
 		this.del_dt = del_dt;
 	}
+	public String getAdmin_yn() {
+		return admin_yn;
+	}
+	public void setAdmin_yn(String admin_yn) {
+		this.admin_yn = admin_yn;
+	}
+	
 	public boolean isSamePasswordConfirmPassword() {
 		if (password == null || confirmPassword == null)
 			return false;

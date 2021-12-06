@@ -32,7 +32,19 @@
   <script src="https://cpwebassets.codepen.io/assets/editor/iframe/iframeRefreshCSS-4793b73c6332f7f14a9b6bba5d5e62748e9d1bd0b5c52d7af6376f3d1c625d7e.js"></script>
   <script src="https://cpwebassets.codepen.io/assets/editor/iframe/iframeRuntimeErrors-4f205f2c14e769b448bcf477de2938c681660d5038bc464e3700256713ebe261.js"></script>
   </head>
-  
+  <script>
+  	window.onload = function() {
+	  	document.getElementById("kakaoLogin").addEventListener("click", function() {
+	  		alert("kakaoLogin");
+	  		var options = 'top=10, left=10, width=500, height=600, status=no, menubar=no, toolbar=no, resizable=no';
+	  		window.open(
+				"https://kauth.kakao.com/oauth/authorize?client_id=73485d0e6ff026448938cac3481cd37b&scope=profile_nickname%2Cprofile_image%2Caccount_email&redirect_uri=http://218.232.135.173:1004/charType/member/login/form&response_type=code&auth_tran_id=b15bcea22jn73485d0e6ff026448938cac3481cd37bkw224hg4&is_popup=true",
+				"popup",
+				options
+			);
+	  	});
+  	}
+  </script>
   <body>
     
     
@@ -84,6 +96,8 @@
                 </div>
                 <div class="footer text-center">
                   <button type="submit" class="btn btn-primary btn-link btn-wd btn-lg">Login</button> 
+                  <a class="btn btn-primary btn-link btn-wd btn-lg" href="javascript:void(0);" id="kakaoLogin">
+                  	카카오로그인</a>
                   <a href="${CONTEXT_PATH}/member/sign/form" class="btn btn-primary btn-link btn-wd btn-lg">Sign up</a>
                   <a href="${CONTEXT_PATH}/member/password/form" class="btn btn-primary btn-link btn-wd btn-lg">Forget your ID or Password?</a>
                 </div>

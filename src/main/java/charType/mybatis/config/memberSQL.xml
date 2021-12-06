@@ -14,7 +14,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="phone" column="phone" />	
 		<result property="mbti" column="mbti" />	
 		<result property="intro" column="intro" />	
-		<result property="private_yn" column="private_yn" />	
+		<result property="private_yn" column="private_yn" />
+		<result property="admin_yn" column="admin_yn" />		
 		<result property="prof_img" column="prof_img" />
 		<result property="back_img" column="back_img" />
 	</resultMap>
