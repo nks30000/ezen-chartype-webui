@@ -5,6 +5,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+<title>Character Type</title>
 <head>
 	
 
@@ -157,7 +158,7 @@
               
               </div>
               <div class="name">
-                <h6><button class="btn btn-dark btn-sm active" type="button" id="btnRequestMBTI" />${map.member.mbti}</h6>
+                <h6><button class="btn btn-dark btn-sm active" type="button" id="btnRequestMBTI" />${map.member.mbti}</h6>         
                 <h3 class="title"> ${map.member.nick}  </h3>
                 <!-- 
                 <a href="javascript:void(0);" onclick="alramModal('alram')" >알림</a>
@@ -940,8 +941,41 @@
 		$('.profile-tabs').find('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 // 		  $($(e.target).attr('href')).find(".pinBoot").pinterest_grid();
 		    var container = $($(e.target).attr('href')).find(".blockIt");
-			gridInit(container);
-		    
+			
+		    var timer
+			var option = {
+			        numOfCol: 3,
+			        offsetX: 0,
+			        offsetY: 10,
+			        blockElement: '.white-panel'
+			    }
+			var wth = container[0].offsetWidth;
+			
+			var setcol = function () {
+				if(wth > 1000) {
+					option.numOfCol = 4
+				} else if(wth > 900) {
+					option.numOfCol = 3
+				} else if(wth > 600) {
+					option.numOfCol = 2
+				} else {
+					option.numOfCol = 1
+				}
+			}
+			
+			
+			container.BlocksIt(option);
+			
+			$(window).resize(function() {
+				
+				wth = container[0].offsetWidth;
+				
+				setcol();
+				
+				timer = setTimeout( function(){
+					container.BlocksIt(option);
+				}, 500)
+			})
 		})
 		gridInit();
 	});
@@ -961,10 +995,10 @@
 			    }
 			var wth = container[0].offsetWidth;
 			
-		    var setcol = function () {
-				if(wth > 1000) {
+			var setcol = function () {
+				if(wth > 900) {
 					option.numOfCol = 4
-				} else if(wth > 900) {
+				} else if(wth > 700) {
 					option.numOfCol = 3
 				} else if(wth > 600) {
 					option.numOfCol = 2
@@ -976,12 +1010,7 @@
 			
 			container.BlocksIt(option);
 			
-			setTimeout(function(){
-				$(window).trigger("resize")
-			},0)
-			
 			$(window).resize(function() {
-				clearTimeout(timer);
 				
 				wth = container[0].offsetWidth;
 				
@@ -989,7 +1018,7 @@
 				
 				timer = setTimeout( function(){
 					container.BlocksIt(option);
-				}, 300)
+				}, 500)
 			})
 		}
 		function fn_openBoardList(){
@@ -1038,10 +1067,6 @@
 		
 		function fn_deleteFile(obj){
 			if($("#fileDiv").find(".img-item").length == 1){
-				
-				obj.parent().removeClass("added");
-				obj.siblings("img").attr("src", "");
-				
 				alert("하나밖에 안남음")
 				return;
 			}
@@ -1160,13 +1185,17 @@
 			});
 
 			el.find("input").on("change", function(e) {
-				var id = $(this).attr("id"),
-					trgId = $(e.target).siblings("img").attr("id");
-				uploadImgPreview(id, trgId);
+				uploadImgPreview($(this).attr("id"), $(e.target).siblings("img").attr("id") );
 				el.addClass("added");
 // 				$(e.target).siblings("img").show();
 			})
 		}
+		
+		$('#btnRequestMBTI').click(function(){
+			window.location = "/charType/recom/memberlist/${map.member.mbti}";
+
+		})
+		
 	</script>
 
 
