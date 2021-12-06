@@ -1,6 +1,11 @@
 package charType.like;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,6 +53,20 @@ public class LikeController {
 		throws Exception{
 		ModelAndView mv = new ModelAndView("jsonView");
 		likeService.deleteTimelineLike(commandMap.getMap());
+		return mv;
+	}
+	
+	@RequestMapping(value="/myLikelist")
+	public ModelAndView myLikelist(CommandMap commandMap, HttpServletRequest request)throws Exception{
+		ModelAndView mv = new ModelAndView("/front/community/like_list/like_list");
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("session_mem_id");
+		
+		commandMap.put("ID", userId);
+		
+		List<Map<String, Object>> likelist = likeService.myLikelist(commandMap.getMap());
+		mv.addObject("likelist", likelist);
+		
 		return mv;
 	}
 

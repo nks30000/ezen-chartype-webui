@@ -3,8 +3,11 @@ package charType.like;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Repository;
 
+import charType.cons.listMbti;
 import charType.utils.common.dao.AbstractDAO;
 
 @Repository("likeDAO")
@@ -36,6 +39,14 @@ public class LikeDAO extends AbstractDAO{
 		
 		delete("like.deleteTimelineLike", map);
 	}
+
+	public  List<Map<String, Object>> myLikelist(Map<String, Object> map)
+		throws Exception{
+		return (List<Map<String,Object>>) selectList("like.myLikelist", map);
+		
+	}
+
+	
 }
 
 

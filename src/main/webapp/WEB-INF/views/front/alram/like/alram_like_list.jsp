@@ -38,7 +38,10 @@
                     <c:forEach var = "alram" items="${alramList}">
                     <div class="d-flex flex-row justify-content-between align-items-center">
                         <div class="d-flex flex-row align-items-center">
+                        <a href="#this" name="moveProf">
                         <img class="rounded-circle" src="/img/${alram.PROF_IMG}" width="55" height="55">
+                        </a><input type="hidden" id="reg_id" value="${alram.REG_ID}">
+                            <input type="hidden" id="alram_num" value="${alram.ALRAM_NUM}">
                             <div class="d-flex flex-column align-items-start ml-2">
                             <span class="font-weight-bold">                            
                             	${alram.REG_ID} 
@@ -63,7 +66,7 @@
                             </div>
                         </div>
                         <div class="d-flex flex-row align-items-center mt-2">
-                        	<a href="#this" class="btn btn-primary btn-sm readAlram">확인</a>
+                        	<a href="#this" class="btn btn-primary btn-sm readAlram">삭제</a>
                         	<input type="hidden" id="alram_num" value="${alram.ALRAM_NUM}">                        					
 						</div>
                     </div>
@@ -73,7 +76,10 @@
                     <c:forEach var = "alram" items="${alramFollowList}">
                     <div class="d-flex flex-row justify-content-between align-items-center">
                         <div class="d-flex flex-row align-items-center">
+                        <a href="#this" name="moveProf">
                         <img class="rounded-circle" src="/img/${alram.PROF_IMG}" width="55" height="55">
+                        </a><input type="hidden" id="reg_id" value="${alram.REG_ID}">
+                            <input type="hidden" id="alram_num" value="${alram.ALRAM_NUM}">
                             <div class="d-flex flex-column align-items-start ml-2">
                             <span class="font-weight-bold">                            
                             	${alram.REG_ID} 
@@ -89,7 +95,7 @@
                             </div>
                         </div>
                         <div class="d-flex flex-row align-items-center mt-2">
-                        	<a href="#this" class="btn btn-primary btn-sm readAlram">확인</a>
+                        	<a href="#this" class="btn btn-primary btn-sm readAlram">삭제</a>
                         	<input type="hidden" id="alram_num" value="${alram.ALRAM_NUM}">                        					
 						</div>
                     </div>
@@ -128,6 +134,15 @@
     			console.log(reg_id);
     			console.log(alram_num);
     			parent.fn_readFollowV2(reg_id, alram_num);
+ 			});
+    		
+    		$("a[name='moveProf']").on("click", function(e){
+    			e.preventDefault();
+    			var reg_id = $(this).parent().find("#reg_id").val();
+    			var alram_num = $(this).parent().find("#alram_num").val();
+    			console.log(reg_id);
+    			console.log(alram_num);
+    			parent.fn_moveProfV2(reg_id, alram_num);
  			});
     		
     		
@@ -184,6 +199,17 @@
 //     	comSubmit.addParam("ALRAM_NUM", alram_num);
 //     	comSubmit.submit(); 
 //     }
+
+	function fn_moveProf(obj){
+    	var reg_id = obj.parent().find("#reg_id").val();
+    	var alram_num = obj.parent().find("#alram_num").val();
+    	console.log(reg_id+","+alram_num);
+       	var comSubmit = new ComSubmit();
+    	comSubmit.setUrl("<c:url value='/alram/list/moveProf'/>");
+    	comSubmit.addParam("REG_ID", reg_id);
+    	comSubmit.addParam("ALRAM_NUM", alram_num);
+    	comSubmit.submit(); 
+    }
     
 
     function openWin(param){  
@@ -192,7 +218,7 @@
 
 	}  
 
-/*     $("input[name='alram']") */
+
     
    
     </script>

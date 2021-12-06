@@ -75,7 +75,19 @@
 				</li>
 				<li class="nav-item">
 					<a href="javascript:void(0);" class="nav-link" onclick="alramModal('alram')" >
-						<i class="fa fa-heart-o"></i>
+					<c:choose>
+						<c:when test= "${alramCnt[0].COUNT>0}">
+							<i class="fa fa-heart"></i>${alramCnt[0].COUNT}
+						</c:when>
+						
+						<c:when test= "${alramCnt[0].COUNT>99}">
+							<i class="fa fa-heart"></i>99+
+						</c:when>
+						
+						<c:otherwise>
+							<i class="fa fa-heart-o"></i>
+						</c:otherwise>
+					</c:choose>
 					</a>
 				</li>
 				<li class="nav-item">
@@ -108,6 +120,7 @@
 					    <a class="dropdown-item" href="/charType/front/account/profile/timeline/${sessionScope.session_mem_id}"><i class="fa fa-user-circle-o  mr-2"></i>프로필</a>
 					    <a class="dropdown-item" href="/charType/account/profile/config/modify"><i class="fa fa-gear  mr-2"></i>설정</a>
 					    <a class="dropdown-item" href="/charType/logout"><i class="fa fa-sign-out  mr-2"></i>로그아웃</a>
+					    <a class="dropdown-item" href="/charType/like/myLikelist"><i class="fa fa-gratipay"></i>좋아요 보기</a>
 					  </div>
 					</div>
 				</li>
@@ -171,9 +184,8 @@
 						<a href="javascript:void(0);" onclick="followModal('following')" >
 	            		<h3 class="title"> ${map.followingCnt }</h3></a>              
 	                	<h6>Following</h6>
-					</div>            		                                       
+					</div>     		                                       
                </div>
-               
                <div class="text-center mt-3">
 	        		<%-- <c:when test="${map.following_id == sessionScope.session_mem_id}"> --%>
 	          		<c:if test="${map.following_id != map.follow_id}">
@@ -188,7 +200,7 @@
 					</c:if>
 					<%-- </c:when> --%>
         		</div>
-				
+        		
 	          					        		        	        		
 <c:choose>
  <c:when test="${map.member.private_yn=='N'}">	          					        		        	        		      
@@ -1125,6 +1137,15 @@
 	    	console.log(reg_id+","+alram_num);
 	       	var comSubmit = new ComSubmit();
 	    	comSubmit.setUrl("<c:url value='/alram/list/readFollow'/>");
+	    	comSubmit.addParam("REG_ID", reg_id);
+	    	comSubmit.addParam("ALRAM_NUM", alram_num);
+	    	comSubmit.submit(); 
+	    }
+	    
+	    function fn_moveProfV2(reg_id, alram_num){
+	    	console.log(reg_id+","+alram_num);
+	       	var comSubmit = new ComSubmit();
+	    	comSubmit.setUrl("<c:url value='/alram/list/moveProf'/>");
 	    	comSubmit.addParam("REG_ID", reg_id);
 	    	comSubmit.addParam("ALRAM_NUM", alram_num);
 	    	comSubmit.submit(); 

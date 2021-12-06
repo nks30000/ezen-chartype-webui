@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import charType.account.follow.FollowService;
+import charType.alram.AlramService;
 import charType.member.MemberModel;
 import charType.member.MemberService;
 import charType.utils.common.mapper.CommandMap;
@@ -35,6 +36,9 @@ public class TimelineController {
 	
 	@Resource(name="memberService") 
 	private MemberService memberService; 
+	
+	@Resource(name="alramService")
+	private AlramService alramService;
 	
 	@RequestMapping(value="/timeline") 
 	public ModelAndView accountTimelineMain(CommandMap commandMap, HttpServletRequest request) throws Exception{ 
@@ -84,7 +88,8 @@ public class TimelineController {
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("session_mem_id");
 		
-		commandMap.put("pageId", pageId);		
+		commandMap.put("pageId", pageId);	
+		commandMap.put("ALRAM_ID", userId);
 				
 		//following_id: 팔로우 하는 사람, 
 		//follow_id: 팔로우 당하는사람
@@ -137,6 +142,9 @@ public class TimelineController {
 		List<Map<String,Object>> style = timelineService.selectAccountTimelineStyle(commandMap.getMap());
 		mv.addObject("style", style);
 		System.out.println("style.size() :" + style.size());
+		
+		List<Map<String, Object>> alramCnt = alramService.selectOne(commandMap.getMap());
+		mv.addObject("alramCnt", alramCnt);
 		
 		mv.addObject("map", commandMap.getMap());
 		return mv; 

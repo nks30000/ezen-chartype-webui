@@ -17,7 +17,7 @@ public class AlramServiceImpl implements AlramService {
 	private AlramDAO alramDAO;
 	
 	@Override
-	public List<Map<String, Object>> alramCheck(Map<String, Object> map) throws Exception {
+	public Map<String, Object> alramCheck(Map<String, Object> map) throws Exception {
 		return alramDAO.alramCheck(map);
 	}
 
@@ -27,7 +27,7 @@ public class AlramServiceImpl implements AlramService {
 	}
 
 	@Override
-	public Map<String, Object> selectAlramOne(Map<String, Object> map) throws Exception {
+	public List<Map<String, Object>> selectAlramOne(Map<String, Object> map) throws Exception {
 		return alramDAO.selectAlramOne(map);
 	}
 
@@ -50,7 +50,11 @@ public class AlramServiceImpl implements AlramService {
 	public List<Map<String, Object>> alramFollowLoad(Map<String, Object> map) throws Exception {
 		return alramDAO.alramFollowLoad(map);
 	}
-	
+
+	@Override
+	public List<Map<String, Object>> selectOne(Map<String, Object> map) throws Exception {
+		return alramDAO.selectOne(map);
+	}
 	
 	
 

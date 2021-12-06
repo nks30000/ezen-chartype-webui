@@ -61,7 +61,7 @@
 		  	</div>
         </form>
 	  </div>
-	  <div class="navbar-right collapse navbar-collapse">
+	  <%-- <div class="navbar-right collapse navbar-collapse">
         <ul class="navbar-nav ml-auto">
         	<c:if test="${sessionScope.session_mem_id != null }">
 				<li class="nav-item">
@@ -71,19 +71,7 @@
 				</li>
 				<li class="nav-item">
 					<a href="javascript:void(0);" class="nav-link" onclick="alramModal('alram')" >
-					<c:choose>
-						<c:when test= "${alramCnt[0].COUNT>0}">
-							<i class="fa fa-heart"></i>${alramCnt[0].COUNT}
-						</c:when>
-						
-						<c:when test= "${alramCnt[0].COUNT>99}">
-							<i class="fa fa-heart"></i>99+
-						</c:when>
-						
-						<c:otherwise>
-							<i class="fa fa-heart-o"></i>
-						</c:otherwise>
-					</c:choose>
+						<i class="fa fa-heart-o"></i>${alramCnt[0].COUNT}
 					</a>
 				</li>
 				<li class="nav-item">
@@ -116,13 +104,12 @@
 					    <a class="dropdown-item" href="/charType/front/account/profile/timeline/${sessionScope.session_mem_id}"><i class="fa fa-user-circle-o  mr-2"></i>프로필</a>
 					    <a class="dropdown-item" href="/charType/account/profile/config/modify"><i class="fa fa-gear  mr-2"></i>설정</a>
 					    <a class="dropdown-item" href="/charType/logout"><i class="fa fa-sign-out  mr-2"></i>로그아웃</a>
-					    <a class="dropdown-item" href="/charType/like/myLikelist"><i class="fa fa-gratipay"></i>좋아요 보기</a>
 					  </div>
 					</div>
 				</li>
         	</c:if> 
         </ul>
-      </div>
+      </div> --%>
     </div>
   </nav>
 	<%-- 
@@ -201,22 +188,22 @@
   <hr>
 
 			<c:choose>
-			<c:when test="${fn:length(list) > 0 || fn:length(priv) > 0}">
+			<c:when test="${fn:length(likelist) > 0}">
      			<section class="pinBoot ui-pinboot">
-			<c:if test="${fn:length(list) > 0}">
-				<c:forEach items="${list}" var="communityList">
+			<c:if test="${fn:length(likelist) > 0}">
+				<c:forEach items="${likelist}" var="communityList">
  				
  					<article class="white-panel"><img src="/img/${communityList.SAVED_NM}" alt="" />
         				<h4><a href="#this" name="openPopup">${communityList.TITLE}</a>
         				<input type="hidden" name="BOARD_NUM" id="subBoardNum" value="${communityList.BOARD_NUM }">
-        				<input type="hidden" name="ID" id="subId" value="${communityList.ID }" >      					
+        				<input type="hidden" name="ID" id="subId" value="${communityList.BID }" >      					
         				</h4>
         				<!-- 게시판 팝업을 위한 전송 데이터 -->
        						 <p>${communityList.CONTENT}</p>
       				</article>
  				</c:forEach>
 			</c:if>
-				<c:if test="${fn:length(priv) > 0}">
+				<%-- <c:if test="${fn:length(priv) > 0}">
 				<c:forEach items="${priv}" var="communityList">
  					<article class="white-panel"><img src="/img/${communityList.SAVED_NM}" alt="" />
         				<h4><a href="#this" name="openPopup">${communityList.TITLE}</a>
@@ -227,7 +214,7 @@
        						 <p>${communityList.CONTENT}</p>
       				</article>
  				</c:forEach>
-			</c:if>
+			</c:if> --%>
 	    	</section>
 			</c:when>
 			<c:otherwise>

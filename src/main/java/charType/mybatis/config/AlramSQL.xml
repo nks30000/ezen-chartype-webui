@@ -6,7 +6,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="alram">
 
 
-<select id="alramCheck" resultType="hashmap" parameterType="hashmap">
+<select id="alramCheck" parameterType="java.util.HashMap"
+	resultType="java.util.HashMap">
 SELECT
 	ALRAM_NUM,
 	ALRAM_INDEX_NO,
@@ -18,8 +19,8 @@ SELECT
 FROM 
 	TB_ALRAM
 WHERE 
-	ALRAM_INDEX_NO = #{ALRAM_INDEX_NO} and ALRAM_CONTNUM = #{ALRAM_CONTNUM} and ALRAM_ID = #{ALRAM_ID}
-	and REG_ID = #{REG_ID} and READDATE is null </select>
+	ALRAM_ID=#{ALRAM_ID}
+</select>
 
 
 <select id="alramLoad" resultType="java.util.HashMap" parameterType="java.util.HashMap">
@@ -31,46 +32,51 @@ SELECT
 	REG_ID,
 	REGDATE,
 	READDATE,
-	U.PROF_IMG,
     B.BOARD_NUM,
-    B.TITLE
+    B.TITLE,
+    (SELECT PROF_IMG FROM TB_USER WHERE ID = REG_ID) AS PROF_IMG
 FROM 
 	TB_ALRAM, TB_USER U, TB_BOARD B
 WHERE
 	 ALRAM_ID = #{ALRAM_ID} 
-     AND READDATE is null 
+     AND READDATE IS NULL 
      AND U.ID = #{ALRAM_ID}  
-     AND B.BOARD_NUM = tb_alram.alram_contnum
-     order by REGDATE DESC
+     AND B.BOARD_NUM = TB_ALRAM.ALRAM_CONTNUM
+     ORDER BY REGDATE DESC
       </select>
 
 <select id="alramFollowLoad" resultType="java.util.HashMap" parameterType="java.util.HashMap">
 	SELECT
-	*
-	FROM 
-	TB_ALRAM A, TB_USER U
-	WHERE
-	 A.ALRAM_ID = 'user1' 
-     AND READDATE is null 
-     AND U.ID = 'user1'  
-     AND ALRAM_CONTNUM = 0
-     
-     order by REGDATE DESC
-      </select>
-
-<select id="selectAlramOne" resultType="hashmap" parameterType="hashmap">
-SELECT 
 	ALRAM_NUM,
 	ALRAM_INDEX_NO,
 	ALRAM_ID,
 	ALRAM_CONTNUM,
 	REG_ID,
 	REGDATE,
-	READDATE
-FROM 
+	READDATE,
+    (SELECT PROF_IMG FROM TB_USER WHERE ID = REG_ID) AS PROF_IMG
+	FROM 
+	TB_ALRAM A, TB_USER U
+	WHERE
+	 A.ALRAM_ID = #{ALRAM_ID}  
+     AND READDATE is null 
+     AND U.ID = #{ALRAM_ID}    
+     AND ALRAM_CONTNUM = 0
+     
+     order by REGDATE DESC
+      </select>
+
+<select id="selectAlramOne" resultType="hashmap" parameterType="hashmap">
+SELECT
+	*
+	FROM 
 	TB_ALRAM
-WHERE 
-	ALRAM_NUM = #{ALRAM_NUM} 
+	WHERE
+	 REG_ID = #{REG_ID} 
+     AND READDATE is null
+     AND ALRAM_NUM = #{ALRAM_NUM}
+     
+     order by REGDATE DESC 
 </select>
 
 <insert id="regAlram" parameterType="hashmap">
@@ -92,13 +98,17 @@ VALUES(
 	) 
 </insert>
 
-<!-- <update id="updateRegIdAlram" parameterType="hashmap">
-UPDATE 
-	TB_ALRAM 
-SET 
-	REGDATE = SYSDATE
-WHERE 
-	ALRAM_NUM = #{ALRAM_NUM} </update> -->
+<select id="selectOne" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+SELECT
+	COUNT(*) count
+	FROM 
+	TB_ALRAM
+	WHERE
+	 ALRAM_ID = #{ALRAM_ID}
+     AND READDATE is null
+     
+     order by REGDATE DESC  
+</select>
 
 <update id="readAlram" parameterType="hashmap">
 UPDATE 

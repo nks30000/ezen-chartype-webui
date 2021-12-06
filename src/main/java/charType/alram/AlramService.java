@@ -6,11 +6,11 @@ import java.util.Map;
 public interface AlramService {
 
 	
-	List<Map<String, Object>> alramCheck(Map<String, Object> map) throws Exception;
+	Map<String, Object> alramCheck(Map<String, Object> map) throws Exception;
 	
 	List<Map<String, Object>> alramLoad(Map<String, Object> map) throws Exception;
 	
-	Map<String, Object> selectAlramOne(Map<String, Object> map) throws Exception;
+	List<Map<String, Object>> selectAlramOne(Map<String, Object> map) throws Exception;
 	
 	void regAlram(Map<String, Object> map) throws Exception;
 	
@@ -19,6 +19,8 @@ public interface AlramService {
 	void readAlram(Map<String, Object> map)throws Exception;
 
 	List<Map<String, Object>> alramFollowLoad(Map<String, Object> map)throws Exception;
+	
+	List<Map<String, Object>> selectOne(Map<String, Object> map)throws Exception;
 
 	
 

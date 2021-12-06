@@ -28,21 +28,22 @@ public class AlramController {
 		ModelAndView mv = new ModelAndView("/front/alram/like/alram_like_list");		
 		
 		
-		if(commandMap.isEmpty()) {
-			//파라미터없을때 임시 코드
-			commandMap.put("ALRAM_ID", "TEST2");
-			List<Map<String, Object>> alramList = alramService.alramLoad(commandMap.getMap());
-			mv.addObject("alramList", alramList);
-			
-			
-		} else {
-			
+		/*
+		 * if(commandMap.isEmpty()) { //파라미터없을때 임시 코드 commandMap.put("ALRAM_ID",
+		 * "TEST2"); List<Map<String, Object>> alramList =
+		 * alramService.alramLoad(commandMap.getMap()); mv.addObject("alramList",
+		 * alramList);
+		 * 
+		 * 
+		 * } else {
+		 */
 			List<Map<String, Object>> alramList = alramService.alramLoad(commandMap.getMap());
 			mv.addObject("alramList", alramList);
 			List<Map<String, Object>> alramFollowList = alramService.alramFollowLoad(commandMap.getMap());
 			mv.addObject("alramFollowList", alramFollowList);
 			
-		}
+			
+			/* } */
 		return mv;
 	}
 	
@@ -81,10 +82,18 @@ public class AlramController {
 		return mv;
 	}
 	
+	@RequestMapping(value="/moveProf")
+	public ModelAndView moveProf(CommandMap commandMap, HttpServletRequest request)throws Exception{
+		String reg_id = (String)commandMap.get("REG_ID");
+		System.out.println(reg_id);
+		System.out.println((String)commandMap.get("ALRAM_NUM"));
+		
+		
+		ModelAndView mv = new ModelAndView("redirect:/front/account/profile/timeline/"+reg_id);
+		alramService.selectAlramOne(commandMap.getMap());
+		return mv;
+	}
 	
-	 
-	 
-
 	
 	
 	

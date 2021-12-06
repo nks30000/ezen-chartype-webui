@@ -12,8 +12,8 @@ import charType.utils.common.dao.AbstractDAO;
 public class AlramDAO extends AbstractDAO{
 	
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> alramCheck(Map<String, Object> map) throws Exception{
-		return (List<Map<String, Object>>) selectList("alram.alramCheck", map);
+	public Map<String, Object> alramCheck(Map<String, Object> map) throws Exception{
+		return (Map<String, Object>) selectOne("alram.alramCheck", map);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -22,8 +22,8 @@ public class AlramDAO extends AbstractDAO{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Map<String, Object> selectAlramOne(Map<String, Object> map) throws Exception{
-		return (Map<String, Object>) selectOne("alram.selectAlramOne", map);
+	public List<Map<String, Object>> selectAlramOne(Map<String, Object> map) throws Exception{
+		return (List<Map<String, Object>>) selectList("alram.selectAlramOne", map);
 	}
 	
 	public void regAlram(Map<String, Object> map) throws Exception{
@@ -41,6 +41,12 @@ public class AlramDAO extends AbstractDAO{
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> alramFollowLoad(Map<String, Object> map) {
 		return (List<Map<String,Object>>) selectList("alram.alramFollowLoad", map);	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> selectOne(Map<String, Object> map){
+		return (List<Map<String, Object>>) selectList("alram.selectOne", map);
+	}
+
 	
 	
 	

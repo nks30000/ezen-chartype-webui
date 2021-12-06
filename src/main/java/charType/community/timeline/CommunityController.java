@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import charType.alram.AlramService;
 import charType.utils.common.mapper.CommandMap;
 
 @Controller
@@ -24,6 +25,9 @@ public class CommunityController {
 	@Resource(name="communityService") 
 	private CommunityService communityService; 
 	
+	@Resource(name="alramService")
+	private AlramService alramService;
+	
 	
 	@RequestMapping(value="/list") 
 	public ModelAndView communityTimelineList(CommandMap commandMap, HttpServletRequest request) throws Exception{ 
@@ -32,13 +36,19 @@ public class CommunityController {
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("session_mem_id");
 		
-		commandMap.put("ID", userId);	
+		commandMap.put("ID", userId);
+		commandMap.put("ALRAM_ID", userId);
 		
 		List<Map<String,Object>> list = communityService.selectListCommunityTimeline(commandMap.getMap());
 		mv.addObject("list", list);
 		
 		List<Map<String,Object>> priv = communityService.selectPrivateCommunityTimeline(commandMap.getMap());
 		mv.addObject("priv", priv);
+		
+		List<Map<String, Object>> alramCnt = alramService.selectOne(commandMap.getMap());
+		mv.addObject("alramCnt", alramCnt);
+		
+		
 		return mv;
 	}
 	

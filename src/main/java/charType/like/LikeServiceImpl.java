@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 import charType.like.LikeService;
@@ -37,5 +38,12 @@ public class LikeServiceImpl implements LikeService {
 			throws Exception{
 		likeDAO.deleteTimelineLike(map);
 	}
+
+	@Override
+	public List<Map<String, Object>> myLikelist(Map<String, Object> map) 
+			throws Exception {
+		return likeDAO.myLikelist(map);
+	}
+
 	
 }

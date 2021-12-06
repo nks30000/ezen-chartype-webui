@@ -64,5 +64,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			DIV_NUM = 0 AND ID = #{USER_ID} AND CONTENTS_NUM = ${BOARD_NUM}
 		]]>
 	</delete>	
+	
+	<select id="myLikelist" parameterType="java.util.HashMap"
+		resultType="java.util.HashMap">
+		<![CDATA[
+		SELECT
+		TB_BOARD.BOARD_NUM, 
+        TITLE, 
+        TB_BOARD.ID AS BID, 
+        TB_BOARD.NICK, 
+        CONTENT, 
+        HIT_CNT, 
+        CATEGORY, 
+        TB_BOARD.MBTI, 
+        LIKE_CNT, 
+        CREATE_DT,
+        IMG_NUM,
+        ORIGINAL_NM,
+        FILE_SIZE,
+        PRIVATE_YN,
+        SAVED_NM,
+        TB_LIKE.ID AS LID
+
+		FROM TB_BOARD, TB_BOARD_IMG, TB_USER, TB_LIKE
+		WHERE TB_BOARD.BOARD_NUM = TB_BOARD_IMG.BOARD_NUM
+        AND TB_BOARD_IMG.IMG_VAL IS NULL
+        AND TB_BOARD.ID = TB_USER.ID
+        AND TB_LIKE.ID = #{ID}
+        AND TB_BOARD.BOARD_NUM = TB_LIKE.CONTENTS_NUM
+        ORDER BY TB_BOARD.CREATE_DT DESC 
+		]]>
+	</select>
 
 </mapper>
