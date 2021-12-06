@@ -940,41 +940,8 @@
 		$('.profile-tabs').find('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 // 		  $($(e.target).attr('href')).find(".pinBoot").pinterest_grid();
 		    var container = $($(e.target).attr('href')).find(".blockIt");
-			
-		    var timer
-			var option = {
-			        numOfCol: 3,
-			        offsetX: 0,
-			        offsetY: 10,
-			        blockElement: '.white-panel'
-			    }
-			var wth = container[0].offsetWidth;
-			
-			var setcol = function () {
-				if(wth > 1000) {
-					option.numOfCol = 4
-				} else if(wth > 900) {
-					option.numOfCol = 3
-				} else if(wth > 600) {
-					option.numOfCol = 2
-				} else {
-					option.numOfCol = 1
-				}
-			}
-			
-			
-			container.BlocksIt(option);
-			
-			$(window).resize(function() {
-				
-				wth = container[0].offsetWidth;
-				
-				setcol();
-				
-				timer = setTimeout( function(){
-					container.BlocksIt(option);
-				}, 500)
-			})
+			gridInit(container);
+		    
 		})
 		gridInit();
 	});
@@ -994,10 +961,10 @@
 			    }
 			var wth = container[0].offsetWidth;
 			
-			var setcol = function () {
-				if(wth > 900) {
+		    var setcol = function () {
+				if(wth > 1000) {
 					option.numOfCol = 4
-				} else if(wth > 700) {
+				} else if(wth > 900) {
 					option.numOfCol = 3
 				} else if(wth > 600) {
 					option.numOfCol = 2
@@ -1009,7 +976,12 @@
 			
 			container.BlocksIt(option);
 			
+			setTimeout(function(){
+				$(window).trigger("resize")
+			},0)
+			
 			$(window).resize(function() {
+				clearTimeout(timer);
 				
 				wth = container[0].offsetWidth;
 				
@@ -1017,7 +989,7 @@
 				
 				timer = setTimeout( function(){
 					container.BlocksIt(option);
-				}, 500)
+				}, 300)
 			})
 		}
 		function fn_openBoardList(){
@@ -1066,6 +1038,10 @@
 		
 		function fn_deleteFile(obj){
 			if($("#fileDiv").find(".img-item").length == 1){
+				
+				obj.parent().removeClass("added");
+				obj.siblings("img").attr("src", "");
+				
 				alert("하나밖에 안남음")
 				return;
 			}
@@ -1184,7 +1160,9 @@
 			});
 
 			el.find("input").on("change", function(e) {
-				uploadImgPreview($(this).attr("id"), $(e.target).siblings("img").attr("id") );
+				var id = $(this).attr("id"),
+					trgId = $(e.target).siblings("img").attr("id");
+				uploadImgPreview(id, trgId);
 				el.addClass("added");
 // 				$(e.target).siblings("img").show();
 			})
