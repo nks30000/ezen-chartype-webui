@@ -81,6 +81,7 @@ PUBLIC " - //mybatis.org//DTD Config 3.0//EN"
 	    <mapper resource="charType/mybatis/config/FollowSQL.xml" />
 	    <mapper resource="charType/mybatis/config/admin.xml" />
 	    <mapper resource="charType/mybatis/config/AlramSQL.xml" />
+	    <mapper resource="charType/mybatis/config/recomFriendSQL.xml" />
 	    
 	</mappers>
 </configuration>
